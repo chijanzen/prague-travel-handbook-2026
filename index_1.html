@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>115年港洲營建事業員工旅遊 - 捷克布拉格8日互動手冊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-hover: #172554;
+      --secondary: #b45309;
+      --accent: #d97706;
+      --map-green: #059669;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Serif TC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-size: 16px;
+      line-height: 1.65;
+      padding-bottom: calc(75px + var(--safe-bottom));
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, rgba(15, 23, 0.9), rgba(30, 58, 138, 0.85)) #1e3a8a;
+      color: white;
+      padding: 3rem 1.25rem 2.25rem;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(217, 119, 6, 0.3);
+      border: 1px solid #fde68a;
+      color: #fef08a;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.6rem;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 0.45rem;
+    }
+    .subtitle {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1.25rem 1rem;
+    }
+
+    /* 主分頁切換按鈕 */
+    .main-tabs-nav {
+      display: flex;
+      background: var(--card-bg);
+      padding: 0.4rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+      margin-top: -1.75rem;
+      position: relative;
+      z-index: 10;
+      border: 1px solid var(--border);
+      gap: 0.35rem;
+    }
+    .main-tab-btn {
+      flex: 1;
+      min-height: 48px;
+      border: none;
+      background: transparent;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      transition: all 0.2s;
+    }
+    .main-tab-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
+    }
+
+    .main-section {
+      display: none;
+      margin-top: 1.25rem;
+      animation: fadeIn 0.25s ease;
+    }
+    .main-section.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 梯次卡片 */
+    .batch-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+    .batch-select-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .batch-select-wrap label {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .batch-card select {
+      width: 100%;
+      height: 50px;
+      padding: 0.6rem 0.85rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      background: #fff;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.15rem;
+    }
+    .batch-info {
+      font-size: 1.05rem;
+      color: var(--secondary);
+      font-weight: 700;
+      background: #fef3c7;
+      padding: 0.75rem;
+      border-radius: 8px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* 天氣模組 */
+    .weather-widget {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-left: 5px solid #0284c7;
+      box-shadow: var(--shadow);
+    }
+    .weather-widget-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+    .weather-widget-header h4 {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    .live-weather-link {
+      font-size: 0.9rem;
+      color: #0284c7;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+    .weather-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 0.65rem 0.4rem;
+      text-align: center;
+    }
+    .weather-box .w-title {
+      font-size: 0.8rem;
+      color: #0369a1;
+      font-weight: 600;
+    }
+    .weather-box .w-val {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0c4a6e;
+      margin-top: 0.25rem;
+    }
+    .weather-tips {
+      font-size: 0.95rem;
+      color: #334155;
+      line-height: 1.6;
+      background: #f8fafc;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    /* 航班提醒 */
+    .flight-strip {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .flight-item h4 {
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.2rem;
+    }
+    .flight-item p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* 行程子標籤 */
+    .days-tabs-wrapper {
+      position: relative;
+      margin: 0 -1rem 1rem;
+      padding: 0 1rem;
+    }
+    .days-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .days-tabs::-webkit-scrollbar { display: none; }
+    
+    .day-btn {
+      flex: 0 0 auto;
+      min-height: 46px;
+      padding: 0.5rem 1.1rem;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .day-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* 行程內容卡片 */
+    .day-panel {
+      display: none;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .day-panel.active { display: block; }
+
+    .panel-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .panel-header .tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .panel-header h3 {
+      font-size: 1.35rem;
+      color: var(--primary);
+      margin-top: 0.2rem;
+      line-height: 1.4;
+    }
+
+    /* 精簡餐食住宿 */
+    .meta-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 0.95rem 1.1rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.25rem;
+    }
+    .meta-item h5 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+    }
+    .meta-item p {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* 景點圖文卡片 */
+    .spot-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1.35rem;
+      background: #fff;
+    }
+    .spot-content {
+      padding: 1.15rem;
+    }
+    .spot-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+    }
+    .spot-desc {
+      font-size: 0.98rem;
+      color: #334155;
+      line-height: 1.7;
+      margin-bottom: 0.85rem;
+      text-align: justify;
+    }
+
+    /* 定點按鈕 */
+    .map-action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .map-nav-btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: #ecfdf5;
+      border: 1.5px solid #a7f3d0;
+      color: #065f46;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .map-nav-btn:active { background: #d1fae5; }
+
+    .rec-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+    .rec-box {
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.92rem;
+    }
+    .rec-box.food {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+    }
+    .rec-box.souvenir {
+      background: #f0fdf4;
+      border: 1px solid #dcfce7;
+    }
+    .rec-box h6 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .rec-box.food h6 { color: #b45309; }
+    .rec-box.souvenir h6 { color: #15803d; }
+    .rec-box ul {
+      padding-left: 1.2rem;
+      color: #475569;
+    }
+    .rec-box ul li {
+      margin-bottom: 0.3rem;
+      line-height: 1.55;
+    }
+
+    /* Outlet 模組 */
+    .outlet-guide-section {
+      margin-top: 1.5rem;
+      border-top: 2px dashed var(--border);
+      padding-top: 1.25rem;
+    }
+    .section-subtitle {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 0.85rem;
+    }
+    .brand-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      border-left: 5px solid var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .brand-card h5 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .brand-card .brand-tag {
+      font-size: 0.8rem;
+      background: #fef3c7;
+      color: #b45309;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .brand-card p {
+      font-size: 0.92rem;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .route-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #fff;
+      margin-bottom: 1rem;
+    }
+    .route-info {
+      padding: 1rem;
+    }
+    .route-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #e0e7ff;
+      color: #3730a3;
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      margin-bottom: 0.35rem;
+    }
+    .route-info h4 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+    .route-path {
+      font-size: 0.9rem;
+      color: var(--secondary);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .route-desc {
+      font-size: 0.92rem;
+      color: #4b5563;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .food-gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .food-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+    .food-card-body {
+      padding: 0.65rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .food-card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.15rem;
+    }
+    .food-price {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #dc2626;
+      margin-bottom: 0.25rem;
+    }
+    .food-card-desc {
+      font-size: 0.85rem;
+      color: #6b7280;
+      line-height: 1.45;
+      margin-bottom: 0.5rem;
+    }
+    .food-map-link {
+      margin-top: auto;
+      font-size: 0.82rem;
+      color: #047857;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .tips-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 0.85rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    /* 實用資訊卡片 */
+    .gtk-banner {
+      background: #fffbeb;
+      border: 1.5px solid #fef3c7;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+      color: #78350f;
+    }
+    .gtk-banner h4 {
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+    }
+    .gtk-banner p {
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .gtk-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .gtk-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      border-top: 4px solid var(--primary);
+    }
+    .gtk-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+    .gtk-icon { font-size: 1.3rem; }
+    .gtk-card-header h4 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .gtk-card p {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.65;
+    }
+    .gtk-card .highlight-text {
+      color: var(--secondary);
+      font-weight: 700;
+    }
+    .lang-pill-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.6rem;
+    }
+    .lang-pill {
+      background: #f1f5f9;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      color: var(--primary);
+      font-weight: 700;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* 手機底部懸浮快捷列 */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: calc(60px + var(--safe-bottom));
+      padding-bottom: var(--safe-bottom);
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+    }
+    .nav-tab-action {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-width: 65px;
+      height: 60px;
+      cursor: pointer;
+    }
+    .nav-tab-action span.icon {
+      font-size: 1.35rem;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .nav-tab-action.active {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    @media (min-width: 640px) {
+      body { font-size: 17px; }
+      .main-tabs-nav { max-width: 700px; margin-left: auto; margin-right: auto; }
+      .batch-card { flex-direction: row; align-items: center; justify-content: space-between; }
+      .batch-select-wrap { flex-direction: row; align-items: center; gap: 0.75rem; }
+      .batch-card select { width: auto; min-width: 250px; }
+      .meta-bar { flex-direction: row; }
+      .meta-item { flex: 1; }
+      .map-action-bar { flex-direction: row; }
+      .rec-grid { flex-direction: row; }
+      .rec-box { flex: 1; }
+      .outlet-brand-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+      .route-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+      .food-gallery { grid-template-columns: repeat(4, 1fr); }
+      .gtk-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+      .mobile-bottom-nav { display: none; }
+      body { padding-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge">115年港洲營建事業員工旅遊</span>
+    <h1>捷克・布拉格 8 日遊</h1>
+    <p class="subtitle">波希米亞古城全覽・梯次天氣速查・原行程景點完整手冊</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- 頂部三大主導航分頁 -->
+    <div class="main-tabs-nav">
+      <button type="button" class="main-tab-btn active" onclick="switchMainTab('tab-batch')">
+        <span>📅</span> 梯次與航班
+      </button>
+      <button type="button" class="main-tab-btn" onclick="switchMainTab('tab-itinerary')">
+        <span>🗺️</span> 每日行程
+      </button>
+      <button type="button" class="main-tab-btn" onclick="switchMainTab('tab-info')">
+        <span>💡</span> 實用須知
+      </button>
+    </div>
+
+    <!-- ==================== 主分頁 1：梯次、天氣與航班 ==================== -->
+    <section id="tab-batch" class="main-section active">
+      <div class="batch-card">
+        <div class="batch-select-wrap">
+          <label for="batchSelect">🗓 選擇您的出發梯次：</label>
+          <select id="batchSelect" onchange="switchBatch()">
+            <option value="0">第一梯次 (2026/11/11 ~ 2026/11/18)</option>
+            <option value="1">第二梯次 (2026/11/18 ~ 2026/11/25)</option>
+            <option value="2">第三梯次 (2026/11/25 ~ 2026/12/02)</option>
+            <option value="3">第四梯次 (2026/12/02 ~ 2026/12/09)</option>
+            <option value="4">第五梯次 (2026/12/09 ~ 2026/12/16)</option>
+          </select>
+        </div>
+        <div id="batchText" class="batch-info">
+          【出發日期】2026/11/11(三) ➔ 【抵台日期】2026/11/18(三)
+        </div>
+      </div>
+
+      <div class="weather-widget">
+        <div class="weather-widget-header">
+          <h4>🌤️ 梯次氣候與穿搭指南</h4>
+          <a id="weatherLiveLink" class="live-weather-link" href="https://www.google.com/search?q=Prague+weather" target="_blank" rel="noopener noreferrer">
+            即時天氣預報 ↗
+          </a>
+        </div>
+        <div class="weather-grid">
+          <div class="weather-box">
+            <div class="w-title">布拉格均溫</div>
+            <div class="w-val" id="wTemp">2°C ~ 8°C</div>
+          </div>
+          <div class="weather-box">
+            <div class="w-title">體感型態</div>
+            <div class="w-val" id="wFeel">初冬濕冷</div>
+          </div>
+          <div class="weather-box">
+            <div class="w-title">日落天黑</div>
+            <div class="w-val" id="wSunset">約 16:25</div>
+          </div>
+        </div>
+        <div class="weather-tips" id="wAdvice">
+          🧣 <strong>穿搭叮嚀：</strong>初冬微冷偶有短暫陣雨，早晚溫差顯著。建議以洋蔥式穿法，內著輕便發熱衣，外搭防風厚外套，並備妥圍巾與好走的止滑平底鞋。
+        </div>
+      </div>
+
+      <div class="flight-strip">
+        <div class="flight-item">
+          <h4>🛫 去程：Day2(四) 星宇航空 JX101</h4>
+          <p>TPE 台北 00:05 ➔ 13小時50分 ➔ PRG 布拉格 08:15</p>
+        </div>
+        <div class="flight-item">
+          <h4>🛬 回程：Day7(二) 星宇航空 JX102</h4>
+          <p>PRG 布拉格 10:45 ➔ 13小時50分 ➔ TPE 台北 05:10(+1日)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 主分頁 2：每日行程導覽 ==================== -->
+    <section id="tab-itinerary" class="main-section">
+      <div class="days-tabs-wrapper">
+        <div class="days-tabs" id="tabsScroll">
+          <button class="day-btn active" onclick="showDay(1)">Day 1</button>
+          <button class="day-btn" onclick="showDay(2)">Day 2 CK古鎮</button>
+          <button class="day-btn" onclick="showDay(3)">Day 3 城堡&遊船</button>
+          <button class="day-btn" onclick="showDay(4)">Day 4 人骨&Outlet</button>
+          <button class="day-btn" onclick="showDay(5)">Day 5 市區觀光</button>
+          <button class="day-btn" onclick="showDay(6)">Day 6 慕夏&自由行</button>
+          <button class="day-btn" onclick="showDay(7)">Day 7</button>
+          <button class="day-btn" onclick="showDay(8)">Day 8</button>
+        </div>
+      </div>
+
+      <!-- DAY 1 -->
+      <div id="day-pane-1" class="day-panel active">
+        <div class="panel-header">
+          <span class="tag">Day 1</span>
+          <h3>桃園 / 布拉格機場</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：× ｜ 中餐：× ｜ 晚餐：機上餐食</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>機上</p>
+          </div>
+        </div>
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">啟程飛行：搭乘星宇航空直飛布拉格</h4>
+            <p class="spot-desc">班機由桃園國際機場出發，於機上享用精緻餐食並稍作休息，養精蓄銳準備迎接浪漫的捷克波希米亞之旅。</p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Taiwan+Taoyuan+International+Airport" target="_blank" rel="noopener noreferrer">🧭 桃園國際機場 地標位址</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div id="day-pane-2" class="day-panel">
+        <div class="panel-header">
+          <span class="tag">Day 2</span>
+          <h3>布拉格 Prague ➔ 173公里 ➔ 契斯科庫倫洛夫 Český Krumlov</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：飯店內 ｜ 中餐：捷克烤鴨風味料理 ｜ 晚餐：肉類拼盤(雞/豬/牛)</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>Hotel OLDINN 或 Hotel Bellevue</p>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">契斯科庫倫洛夫 (Český Krumlov)</h4>
+            <p class="spot-desc">
+              契斯科庫倫洛夫被公認為捷克最美麗的中世紀古鎮，維第格王朝在此興建的美麗城堡，讓您如同墜入歷史歲月的時光洪流之中，其建築、街道、教堂、要塞等散發出濃郁的古典氣息，令人發思古之幽情。曾有人說，想要當中古世紀的古人，就要到至今連麥當勞都沒有的「契斯科庫倫洛夫」。這個如珠玉般風情的中古世紀小鎮，風情如詩如畫，伏爾他瓦河蜿蜒而過，悠緩而寧靜，從城堡區俯瞰小鎮，紅瓦白牆的屋子在陽光下展露出迷人的風情，時光彷彿停留在十八世紀般，照亮了彩繪塔、走過玫瑰家族等三朝領主的輝煌歲月。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=State+Castle+and+Chateau+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">🧭 庫倫洛夫城堡 地標位址</a>
+            </div>
+
+            <div class="rec-grid">
+              <div class="rec-box food">
+                <h6>🍴 推薦周邊小吃</h6>
+                <ul>
+                  <li><strong>Trdelník (肉桂煙囪捲)：</strong>現烤螺旋空心麵包，外脆內軟裹滿砂糖肉桂粉。</li>
+                  <li><strong>地窖碳烤肉排：</strong>舊城地窖餐館的經典炭火烤肉與酸菜。</li>
+                </ul>
+              </div>
+              <div class="rec-box souvenir">
+                <h6>🎁 推薦特色紀念品</h6>
+                <ul>
+                  <li><strong>Koh-i-Noor 刺蝟彩色鉛筆：</strong>捷克老字號工藝木雕文具。</li>
+                  <li><strong>木造玩具與水晶製品：</strong>舊城巷弄特色小店紀念品。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">舊城區</h4>
+            <p class="spot-desc">
+              被伏爾他瓦河以 S 型蜿蜒環繞，巧妙地將古城分為兩部分，東北是河左岸以古堡為主的城堡區；西南則是河右岸以市政廣場為中心的舊城區。庫倫洛夫城堡，以哥德式的形式建在山頂，不論在市區任何地方抬頭都能望見，城堡由四十棟建築物組成，規模之大，在捷克境內僅次於布拉格城堡。千萬別錯過舊城區的巷弄中，有數不清各式各樣的特色商店，像是琳瑯滿目的木造玩具、晶瑩剔透的波希米亞水晶製品等，都是選購特色紀念品的好地方。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Namesti+Svornosti+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">🧭 舊城市政廣場 地標位址</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div id="day-pane-3" class="day-panel">
+        <div class="panel-header">
+          <span class="tag">Day 3</span>
+          <h3>契斯科庫倫洛夫 ➔ 25公里 ➔ 捷克布傑約維采 ➔ 12公里 ➔ 赫魯博卡城堡 ➔ 145公里 ➔ 布拉格 ➔ 跳舞的房子 ➔ 伏爾他瓦河遊船</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：飯店內 ｜ 中餐：傳統捷克午餐 ｜ 晚餐：傳統捷克晚餐</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>Art Nouveau Palace 或 Marriott Hotel Prague 或 Hilton prague old town</p>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">捷克布傑約維采</h4>
+            <p class="spot-desc">
+              舊稱波希米亞布德維斯是捷克城市，南捷克州的首府和最大城市，天主教捷克布傑約維采教區和南捷克的中心。在途中，我們會在布傑約維采短暫停留。這是一座迷人的歷史小鎮，被稱為原創百威啤酒的故鄉。在這裡，您可以在主廣場上稍作漫步，參孫噴泉所在的廣場-普熱米斯爾·奧托卡二世廣場以及黑塔。百威啤酒源於該地，13世紀起該地就以釀造啤酒而知名。當地最著名的啤酒公司是布德瓦啤酒。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Premysl+Otakar+II+Square+Ceske+Budejovice" target="_blank" rel="noopener noreferrer">🧭 奧托卡二世廣場 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Black+Tower+Ceske+Budejovice" target="_blank" rel="noopener noreferrer">🧭 黑塔 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">赫魯博卡城堡 (Hluboka Castle)</h4>
+            <p class="spot-desc">
+              這座優雅的白色宮殿以溫莎城堡為靈感，是捷克共和國最美麗的城堡之一。這座城堡四周環繞著花園和自然風光，為您的一天畫下寧靜而難忘的句點。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=State+Chateau+Hluboka" target="_blank" rel="noopener noreferrer">🧭 赫魯博卡城堡 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">跳舞的房子 (Tančící dům)</h4>
+            <p class="spot-desc">
+              「跳舞的房子」(Tančící dům)位於捷克布拉格伏爾塔瓦河畔，是當代解構主義建築的傑作。這棟建築由加拿大建築師法蘭克·蓋瑞(Frank Gehry)與克羅埃西亞籍建築師弗拉多・米盧尼克(Vlado Milunić) 合作設計，於1996年完工。其造型靈感源自好萊塢傳奇舞伴弗雷德與琴吉，因此又名「弗雷德與琴吉之屋」。建築由兩座相互依偎、扭轉的塔樓組成：一座是以混凝土為主的實體，代表男舞者；另一座則是呈現婀娜曲線的玻璃塔，象徵穿著裙擺的女舞者。這種大膽的動態美感，打破了傳統建築的對稱與剛性，現已成為布拉格除古城外的另一座標誌性地標。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Dancing+House+Prague" target="_blank" rel="noopener noreferrer">🧭 跳舞的房子 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">伏爾他瓦河遊船 (Vltava Cruise)</h4>
+            <p class="spot-desc">
+              捷克著名文學家卡夫卡曾寫給女友一封信中說：「我最喜歡划著我的小船沿伏爾他瓦河逆流而上，然後仰臥在船中順流而下，欣賞不同形式的橋.........。」一個城市，能有條美麗的河流蜿蜒其中，如同為這個城市畫上了一條柔美的線條，城裡也就有了個能讓戀人依偎漫步的浪漫場景。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Steamboats+Vltava+Cruise" target="_blank" rel="noopener noreferrer">🧭 伏爾他瓦河遊船碼頭 地標位址</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 4 -->
+      <div id="day-pane-4" class="day-panel">
+        <div class="panel-header">
+          <span class="tag">Day 4</span>
+          <h3>布拉格 ➔ 70公里 ➔ 庫特納霍拉 Kutná Hora ➔ 聖母升天和施洗者聖約翰教堂 ➔ 人骨教堂 ➔ 聖芭芭拉教堂 ➔ 65公里 ➔ OUTLET (Fashion Arena Prague Outlet) ➔ 布拉格</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：飯店內 ｜ 中餐：傳統捷克午餐 ｜ 晚餐：傳統捷克晚餐</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>Art Nouveau Palace 或 Marriott Hotel Prague 或 Hilton prague old town</p>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">庫特納霍拉 Kutná Hora、聖母升天和施洗者聖約翰教堂、人骨教堂</h4>
+            <p class="spot-desc">
+              <strong>庫特納霍拉 Kutná Hora：</strong>是捷克共和國中波希米亞州的一個城市。這座城市在十二世紀由日爾曼人作為定居點而創建。13世紀末時已發展為波希米亞地區最具活力和最富裕的城市之一。<br><br>
+              <strong>聖母升天和施洗者聖約翰教堂：</strong>巴洛克哥德式教堂。<br><br>
+              <strong>人骨教堂：</strong>聯合國教科文組織列為世界遺產的塞德萊茨骸骨教堂，位於庫特納霍拉，聽起來很恐怖，但其實這些骸骨來自於中世紀的黑死病與戰爭後的死者，19世紀時由木雕藝術家弗朗提謝克・林特(František Rint) 將這些骸骨重新整理並藝術化擺放。繼續前往庫特納霍拉的歷史中心，在中世紀餐廳品嚐傳統的捷克午餐。在舊城區的鵝卵石街道上輕鬆漫步後，經過一所前耶穌會學院，欣賞美麗的風景。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Sedlec+Ossuary+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 人骨教堂 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Church+of+the+Assumption+of+Our+Lady+and+Saint+John+the+Baptist+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 聖約翰教堂 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">聖芭芭拉教堂</h4>
+            <p class="spot-desc">
+              這是庫特納霍拉皇家城鎮的哥德式地標，也是聯合國教科文組織世界遺產。壯麗的飛扶壁與獨特的三峰式尖頂外觀，見證了中世紀銀礦之都的無上榮耀。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St+Barbara's+Cathedral+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 聖芭芭拉教堂 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">捷克 OUTLET (Fashion Arena Prague Outlet)</h4>
+            <p class="spot-desc">
+              喜歡名牌？別錯過布拉格近郊這座大型 Outlet，匯集 HH、Ecco、Adidas、Nike、Calvin Klein、Guess 等中高階品牌，部份精品包款也會上架。搭配退稅，價格比亞洲更優惠，是高 CP 值買手的天堂。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Fashion+Arena+Prague+Outlet" target="_blank" rel="noopener noreferrer">🧭 Fashion Arena Outlet 地標位址</a>
+            </div>
+
+            <div class="outlet-guide-section">
+              <h3 class="section-subtitle">🛍️ 捷克當地特色品牌推薦</h3>
+              <div class="outlet-brand-grid">
+                <div class="brand-card">
+                  <h5>👞 Baťa (拔佳皮鞋) <span class="brand-tag">捷克百年國寶</span></h5>
+                  <p>創立於 1894 年的捷克國民皮鞋。氣墊皮鞋、休閒鞋與真皮皮帶極具性價比，折合台幣常在千元上下，耐磨好穿。</p>
+                </div>
+                <div class="brand-card">
+                  <h5>⛷️ Alpine Pro <span class="brand-tag">捷克冬奧指定</span></h5>
+                  <p>捷克頂級戶外機能品牌。防風防水衝鋒外套、保暖羽絨衣與雪地防寒褲，品質扎實，價格約為一線國際大牌三分之一。</p>
+                </div>
+              </div>
+              <div class="tips-box">
+                💡 <strong>血拼省錢叮嚀：</strong>入館可先至服務中心（Information Centre）出示外國護照領取 VIP Day Pass（指定店家再享 9 折）。同一店家當日單筆滿 <strong>2,001 捷克克朗</strong>主動索取退稅單。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 5 -->
+      <div id="day-pane-5" class="day-panel">
+        <div class="panel-header">
+          <span class="tag">Day 5</span>
+          <h3>布拉格 Prague (市區觀光) ➔ 在布拉格城堡裡穿越不同世紀 ➔ 聖維特大教堂 ➔ 布拉格城堡 ➔ 布拉格黃金巷 ➔ 華倫斯坦宮 ➔ 小區廣場 ➔ 布拉格列儂牆 ➔ 查理大橋 ➔ 舊城廣場 ➔ 布拉格老城天文鐘 ➔ 火藥塔 ➔ 布拉格</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：飯店內 ｜ 中餐：查理士橋畔餐廳 (三道式餐點) ｜ 晚餐：中式晚餐 (貼心安排下午茶：咖啡+蛋糕)</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>Art Nouveau Palace 或 Marriott Hotel Prague 或 Hilton prague old town</p>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">布拉格市區觀光、布拉格城堡、聖維特大教堂</h4>
+            <p class="spot-desc">
+              <strong>布拉格市區觀光：</strong>晨曦中迎接第一道陽光落映眼簾，體驗伏爾他瓦河上布拉格的夢幻氣息，猶如置身於時光幻影絕美的中古世紀！走在中古世紀靜靜的街道上，曾經風起雲湧的歷史歲月，幻想著極盛時期萬人擾嚷洶湧的繁華景象，心靈更添平靜！邂逅布拉格就讓我們從古堡皇宮開始。<br><br>
+              <strong>在布拉格城堡裡穿越不同世紀 (Prague Castle)：</strong>世界上最大的城堡非布拉格城堡莫屬！在城堡裡悠閒漫步，欣賞在一千多年來作為歷任捷克國王、皇帝及總統官邸的布拉格城堡之美。矗立在布拉格《城堡區》Hradčany山崗上的巨無霸《布拉格城堡》Prague Castle是布拉格最顯著的地標。這座城堡佔地高達7萬平方公尺，是金氏世界紀錄上全世界最大的古堡，不僅是捷克共和國的象徵，也讓布拉格躋身全球最美城市之一，到豐富的藝術收藏和精美的建築設計。<br><br>
+              <strong>聖維特大教堂 (St. Vitus Cathedral)：</strong>最巨大雄偉的教堂是整個城堡境內最顯眼的建築物，同時也是歐洲最美的教堂。1344年布拉格升為總教區後，查理四世希望有座可以容納多人、加冕和安息等作用的教堂，便下令擴建，於1929年完全竣工，因此，除了哥德式的尖塔鐘樓外，也融入了文藝復興、巴洛克的風格，如網狀拱頂、玫瑰窗和金色大門等，是世界三大哥德式教堂之一。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Castle" target="_blank" rel="noopener noreferrer">🧭 布拉格城堡 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St.+Vitus+Cathedral+Prague" target="_blank" rel="noopener noreferrer">🧭 聖維特大教堂 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">布拉格黃金巷、華倫斯坦宮、小區廣場、布拉格列儂牆</h4>
+            <p class="spot-desc">
+              <strong>布拉格黃金巷 (Golden Lane)：</strong>位於布拉格城堡內，一條保留了中世紀風格的巷子。數間又矮又窄接連著的房子，外牆漆著繽紛的顏色，原是侍衛的住所，一度淪為窮人集散地，最後是16世紀一群鍊金士於此煉製黃金而得名。目前作為觀光開放，有畫廊、商店、展覽館。另外，別忘了參觀22號小屋，這裡是世界知名的布拉格作家法蘭茲·卡夫卡(Franz Kafka)的故居。參觀過黃金巷，布拉格城堡之旅才算完整，這條小巷與古城牆接鄰，呈現出令人驚豔的別緻街景。魯道夫二世皇帝以渴望找到傳說中長生不老藥與點金石而聞名，據說為魯道夫二世皇帝效力的煉金術士就是居住在這些色彩繽紛的小屋裡。<br><br>
+              <strong>華倫斯坦宮：</strong>華倫斯坦宮(Wallenstein Palace)是位於捷克布拉格的一座巴洛克式宮殿，始建於1623年，由阿爾布雷希特·馮·華倫斯坦(Albrecht von Wallenstein)下令興建，用來展示他的財富和權力。宮殿內設有一座大型的庭院，以及許多裝飾豐富的房間和大廳，包括一個富麗堂皇的宴會廳，現在用作音樂會場所。此外，華倫斯坦宮也是布拉格的國家畫廊所在地，收藏了大量捷克藝術家的作品，以及一些歐洲藝術家的作品。遊客可以在這裡欣賞精美的建築設計。<br><br>
+              <strong>小區廣場 (Malostranske)：</strong>周圍有著一系列歷史宮殿及保護建築，曾作為市場、政府活動和執行司法等場所，現今則因附近有多家餐廳及旅遊景點，吸引遊客前來。<br><br>
+              <strong>布拉格列儂牆：</strong>布拉格的列儂牆(Lennon Wall)是一個著名的塗鴉牆，位於城市的查理大橋對岸的馬爾斯區。這個牆壁在1980年代成為了紀念約翰·列儂的地方，後來逐漸成為了反共主義的符號，許多人都會在這裡留下自己的塗鴉和訊息。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Golden+Lane+Prague" target="_blank" rel="noopener noreferrer">🧭 黃金巷 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wallenstein+Palace+Prague" target="_blank" rel="noopener noreferrer">🧭 華倫斯坦宮 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Malostranske+namesti+Prague" target="_blank" rel="noopener noreferrer">🧭 小區廣場 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Lennon+Wall+Prague" target="_blank" rel="noopener noreferrer">🧭 列儂牆 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">查理大橋 (Charles Bridge) 與查理士橋畔餐廳</h4>
+            <p class="spot-desc">
+              <strong>到查理大橋上尋見浪漫的真諦：</strong>查理大橋總是為藝術家、攝影師與詩人們提供源源不絕的靈感。遠景中布拉格城堡的剪影浮現，巴洛克時期的雕像佇立橋的兩側，無庸置疑這裡就是全歐洲最漂亮的地方。東歐現存最古老的石橋。建於十四世紀，全長520公尺，兩旁聳立了30座雕像，108聖者的古橋，已然成為布拉格觀光生活的代表。橋兩端有哥德式橋塔，兩側欄杆上有以宗教故事為題的15座聖像，偶有街頭藝人或民俗藝品賣者吆喝其間，輕鬆有趣；它也同時是連結舊城區和布拉格城堡區的唯一橋樑。<br><br>
+              <strong>查理士橋畔餐廳：</strong>安排於布拉格市區最美麗的觀光景點查理橋下的 MLYNEC RESTAURANT 查理士橋畔餐廳享用西餐、享用美食，MLYNEC 曾多度入選米其林推薦的指南，安排前湯、主餐(鮭魚)、甜點，在優雅的環境內享受法式浪漫融合捷克料理供法的美食饗宴。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Charles+Bridge+Prague" target="_blank" rel="noopener noreferrer">🧭 查理大橋 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mlynec+Restaurant+Prague" target="_blank" rel="noopener noreferrer">🧭 MLYNEC 橋畔餐廳 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">布拉格老城天文鐘、火藥塔、舊城廣場、聖尼古拉斯教堂</h4>
+            <p class="spot-desc">
+              <strong>布拉格老城天文鐘 (Old Town)：</strong>壯麗的市民會館是全球最大、保存狀態最好的建築物之一，在這裡，時間彷彿回到了神奇的蒸氣時代。市民會館是珍貴的新藝術風格建築，在寬廣的共和國廣場上一個鮮明的地標建築，過去通往銀礦庫特納霍拉的重要貿易路線就是從這裡經過。由於這個地點具備戰略重要性，因此捷克的統治者最初就是在這裡建造宮殿，傳統上加冕遊行也是以這裡作為起點，如今卻只剩下緊鄰市民會館的哥德式火藥塔依舊屹立在原地見證過往的輝煌。舊市政廳這座地標佇立在舊城廣場上已然好幾個世紀。因為吸睛的天文鐘和足以俯瞰布拉格歷史城區的高塔，舊市政廳始終都是最熱門的景點。其哥德式建築始建於1338年。天文鐘是中世紀的科學奇蹟。每一天，從早上九點一直到晚上九點，布拉格的遊人都能站在舊市政廳前欣賞天文鐘，看十二使徒輪流出來打招呼。這件驚人的科技結晶如今已運作了六百年，天文鐘在每個整點都會活過來，演出引人入勝的表演。<br><br>
+              <strong>火藥塔 (Powder Tower, Prague)：</strong>建於1475年，是布拉格舊城門，17世紀時曾用來貯藏火藥後改稱火藥塔，如果登上65公尺的高塔，可遠眺市區，欣賞外觀華麗的新市政廳以及新城區的瓦茲拉夫廣場等，體會布拉格「百塔之城」的風情。<br><br>
+              <strong>舊城廣場：</strong>布拉格舊城的中央地帶，鋪滿石板道路，聚集許多觀光客。廣場一角有文藝復興時期的拱型建築，已改成咖啡廳、禮品店，還有不少小吃攤和街頭藝人在此演出。舊城廣場座落著美麗的提恩教堂與胡斯紀念碑鐫刻著：「愛真實、說真實、守衛真實」三名言。<br><br>
+              <strong>聖尼古拉斯教堂：</strong>位於老城廣場，另一座同名教堂則位於小區。聖尼古拉教堂建於1732年，由當時最傑出的建築師 Kilian Ignaz Dientzenhofer 設計而成，內部以華美的壁畫聞名。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Astronomical+Clock" target="_blank" rel="noopener noreferrer">🧭 老城天文鐘 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Powder+Tower+Prague" target="_blank" rel="noopener noreferrer">🧭 火藥塔 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 舊城廣場 地標位址</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 6 -->
+      <div id="day-pane-6" class="day-panel">
+        <div class="panel-header">
+          <span class="tag">Day 6</span>
+          <h3>布拉格 ➔ 新城區 Nové Město ➔ 慕夏美術館 ➔ 下午自由活動 ➔ 布拉格</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：飯店內 ｜ 中餐：捷克風味烤肋排料理 ｜ 晚餐：發500捷克克朗自理</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>Art Nouveau Palace 或 Marriott Hotel Prague 或 Hilton prague old town</p>
+          </div>
+        </div>
+
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">新城區 Nové Město、慕夏美術館、帕拉迪姆購物中心</h4>
+            <p class="spot-desc">
+              <strong>新城區 Nové Město：</strong>位於伏爾塔瓦河右岸、舊城區南方，是查理四世在14世紀時建立的城市，雖名為「新城」，實際上卻是歷史悠遠，面積更是老城區的三倍，以壯麗的哥德式與巴洛克式教堂聞名，當中最知名的地標為瓦茲拉夫廣場與國家博物館，前者為新城區的商業中心，隨處可見別出心裁的小店與特色咖啡廳；後者則是捷克尊榮的象徵，近代改革後的商業門市都在此生根發芽。<br><br>
+              <strong>慕夏美術館：</strong>布拉格慕夏美術館位於18世紀的薩瓦林宮(Savarin Palace)內，是一座充滿歷史風華的宮殿建築。美術館收藏捷克著名藝術家阿爾豐斯·慕夏(Alfons Mucha)的經典作品，包括海報、繪畫與手稿，展現他獨特的新藝術風格。結合宮殿優雅空間與藝術之美，透過細膩的觀賞體驗，旅客都能輕鬆感受慕夏作品中的精緻與魅力。<br><br>
+              <strong>帕拉迪姆購物中心：</strong>位於捷克共和國布拉格市中心，於2007年開幕。該購物中心擁有170家商店和30家餐廳，零售面積達39,000平方公尺(420,000平方英尺)。此外，該建築內還設有總面積達19,500平方公尺(210,000平方英尺)的辦公空間。它是捷克共和國最大的購物中心之一，正對面是另一家購物中心—科特瓦百貨公司。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mucha+Museum+Prague" target="_blank" rel="noopener noreferrer">🧭 慕夏美術館 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Palladium+Shopping+Center+Prague" target="_blank" rel="noopener noreferrer">🧭 帕拉迪姆購物中心 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wenceslas+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 瓦茲拉夫廣場 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="free-plan-section">
+          <h3 class="section-subtitle">🚶‍♂️ 帕拉迪姆解散後：午後 3 處散策地標</h3>
+          <div class="route-grid">
+            <div class="route-card">
+              <div class="route-info">
+                <span class="route-tag">古典文藝</span>
+                <h4>帝國咖啡館 (Café Imperial)</h4>
+                <p class="route-path">📍 帕拉迪姆斜對面步行 3 分鐘</p>
+                <p class="route-desc">世界十大最美咖啡館之一，滿室百年馬賽克陶瓷浮雕，品嚐經典泡芙與香醇熱咖啡。</p>
+                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Cafe+Imperial+Prague" target="_blank" rel="noopener noreferrer">🧭 帝國咖啡館 地標位址</a>
+              </div>
+            </div>
+
+            <div class="route-card">
+              <div class="route-info">
+                <span class="route-tag">夕陽打卡</span>
+                <h4>伏爾他瓦河天鵝岸 (Cihelná)</h4>
+                <p class="route-path">📍 查理大橋北側河灘</p>
+                <p class="route-desc">群聚優雅天鵝的河畔秘境，傍晚時分能拍下夕陽金光灑在布拉格城堡與查理大橋的明信片大片。</p>
+                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Cihelna+Park+Prague" target="_blank" rel="noopener noreferrer">🧭 天鵝岸 (Cihelná) 地標位址</a>
+              </div>
+            </div>
+
+            <div class="route-card">
+              <div class="route-info">
+                <span class="route-tag">市集尋寶</span>
+                <h4>哈維爾露天市集 (Havelské tržiště)</h4>
+                <p class="route-path">📍 老城區核心步道</p>
+                <p class="route-desc">布拉格歷史最悠久的露天市集，販售新鮮莓果、手作木雕、天文鐘磁鐵與波希米亞小點。</p>
+                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Havelske+trziste+Prague" target="_blank" rel="noopener noreferrer">🧭 哈維爾市集 地標位址</a>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">🌭 500 克朗自由吃！必吃在地小吃</h3>
+          <div class="food-gallery">
+            <div class="food-card">
+              <div class="food-card-body">
+                <div class="food-card-title">肉桂煙囪捲 (Trdelník)</div>
+                <div class="food-price">約 80 ~ 160 CZK</div>
+                <p class="food-card-desc">炭火烤外酥內軟，撒糖霜肉桂粉。</p>
+              </div>
+            </div>
+
+            <div class="food-card">
+              <div class="food-card-body">
+                <div class="food-card-title">街頭烤大香腸 (Klobása)</div>
+                <div class="food-price">約 100 ~ 150 CZK</div>
+                <p class="food-card-desc">現烤多汁大肉腸佐黃芥末酸菜。</p>
+              </div>
+            </div>
+
+            <div class="food-card">
+              <div class="food-card-body">
+                <div class="food-card-title">開放三明治 (Chlebíčky)</div>
+                <div class="food-price">約 45 ~ 75 CZK</div>
+                <p class="food-card-desc">法棍麵包抹薯泥，鋪火腿與水煮蛋。</p>
+              </div>
+            </div>
+
+            <div class="food-card">
+              <div class="food-card-body">
+                <div class="food-card-title">皮爾森生啤 (Pilsner)</div>
+                <div class="food-price">約 55 ~ 80 CZK</div>
+                <p class="food-card-desc">現拉滑順生啤，捷克國民之光。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 7 -->
+      <div id="day-pane-7" class="day-panel">
+        <div class="panel-header">
+          <span class="tag">Day 7</span>
+          <h3>布拉格 / 桃園</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：飯店內 ｜ 中餐：機上餐食 ｜ 晚餐：機上餐食</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>飛機上</p>
+          </div>
+        </div>
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">布拉格 ➔ 布拉格國際機場 ➔ 桃園</h4>
+            <p class="spot-desc">早餐後專車前往布拉格國際機場搭機返回桃園。</p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Vaclav+Havel+Airport+Prague" target="_blank" rel="noopener noreferrer">🧭 布拉格哈維爾機場 地標位址</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 8 -->
+      <div id="day-pane-8" class="day-panel">
+        <div class="panel-header">
+          <span class="tag">Day 8</span>
+          <h3>桃園國際機場</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：機上餐食 ｜ 中餐：× ｜ 晚餐：×</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>溫暖的家</p>
+          </div>
+        </div>
+        <div class="spot-card">
+          <div class="spot-content">
+            <h4 class="spot-title">圓滿賦歸：抵達桃園國際機場</h4>
+            <p class="spot-desc">班機抵達桃園國際機場，返回溫暖的家，圓滿結束 8 天精彩的捷克布拉格之旅。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 主分頁 3：實用資訊 GOOD TO KNOW ==================== -->
+    <section id="tab-info" class="main-section">
+      <div class="gtk-banner">
+        <h4>📌 行前與當地都用得上的重點提醒</h4>
+        <p>初冬的布拉格<strong>濕冷、日照短</strong>，<strong>保暖</strong>與<strong>防扒手</strong>是兩大關鍵！</p>
+      </div>
+
+      <div class="gtk-grid">
+        <div class="gtk-card">
+          <div class="gtk-card-header">
+            <span class="gtk-icon">💰</span>
+            <h4>貨幣</h4>
+          </div>
+          <p>捷克克朗 <span class="highlight-text">CZK（Kč）</span>，不用歐元。約 <strong>1 克朗 ≈ 新台幣 1.4 元</strong>（僅供參考，以當日匯率為準）。大城市刷卡普及，零錢備一些付廁所與市集。</p>
+        </div>
+
+        <div class="gtk-card">
+          <div class="gtk-card-header">
+            <span class="gtk-icon">🧣</span>
+            <h4>天氣與穿著</h4>
+          </div>
+          <p>11 月中～12 月中約 <span class="highlight-text">-1°C ～ 7°C</span>，濕冷有風，約 <strong>16:00 天黑</strong>。厚外套、圍巾、手套、發熱衣與<strong>好走防滑的鞋必備</strong>，石板路多。</p>
+        </div>
+
+        <div class="gtk-card">
+          <div class="gtk-card-header">
+            <span class="gtk-icon">⏰</span>
+            <h4>時差</h4>
+          </div>
+          <p>冬令時間捷克比台灣<strong>慢 7 小時</strong>。當地中午，台灣是晚上 7 點。</p>
+        </div>
+
+        <div class="gtk-card">
+          <div class="gtk-card-header">
+            <span class="gtk-icon">🎒</span>
+            <h4>防扒手</h4>
+          </div>
+          <p><strong>查理大橋、天文鐘、舊城廣場</strong>與地鐵、電車人多處特別注意隨身財物。背包背前面，護照與現金分開放。</p>
+        </div>
+
+        <div class="gtk-card">
+          <div class="gtk-card-header">
+            <span class="gtk-icon">🛍</span>
+            <h4>退稅 Tax Free</h4>
+          </div>
+          <p>同一店家單次消費達門檻可辦退稅，<strong>Outlet 與精品店最划算</strong>。索取退稅單，離境於機場蓋章。伴手食品到超市 <strong>Billa／Albert</strong> 買更便宜。</p>
+        </div>
+
+        <div class="gtk-card">
+          <div class="gtk-card-header">
+            <span class="gtk-icon">🔌</span>
+            <h4>電壓與插座</h4>
+          </div>
+          <p>歐規 <strong>220V</strong>，圓形雙孔 <strong>Type E／F</strong>。帶萬用轉接頭，充電寶（行動電源）與吹風機留意電壓規格。</p>
+        </div>
+
+        <div class="gtk-card">
+          <div class="gtk-card-header">
+            <span class="gtk-icon">🍽</span>
+            <h4>小費與禮儀</h4>
+          </div>
+          <p>餐廳可給約 <strong>10% 小費</strong>（或湊整數）。公廁多需付費 <strong>10–20 克朗</strong>。教堂參觀請輕聲、勿開閃光燈。</p>
+        </div>
+
+        <div class="gtk-card">
+          <div class="gtk-card-header">
+            <span class="gtk-icon">📱</span>
+            <h4>語言與網路</h4>
+          </div>
+          <p>官方語言捷克語，觀光區通英文。建議備歐洲網卡或漫遊，飯店多有 Wi-Fi。<br>
+          <div class="lang-pill-box">
+            <span class="lang-pill">你好 ＝ Dobrý den</span>
+            <span class="lang-pill">謝謝 ＝ Děkuji</span>
+          </div>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 手機專屬底部懸浮快捷列 -->
+  <div class="mobile-bottom-nav">
+    <button type="button" class="nav-tab-action active" onclick="quickNav('tab-batch', 0)">
+      <span class="icon">📅</span>
+      <span>梯次航班</span>
+    </button>
+    <button type="button" class="nav-tab-action" onclick="quickNav('tab-itinerary', 1)">
+      <span class="icon">🗺️</span>
+      <span>每日行程</span>
+    </button>
+    <button type="button" class="nav-tab-action" onclick="quickNavDay(4, 2)">
+      <span class="icon">🛍️</span>
+      <span>Outlet</span>
+    </button>
+    <button type="button" class="nav-tab-action" onclick="quickNavDay(6, 3)">
+      <span class="icon">🚶‍♂️</span>
+      <span>自由漫遊</span>
+    </button>
+    <button type="button" class="nav-tab-action" onclick="quickNav('tab-info', 4)">
+      <span class="icon">💡</span>
+      <span>實用須知</span>
+    </button>
+  </div>
+
+  <footer>
+    <p>© 115年港洲營建事業員工旅遊 捷克-布拉格8日遊 行程手冊</p>
+  </footer>
+
+  <script>
+    const batches = [
+      { 
+        start: "2026/11/11(三)", 
+        end: "2026/11/18(三)",
+        temp: "2°C ~ 8°C",
+        feel: "初冬濕冷",
+        sunset: "約 16:25",
+        advice: "初冬微冷偶有短暫陣雨，早晚溫差顯著。建議以洋蔥式穿法，內著輕便發熱衣，外搭防風厚外套，並備妥圍巾與好走的止滑平底鞋。"
+      },
+      { 
+        start: "2026/11/18(三)", 
+        end: "2026/11/25(三)",
+        temp: "1°C ~ 6°C",
+        feel: "風大微寒",
+        sunset: "約 16:15",
+        advice: "11月中下旬氣溫接近冰點，日照縮短至下午四點多天黑。毛帽、保暖圍巾、手套必備，戶外走訪城堡區時注意防風。"
+      },
+      { 
+        start: "2026/11/25(三)", 
+        end: "2026/12/02(三)",
+        temp: "0°C ~ 5°C",
+        feel: "寒冷偶雪",
+        sunset: "約 16:05",
+        advice: "邁入冬令極寒期，偶有飄雪或清晨路面結霜。請務必穿著防滑底鞋與厚羽絨大衣，室內皆有強暖氣，洋蔥式穿搭最俐落。"
+      },
+      { 
+        start: "2026/12/02(三)", 
+        end: "2026/12/09(三)",
+        temp: "-1°C ~ 4°C",
+        feel: "冬季嚴寒",
+        sunset: "約 16:00",
+        advice: "已進入12月冬季，舊城廣場聖誕市集開跑！室外體感寒冷，建議備妥發熱褲、羊毛襪與保暖防風手套，走在戶外隨時來杯熱紅酒暖身。"
+      },
+      { 
+        start: "2026/12/09(三)", 
+        end: "2026/12/16(三)",
+        temp: "-2°C ~ 3°C",
+        feel: "極寒降雪",
+        sunset: "約 16:00",
+        advice: "全年中日照最短的一週（約下午四點即天黑）。氣溫常處零度以下，防寒大衣、雪靴或抓地力強之防滑厚底鞋為必需品。"
+      }
+    ];
+
+    function switchBatch() {
+      const select = document.getElementById("batchSelect");
+      const idx = select.value;
+      const b = batches[idx];
+
+      document.getElementById("batchText").innerText = `【出發日期】${b.start} ➔ 【抵台日期】${b.end}`;
+      document.getElementById("wTemp").innerText = b.temp;
+      document.getElementById("wFeel").innerText = b.feel;
+      document.getElementById("wSunset").innerText = b.sunset;
+      document.getElementById("wAdvice").innerHTML = `🧣 <strong>穿搭叮嚀：</strong>${b.advice}`;
+    }
+
+    function switchMainTab(targetId) {
+      const tabs = document.querySelectorAll('.main-section');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      const btns = document.querySelectorAll('.main-tab-btn');
+      btns.forEach(btn => btn.classList.remove('active'));
+
+      const target = document.getElementById(targetId);
+      if (target) target.classList.add('active');
+
+      if (targetId === 'tab-batch') btns[0].classList.add('active');
+      else if (targetId === 'tab-itinerary') btns[1].classList.add('active');
+      else if (targetId === 'tab-info') btns[2].classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showDay(dayKey) {
+      const buttons = document.querySelectorAll(".day-btn");
+      buttons.forEach(btn => btn.classList.remove("active"));
+
+      const panels = document.querySelectorAll(".day-panel");
+      panels.forEach(panel => panel.classList.remove("active"));
+
+      const currentBtn = buttons[dayKey - 1];
+      if (currentBtn) {
+        currentBtn.classList.add("active");
+        currentBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+      const currentPane = document.getElementById(`day-pane-${dayKey}`);
+      if (currentPane) currentPane.classList.add("active");
+    }
+
+    function quickNav(targetTab, actionIdx) {
+      const actions = document.querySelectorAll('.nav-tab-action');
+      actions.forEach(a => a.classList.remove('active'));
+      actions[actionIdx].classList.add('active');
+
+      switchMainTab(targetTab);
+    }
+
+    function quickNavDay(dayNum, actionIdx) {
+      const actions = document.querySelectorAll('.nav-tab-action');
+      actions.forEach(a => a.classList.remove('active'));
+      actions[actionIdx].classList.add('active');
+
+      switchMainTab('tab-itinerary');
+      showDay(dayNum);
+    }
+  </script>
+</body>
+</html>
