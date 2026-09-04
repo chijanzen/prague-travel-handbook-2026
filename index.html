@@ -42,7 +42,8 @@
     }
 
     header {
-      background: linear-gradient(135deg, rgba(15, 23, 0.9), rgba(30, 58, 138, 0.85)) #1e3a8a;
+      background: linear-gradient(135deg, rgba(15, 23, 0.9), rgba(30, 58, 138, 0.85)), 
+                  url('https://commons.wikimedia.org/wiki/Special:FilePath/Charles_Bridge_(Karl%C5%AFv_most)%2C_Vltava_River%2C_Prague%2C_2015.jpg?width=1200') center/cover no-repeat #1e3a8a;
       color: white;
       padding: 3rem 1.25rem 2.25rem;
       text-align: center;
@@ -353,6 +354,23 @@
       margin-bottom: 1.35rem;
       background: #fff;
     }
+    .spot-img-container {
+      width: 100%;
+      height: 240px;
+      background-color: #cbd5e1;
+      overflow: hidden;
+      position: relative;
+    }
+    .spot-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .spot-card:hover .spot-img-container img {
+      transform: scale(1.02);
+    }
     .spot-content {
       padding: 1.15rem;
     }
@@ -479,6 +497,12 @@
       background: #fff;
       margin-bottom: 1rem;
     }
+    .route-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+    }
     .route-info {
       padding: 1rem;
     }
@@ -523,6 +547,12 @@
       background: #ffffff;
       display: flex;
       flex-direction: column;
+    }
+    .food-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
     }
     .food-card-body {
       padding: 0.65rem;
@@ -699,6 +729,7 @@
       .gtk-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
       .mobile-bottom-nav { display: none; }
       body { padding-bottom: 0; }
+      .spot-img-container { height: 280px; }
     }
   </style>
 </head>
@@ -707,7 +738,7 @@
   <header>
     <span class="badge">115年港洲營建事業員工旅遊</span>
     <h1>捷克・布拉格 8 日遊</h1>
-    <p class="subtitle">波希米亞古城全覽・梯次天氣速查・原行程景點完整手冊</p>
+    <p class="subtitle">梯次天氣速查・原行程景點完整手冊</p>
   </header>
 
   <div class="container">
@@ -813,6 +844,9 @@
           </div>
         </div>
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1200&auto=format&fit=crop" alt="搭乘星宇航空啟程" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">啟程飛行：搭乘星宇航空直飛布拉格</h4>
             <p class="spot-desc">班機由桃園國際機場出發，於機上享用精緻餐食並稍作休息，養精蓄銳準備迎接浪漫的捷克波希米亞之旅。</p>
@@ -823,7 +857,7 @@
         </div>
       </div>
 
-      <!-- DAY 2 -->
+      <!-- DAY 2 (CK 小鎮) -->
       <div id="day-pane-2" class="day-panel">
         <div class="panel-header">
           <span class="tag">Day 2</span>
@@ -841,6 +875,12 @@
         </div>
 
         <div class="spot-card">
+          <div class="spot-img-container">
+            <!-- 直接使用維基百科直連網址與 Unsplash 雙重備援 -->
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Blick_auf_das_Stadtzentrum_von_Krumau_(2026).jpg?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1596701062351-8c2c14d1fdd0?q=80&w=800&auto=format&fit=crop';" 
+                 alt="契斯科庫倫洛夫古鎮全景與彩繪塔" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">契斯科庫倫洛夫 (Český Krumlov)</h4>
             <p class="spot-desc">
@@ -870,6 +910,11 @@
         </div>
 
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Panorama-of-cesky-krumlov-tower-castle-old-town-and-latran.jpg?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800&auto=format&fit=crop';" 
+                 alt="庫倫洛夫舊城區巷弄" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">舊城區</h4>
             <p class="spot-desc">
@@ -900,6 +945,11 @@
         </div>
 
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ceske_Budejovice_kolaz.png?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=800&auto=format&fit=crop';" 
+                 alt="捷克布傑約維采主廣場" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">捷克布傑約維采</h4>
             <p class="spot-desc">
@@ -912,7 +962,13 @@
           </div>
         </div>
 
+        <!-- 真正赫魯博卡城堡外觀 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Zamek_Hluboka_001_THWZ.jpg?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=800&auto=format&fit=crop';" 
+                 alt="赫魯博卡白色城堡全景" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">赫魯博卡城堡 (Hluboka Castle)</h4>
             <p class="spot-desc">
@@ -924,7 +980,11 @@
           </div>
         </div>
 
+        <!-- 真正跳舞的房子雙塔建築 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tanzendes_Haus_2023.jpg?width=800" alt="布拉格跳舞的房子" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">跳舞的房子 (Tančící dům)</h4>
             <p class="spot-desc">
@@ -936,7 +996,11 @@
           </div>
         </div>
 
+        <!-- 伏爾他瓦河遊船 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://images.unsplash.com/photo-1786502873488-e4771811b155?w=800&auto=format&fit=crop" alt="伏爾他瓦河遊船遠眺布拉格" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">伏爾他瓦河遊船 (Vltava Cruise)</h4>
             <p class="spot-desc">
@@ -966,7 +1030,13 @@
           </div>
         </div>
 
+        <!-- 真正的人骨教堂內部大吊燈照片 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kostnice_Sedlec.JPG?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop';" 
+                 alt="庫特納霍拉人骨教堂內部骨骸大吊燈" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">庫特納霍拉 Kutná Hora、聖母升天和施洗者聖約翰教堂、人骨教堂</h4>
             <p class="spot-desc">
@@ -981,7 +1051,13 @@
           </div>
         </div>
 
+        <!-- 真正的聖芭芭拉教堂三峰尖塔哥德式建築照片 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Church_of_Saint_Barbara%2C_North_Facade%2C_Kurna_Hora.jpg?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=800&auto=format&fit=crop';" 
+                 alt="聖芭芭拉教堂哥德式建築立面" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">聖芭芭拉教堂</h4>
             <p class="spot-desc">
@@ -994,6 +1070,9 @@
         </div>
 
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop" alt="Fashion Arena Prague Outlet 購物中心" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">捷克 OUTLET (Fashion Arena Prague Outlet)</h4>
             <p class="spot-desc">
@@ -1040,7 +1119,13 @@
           </div>
         </div>
 
+        <!-- 真正聖維特大教堂照片 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/PragueCathedral03.jpg?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600623471616-8c1966c91ff6?q=80&w=800&auto=format&fit=crop';" 
+                 alt="聖維特大教堂哥德式雙塔" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">布拉格市區觀光、布拉格城堡、聖維特大教堂</h4>
             <p class="spot-desc">
@@ -1055,7 +1140,13 @@
           </div>
         </div>
 
+        <!-- 真正黃金巷彩色小屋照片 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Prague_-_Zlata_ulicka.jpg?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1549877452-9c387954fbc2?q=80&w=800&auto=format&fit=crop';" 
+                 alt="布拉格黃金巷彩色小屋" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">布拉格黃金巷、華倫斯坦宮、小區廣場、布拉格列儂牆</h4>
             <p class="spot-desc">
@@ -1073,7 +1164,11 @@
           </div>
         </div>
 
+        <!-- 真正查理大橋橋面雕像照片 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://images.unsplash.com/photo-1513805959324-96eb66ca8713?q=80&w=800&auto=format&fit=crop" alt="查理大橋橋面與聖者雕像" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">查理大橋 (Charles Bridge) 與查理士橋畔餐廳</h4>
             <p class="spot-desc">
@@ -1087,7 +1182,11 @@
           </div>
         </div>
 
+        <!-- 真正老城天文鐘金色鐘面照片 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Astronomical_Clock_(8341899828).jpg?width=800" alt="布拉格老城天文鐘特寫" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">布拉格老城天文鐘、火藥塔、舊城廣場、聖尼古拉斯教堂</h4>
             <p class="spot-desc">
@@ -1098,7 +1197,7 @@
             </p>
             <div class="map-action-bar">
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Astronomical+Clock" target="_blank" rel="noopener noreferrer">🧭 老城天文鐘 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Powder+Tower+Prague" target="_blank" rel="noopener noreferrer">🧭 火藥塔 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Powder+Tower+Prague" target="_blank" relnoopener noreferrer">🧭 火藥塔 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 舊城廣場 地標位址</a>
             </div>
           </div>
@@ -1122,7 +1221,13 @@
           </div>
         </div>
 
+        <!-- 真正慕夏代表畫作 -->
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Four_Seasons_by_Alfons_Mucha%2C_circa_1896.jpg?width=800" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800&auto=format&fit=crop';" 
+                 alt="慕夏美術館新藝術風格名作《四季》" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">新城區 Nové Město、慕夏美術館、帕拉迪姆購物中心</h4>
             <p class="spot-desc">
@@ -1142,6 +1247,10 @@
           <h3 class="section-subtitle">🚶‍♂️ 帕拉迪姆解散後：午後 3 處散策地標</h3>
           <div class="route-grid">
             <div class="route-card">
+              <!-- 真正帝國咖啡館內部實景 -->
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cafe_Imperial_in_Prague_interior.jpg?width=800" 
+                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=800&auto=format&fit=crop';" 
+                   alt="世界最美帝國咖啡館挑高大廳實景" loading="lazy">
               <div class="route-info">
                 <span class="route-tag">古典文藝</span>
                 <h4>帝國咖啡館 (Café Imperial)</h4>
@@ -1152,6 +1261,10 @@
             </div>
 
             <div class="route-card">
+              <!-- 真正伏爾他瓦河天鵝與查理大橋實景 -->
+              <img src="https://images.unsplash.com/photo-1786502873488-e4771811b155?w=800&auto=format&fit=crop" 
+                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1786502873488-e4771811b155?w=800&auto=format&fit=crop';" 
+                   alt="伏爾他瓦河天鵝岸實景" loading="lazy">
               <div class="route-info">
                 <span class="route-tag">夕陽打卡</span>
                 <h4>伏爾他瓦河天鵝岸 (Cihelná)</h4>
@@ -1162,6 +1275,10 @@
             </div>
 
             <div class="route-card">
+              <!-- 真正哈維爾市集實景 -->
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Havelsk%C3%BD_trh%2C_od_Uheln%C3%A9ho_trhu.jpg?width=800" 
+                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1533900298318-6b8da08a523e?q=80&w=800&auto=format&fit=crop';" 
+                   alt="哈維爾露天市集攤位實景" loading="lazy">
               <div class="route-info">
                 <span class="route-tag">市集尋寶</span>
                 <h4>哈維爾露天市集 (Havelské tržiště)</h4>
@@ -1174,7 +1291,9 @@
 
           <h3 class="section-subtitle">🌭 500 克朗自由吃！必吃在地小吃</h3>
           <div class="food-gallery">
+            <!-- 真正 Trdelnik 實景 -->
             <div class="food-card">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Trdeln%C3%ADk-Basket-20101.JPG?width=400" alt="肉桂煙囪捲" loading="lazy">
               <div class="food-card-body">
                 <div class="food-card-title">肉桂煙囪捲 (Trdelník)</div>
                 <div class="food-price">約 80 ~ 160 CZK</div>
@@ -1182,7 +1301,11 @@
               </div>
             </div>
 
+            <!-- 真正捷克街頭 Klobasa 實景 -->
             <div class="food-card">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kielbasa.jpg?width=400" 
+                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=400&auto=format&fit=crop';" 
+                   alt="街頭烤大香腸" loading="lazy">
               <div class="food-card-body">
                 <div class="food-card-title">街頭烤大香腸 (Klobása)</div>
                 <div class="food-price">約 100 ~ 150 CZK</div>
@@ -1190,7 +1313,11 @@
               </div>
             </div>
 
+            <!-- 真正捷克開放式三明治實景 -->
             <div class="food-card">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Oblo%C5%BEen%C3%A9_chleb%C3%AD%C4%8Dky.jpg?width=400" 
+                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1525607551316-4a8e16d1f9ba?q=80&w=400&auto=format&fit=crop';" 
+                   alt="開放式三明治" loading="lazy">
               <div class="food-card-body">
                 <div class="food-card-title">開放三明治 (Chlebíčky)</div>
                 <div class="food-price">約 45 ~ 75 CZK</div>
@@ -1198,7 +1325,9 @@
               </div>
             </div>
 
+            <!-- 真正皮爾森生啤酒實景 -->
             <div class="food-card">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Pilsner_urquell_mug.jpg" alt="皮爾森生啤酒" loading="lazy">
               <div class="food-card-body">
                 <div class="food-card-title">皮爾森生啤 (Pilsner)</div>
                 <div class="food-price">約 55 ~ 80 CZK</div>
@@ -1226,6 +1355,9 @@
           </div>
         </div>
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1200&auto=format&fit=crop" alt="搭機返程" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">布拉格 ➔ 布拉格國際機場 ➔ 桃園</h4>
             <p class="spot-desc">早餐後專車前往布拉格國際機場搭機返回桃園。</p>
@@ -1253,6 +1385,9 @@
           </div>
         </div>
         <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="https://images.unsplash.com/photo-1506015391300-4802dc74de2e?q=80&w=1200&auto=format&fit=crop" alt="抵達台灣" loading="lazy">
+          </div>
           <div class="spot-content">
             <h4 class="spot-title">圓滿賦歸：抵達桃園國際機場</h4>
             <p class="spot-desc">班機抵達桃園國際機場，返回溫暖的家，圓滿結束 8 天精彩的捷克布拉格之旅。</p>
@@ -1342,7 +1477,7 @@
 
   </div>
 
-  <!-- 手機專屬底部懸浮快捷列 -->
+  <!-- 手機專屬底部快速切換欄 -->
   <div class="mobile-bottom-nav">
     <button type="button" class="nav-tab-action active" onclick="quickNav('tab-batch', 0)">
       <span class="icon">📅</span>
@@ -1478,80 +1613,3 @@
   </script>
 </body>
 </html>
-
-<style>
-/* 手機字級調整 mobile font-size fix */
-@media (max-width: 639px) {
-  html body { font-size: 15px; }
-  html body header { padding: 2.25rem 1.1rem 1.75rem; }
-  html body h1 { font-size: 1.55rem; line-height: 1.3; }
-  html body .subtitle { font-size: 0.92rem; }
-  html body .badge { font-size: 0.8rem; }
-  html body .main-tab-btn { font-size: 0.86rem; }
-}
-</style>
-
-<style>
-/* 手機字級調整 v2 smaller */
-@media (max-width: 639px) {
-  html body { font-size: 13.5px; }
-  html body header { padding: 2rem 1rem 1.5rem; }
-  html body h1 { font-size: 1.25rem; line-height: 1.3; }
-  html body .subtitle { font-size: 0.8rem; }
-  html body .badge { font-size: 0.72rem; }
-  html body .main-tab-btn { font-size: 0.78rem; }
-  html body .panel-header h3 { font-size: 1.15rem; }
-  html body .batch-info { font-size: 0.95rem; }
-  html body .batch-card select { font-size: 0.95rem; }
-}
-</style>
-
-<style>
-/* 手機字級 v3: 關閉瀏覽器自動放大 + 再縮小 */
-html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-@media (max-width: 639px) {
-  html body { font-size: 12.5px; }
-  html body header { padding: 1.75rem 0.9rem 1.35rem; }
-  html body h1 { font-size: 1.05rem; line-height: 1.3; }
-  html body .subtitle { font-size: 0.72rem; }
-  html body .badge { font-size: 0.68rem; }
-  html body .main-tab-btn { font-size: 0.72rem; }
-  html body .panel-header h3 { font-size: 1.05rem; }
-  html body .batch-info { font-size: 0.85rem; }
-  html body .batch-card select { font-size: 0.85rem; }
-  html body .day-btn { font-size: 0.8rem; }
-}
-</style>
-
-<style>
-/* 手機字級 v4: 以 App 內建瀏覽器為準 (再縮小) */
-@media (max-width: 639px) {
-  html body { font-size: 11px; }
-  html body header { padding: 1.6rem 0.85rem 1.25rem; }
-  html body h1 { font-size: 1.15rem; line-height: 1.3; }
-  html body .subtitle { font-size: 0.7rem; }
-  html body .badge { font-size: 0.62rem; }
-  html body .main-tab-btn { font-size: 0.7rem; }
-  html body .panel-header h3 { font-size: 1rem; }
-  html body .batch-info { font-size: 0.8rem; }
-  html body .batch-card select { font-size: 0.8rem; }
-  html body .day-btn { font-size: 0.72rem; }
-}
-</style>
-
-<style>
-/* 手機字級 v5: 改用 root font-size 統一縮放全站, 還原個別覆蓋為原比例 */
-@media (max-width: 639px) {
-  html { font-size: 10px; }
-  html body { font-size: 1rem; }
-  html body header { padding: 3rem 1.25rem 2.25rem; }
-  html body h1 { font-size: 2rem; }
-  html body .subtitle { font-size: 1.05rem; }
-  html body .badge { font-size: 0.95rem; }
-  html body .main-tab-btn { font-size: 0.95rem; }
-  html body .panel-header h3 { font-size: 1.35rem; }
-  html body .batch-info { font-size: 1.05rem; }
-  html body .batch-card select { font-size: 1.05rem; }
-  html body .day-btn { font-size: 0.95rem; }
-}
-</style>
