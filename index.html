@@ -1538,3 +1538,20 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   html body .day-btn { font-size: 0.72rem; }
 }
 </style>
+
+<style>
+/* 手機字級 v5: 改用 root font-size 統一縮放全站, 還原個別覆蓋為原比例 */
+@media (max-width: 639px) {
+  html { font-size: 10px; }
+  html body { font-size: 1rem; }
+  html body header { padding: 3rem 1.25rem 2.25rem; }
+  html body h1 { font-size: 2rem; }
+  html body .subtitle { font-size: 1.05rem; }
+  html body .badge { font-size: 0.95rem; }
+  html body .main-tab-btn { font-size: 0.95rem; }
+  html body .panel-header h3 { font-size: 1.35rem; }
+  html body .batch-info { font-size: 1.05rem; }
+  html body .batch-card select { font-size: 1.05rem; }
+  html body .day-btn { font-size: 0.95rem; }
+}
+</style>
