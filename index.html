@@ -1611,3 +1611,10 @@ img { max-width: 100%; height: auto; }
   body { font-size: 1rem; }
 }
 </style>
+
+<style>
+/* 景點大圖 + 行程卡:完整顯示不裁切(contain)+ 淡底色留白;美食縮圖維持 cover */
+.spot-img-container { background: #f1f5f9; }
+.spot-img-container img,
+.route-card img { object-fit: contain !important; background: #f1f5f9; }
+</style>
