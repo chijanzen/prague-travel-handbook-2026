@@ -1472,27 +1472,28 @@
         <span class="tag">SHOPPING</span>
         <h3>🛍️ 捷克必買・熱門代購 Top 10</h3>
       </div>
-      <p class="shop-intro">嚴選台灣代購圈高人氣、大價差、高回購的十款捷克代表作。可自訂克朗匯率,即時試算台幣價與省錢幅度。</p>
+      <p class="shop-intro">嚴選台灣代購圈高人氣、大價差、高回購的十款捷克代表作。以下皆以「即時克朗匯率」試算台幣價與省錢幅度。</p>
 
       <div class="shop-controls">
-        <div class="shop-rate">
-          <label for="rateInput">💰 克朗匯率　1 CZK ≈</label>
-          <input type="number" id="rateInput" step="0.01" value="1.42" inputmode="decimal">
-          <span>TWD</span>
+        <div class="rate-head">
+          <span class="rate-title">💱 即時匯率查詢</span>
+          <button type="button" id="rateRefresh" class="rate-refresh" onclick="fetchShopRate(true)">↻ 更新匯率</button>
         </div>
-        <input type="text" id="shopSearch" class="shop-search" placeholder="🔍 搜尋品名 / 品牌 / 功效…">
-        <select id="shopCategory" class="shop-select">
-          <option value="all">全部商品</option>
-          <option value="護膚保養">🌿 護膚保養</option>
-          <option value="洗沐護理">🛁 洗沐護理</option>
-          <option value="特色名品">🎁 特色名品</option>
-        </select>
+        <div class="rate-main">1 CZK ≈ <b id="rateValue">1.42</b> TWD</div>
+        <div class="rate-meta" id="rateMeta">載入中…</div>
+        <div class="rate-conv">
+          <label>換算小工具</label>
+          <div class="rate-conv-row">
+            <input type="number" id="convCzk" placeholder="輸入 CZK 金額" inputmode="decimal">
+            <span class="rate-conv-eq">≈</span>
+            <span class="rate-conv-out">NT$ <b id="convTwd">—</b></span>
+          </div>
+        </div>
       </div>
 
-      <p class="shop-count">共 <span id="shopCount">10</span> 款符合條件・價格與省錢幅度即時更新</p>
+      <p class="shop-count">共 <span id="shopCount">10</span> 款嚴選代購・價格依即時匯率換算</p>
 
       <div id="shopGrid" class="shop-grid"></div>
-      <div id="shopEmpty" class="shop-empty" style="display:none;">😅 找不到相符的商品,換個關鍵字或分類試試。</div>
 
       <div class="shop-insights">
         <h4>🔎 代購市場快速透析</h4>
@@ -1659,19 +1660,19 @@
 
     /* ===== 熱門代購 ===== */
     const shopProducts = [
-      { rank:"TOP 1", name:"玫瑰眼霜 (Rose Eyecare Cream)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:295, twdCounterPrice:1600, specs:"15g", efficacy:"深層滋養眼周、淡化撫平細紋、改善暗沉緊緻肌膚。", reason:"菠丹妮鎮店神霜,成分溫和純粹。台灣專櫃約 NT$1,600 以上,當地購入折合僅 2～3 折,常態性斷貨。", img:"shop01.webp", stars:5.0, hotTag:"價差王者 🔥" },
-      { rank:"TOP 2", name:"死海泥手工皂 (Dead Sea Mud Soap)", brand:"菠丹妮 Botanicus", category:"洗沐護理", priceCzk:125, twdCounterPrice:450, specs:"70g", efficacy:"深層毛孔清潔、油脂平衡調理、緩解背部粉刺問題。", reason:"天然礦泥吸附力強且洗後不乾澀,契合台灣濕熱氣候與痘痘肌。單價親民,湊退稅與送禮首選。", img:"shop02.webp", stars:4.9, hotTag:"回購冠軍 🏆" },
-      { rank:"TOP 3", name:"啤酒花豐盈洗髮精 (Beer Hair Shampoo)", brand:"蔓菲蘿 Manufaktura", category:"洗沐護理", priceCzk:259, twdCounterPrice:650, specs:"300ml", efficacy:"活絡強健髮根、控油蓬鬆、維持秀髮自然光澤。", reason:"富含捷克在地啤酒花精華與維他命 B 群,獨特清雅麥香,洗完髮根輕盈蓬鬆,長居回購榜首。", img:"shop03.webp", stars:4.8, hotTag:"口碑爆棚 💬" },
-      { rank:"TOP 4", name:"玫瑰臉部活膚油 (Rose Facial Oil)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:395, twdCounterPrice:1200, specs:"50ml", efficacy:"抗老撫紋、深層鎖水修護、提亮勻淨膚色。", reason:"含珍貴大馬士革玫瑰精油,吸收快不厚重。秋冬修護與冷氣房保濕神物,較專櫃具極大價格優勢。", img:"shop04.webp", stars:4.9, hotTag:"保養神物 ✨" },
-      { rank:"TOP 5", name:"刺蝟彩色鉛筆 / 魔術彩繪筆", brand:"酷喜樂 KOH-I-NOOR", category:"特色名品", priceCzk:45, twdCounterPrice:180, specs:"魔術筆約 45 CZK / 刺蝟組約 1,350 CZK", efficacy:"美術塗鴉、三色漸層繪畫、質感文創桌飾。", reason:"傳承逾兩百年的捷克國寶文具。魔術筆一筆即現夢幻混色,刺蝟木質底座兼具童趣與工藝質感。", img:"shop05.webp", stars:4.8, hotTag:"手作經典 🦔" },
-      { rank:"TOP 6", name:"捷克奇蹟霜 (Czech Miracle Cream)", brand:"哈維利克草本藥局 Havlíkova Apotéka", category:"護膚保養", priceCzk:289, twdCounterPrice:850, specs:"30ml", efficacy:"全效滋養修護、急救敏感乾癢、強化肌膚屏障。", reason:"傳承自 1928 年有機草本蜂蠟古方,被譽為中歐「平價急救滅火器」,在台代購圈迅速竄紅。", img:"shop06.webp", stars:4.7, hotTag:"文青首選 🌿" },
-      { rank:"TOP 7", name:"啤酒花清透沐浴乳 (Beer Shower Gel)", brand:"蔓菲蘿 Manufaktura", category:"洗沐護理", priceCzk:239, twdCounterPrice:600, specs:"300ml", efficacy:"溫和洗淨肌膚、舒緩緊繃身心、長效保水不乾癢。", reason:"泡沫細緻好沖洗,帶有蔓菲蘿招牌的淡雅甜甜麥香,男女皆適合的洗沐入門首選。", img:"shop07.webp", stars:4.6, hotTag:"CP 值之王 💰" },
-      { rank:"TOP 8", name:"純乳木果油滋養霜 (Pure Shea Butter)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:260, twdCounterPrice:750, specs:"100g", efficacy:"深層潤澤乾裂(腳跟/手肘/唇周)、屏障修護。", reason:"100% 有機純粹無香料,容量大且用量極省,是秋冬及乾燥敏弱肌的萬用常備品。", img:"shop08.webp", stars:4.8, hotTag:"萬用修護 🛡️" },
-      { rank:"TOP 9", name:"貝赫洛夫卡草本甜酒 (Becherovka)", brand:"Jan Becher", category:"特色名品", priceCzk:210, twdCounterPrice:650, specs:"500ml", efficacy:"餐前開胃助消化、捷克傳統草本利口調酒基底。", reason:"被封為卡羅維瓦利「第 13 處溫泉泉眼」,融合 30 餘種天然草本釀製,極具歷史與中歐風味。", img:"shop09.webp", stars:4.7, hotTag:"國寶名酒 🍷" },
-      { rank:"TOP 10", name:"經典溫泉薄餅 (Kolonáda Wafers)", brand:"Kolonáda", category:"特色名品", priceCzk:65, twdCounterPrice:200, specs:"175g", efficacy:"休閒零食甜點、下午茶搭配咖啡/茶飲。", reason:"捷克溫泉鄉百年經典名菓,輕脆外皮夾入濃郁榛果可可與肉桂糖霜,回烤後香氣爆發,大人小孩皆愛。", img:"shop10.webp", stars:4.5, hotTag:"伴手首選 🍪" }
+      { rank:"TOP 1", name:"玫瑰眼霜 (Rose Eyecare Cream)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:295, twdCounterPrice:1600, specs:"15g", efficacy:"深層滋養眼周、淡化撫平細紋、改善暗沉緊緻肌膚。", reason:"菠丹妮鎮店神霜,成分溫和純粹。台灣專櫃約 NT$1,600 以上,當地購入折合僅 2～3 折,常態性斷貨。", img:"A01.webp", stars:5.0, hotTag:"價差王者 🔥" },
+      { rank:"TOP 2", name:"死海泥手工皂 (Dead Sea Mud Soap)", brand:"菠丹妮 Botanicus", category:"洗沐護理", priceCzk:125, twdCounterPrice:450, specs:"70g", efficacy:"深層毛孔清潔、油脂平衡調理、緩解背部粉刺問題。", reason:"天然礦泥吸附力強且洗後不乾澀,契合台灣濕熱氣候與痘痘肌。單價親民,湊退稅與送禮首選。", img:"A02.webp", stars:4.9, hotTag:"回購冠軍 🏆" },
+      { rank:"TOP 3", name:"啤酒花豐盈洗髮精 (Beer Hair Shampoo)", brand:"蔓菲蘿 Manufaktura", category:"洗沐護理", priceCzk:259, twdCounterPrice:650, specs:"300ml", efficacy:"活絡強健髮根、控油蓬鬆、維持秀髮自然光澤。", reason:"富含捷克在地啤酒花精華與維他命 B 群,獨特清雅麥香,洗完髮根輕盈蓬鬆,長居回購榜首。", img:"A03.webp", stars:4.8, hotTag:"口碑爆棚 💬" },
+      { rank:"TOP 4", name:"玫瑰臉部活膚油 (Rose Facial Oil)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:395, twdCounterPrice:1200, specs:"50ml", efficacy:"抗老撫紋、深層鎖水修護、提亮勻淨膚色。", reason:"含珍貴大馬士革玫瑰精油,吸收快不厚重。秋冬修護與冷氣房保濕神物,較專櫃具極大價格優勢。", img:"A04.webp", stars:4.9, hotTag:"保養神物 ✨" },
+      { rank:"TOP 5", name:"刺蝟彩色鉛筆 / 魔術彩繪筆", brand:"酷喜樂 KOH-I-NOOR", category:"特色名品", priceCzk:45, twdCounterPrice:180, specs:"魔術筆約 45 CZK / 刺蝟組約 1,350 CZK", efficacy:"美術塗鴉、三色漸層繪畫、質感文創桌飾。", reason:"傳承逾兩百年的捷克國寶文具。魔術筆一筆即現夢幻混色,刺蝟木質底座兼具童趣與工藝質感。", img:"A05.webp", stars:4.8, hotTag:"手作經典 🦔" },
+      { rank:"TOP 6", name:"捷克奇蹟霜 (Czech Miracle Cream)", brand:"哈維利克草本藥局 Havlíkova Apotéka", category:"護膚保養", priceCzk:289, twdCounterPrice:850, specs:"30ml", efficacy:"全效滋養修護、急救敏感乾癢、強化肌膚屏障。", reason:"傳承自 1928 年有機草本蜂蠟古方,被譽為中歐「平價急救滅火器」,在台代購圈迅速竄紅。", img:"A06.webp", stars:4.7, hotTag:"文青首選 🌿" },
+      { rank:"TOP 7", name:"啤酒花清透沐浴乳 (Beer Shower Gel)", brand:"蔓菲蘿 Manufaktura", category:"洗沐護理", priceCzk:239, twdCounterPrice:600, specs:"300ml", efficacy:"溫和洗淨肌膚、舒緩緊繃身心、長效保水不乾癢。", reason:"泡沫細緻好沖洗,帶有蔓菲蘿招牌的淡雅甜甜麥香,男女皆適合的洗沐入門首選。", img:"A07.webp", stars:4.6, hotTag:"CP 值之王 💰" },
+      { rank:"TOP 8", name:"純乳木果油滋養霜 (Pure Shea Butter)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:260, twdCounterPrice:750, specs:"100g", efficacy:"深層潤澤乾裂(腳跟/手肘/唇周)、屏障修護。", reason:"100% 有機純粹無香料,容量大且用量極省,是秋冬及乾燥敏弱肌的萬用常備品。", img:"A08.webp", stars:4.8, hotTag:"萬用修護 🛡️" },
+      { rank:"TOP 9", name:"貝赫洛夫卡草本甜酒 (Becherovka)", brand:"Jan Becher", category:"特色名品", priceCzk:210, twdCounterPrice:650, specs:"500ml", efficacy:"餐前開胃助消化、捷克傳統草本利口調酒基底。", reason:"被封為卡羅維瓦利「第 13 處溫泉泉眼」,融合 30 餘種天然草本釀製,極具歷史與中歐風味。", img:"A09.webp", stars:4.7, hotTag:"國寶名酒 🍷" },
+      { rank:"TOP 10", name:"經典溫泉薄餅 (Kolonáda Wafers)", brand:"Kolonáda", category:"特色名品", priceCzk:65, twdCounterPrice:200, specs:"175g", efficacy:"休閒零食甜點、下午茶搭配咖啡/茶飲。", reason:"捷克溫泉鄉百年經典名菓,輕脆外皮夾入濃郁榛果可可與肉桂糖霜,回烤後香氣爆發,大人小孩皆愛。", img:"A10.webp", stars:4.5, hotTag:"伴手首選 🍪" }
     ];
 
-    let shopRate = 1.42, shopQuery = '', shopCat = 'all';
+    let shopRate = 1.42;
 
     function shopFallback(text) {
       const t = (text || '').length > 16 ? text.slice(0, 16) + '…' : text;
@@ -1687,19 +1688,11 @@
 
     function renderShop() {
       const grid = document.getElementById('shopGrid');
-      const empty = document.getElementById('shopEmpty');
       const count = document.getElementById('shopCount');
       if (!grid) return;
-      const q = shopQuery.toLowerCase();
-      const list = shopProducts.filter(p => {
-        const okCat = (shopCat === 'all') || (p.category === shopCat);
-        const okQ = !q || (p.name + p.brand + p.efficacy + p.reason).toLowerCase().includes(q);
-        return okCat && okQ;
-      });
+      const list = shopProducts;
       count.textContent = list.length;
       grid.innerHTML = '';
-      if (list.length === 0) { empty.style.display = 'block'; return; }
-      empty.style.display = 'none';
       list.forEach(p => {
         const twd = Math.round(p.priceCzk * shopRate);
         const saved = p.twdCounterPrice - twd;
@@ -1749,14 +1742,46 @@
       document.getElementById('shopModal').style.display = 'none';
     }
 
-    document.getElementById('rateInput').addEventListener('input', e => {
-      const v = parseFloat(e.target.value);
-      if (!isNaN(v) && v > 0) { shopRate = v; renderShop(); }
-    });
-    document.getElementById('shopSearch').addEventListener('input', e => { shopQuery = e.target.value; renderShop(); });
-    document.getElementById('shopCategory').addEventListener('change', e => { shopCat = e.target.value; renderShop(); });
+    function updateConverter() {
+      const el = document.getElementById('convCzk');
+      const out = document.getElementById('convTwd');
+      if (!el || !out) return;
+      const v = parseFloat(el.value);
+      out.textContent = (!isNaN(v) && v >= 0) ? Math.round(v * shopRate).toLocaleString() : '—';
+    }
+
+    function applyRate(rate, meta) {
+      shopRate = rate;
+      document.getElementById('rateValue').textContent = rate.toFixed(3);
+      document.getElementById('rateMeta').textContent = meta;
+      renderShop();
+      updateConverter();
+    }
+
+    async function fetchShopRate(manual) {
+      const btn = document.getElementById('rateRefresh');
+      const metaEl = document.getElementById('rateMeta');
+      if (btn) { btn.disabled = true; }
+      if (manual) metaEl.textContent = '更新中…';
+      try {
+        const res = await fetch('https://open.er-api.com/v6/latest/CZK', { cache: 'no-store' });
+        const data = await res.json();
+        const twd = data && data.rates && data.rates.TWD;
+        if (!twd) throw new Error('no TWD');
+        const t = data.time_last_update_utc ? new Date(data.time_last_update_utc) : new Date();
+        const stamp = t.toLocaleDateString('zh-TW') + ' ' + t.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
+        applyRate(twd, '✅ 即時匯率・更新於 ' + stamp);
+      } catch (err) {
+        applyRate(shopRate, '⚠️ 即時匯率載入失敗,暫用參考值 ' + shopRate.toFixed(2) + '(請按更新重試)');
+      } finally {
+        if (btn) { btn.disabled = false; }
+      }
+    }
+
+    document.getElementById('convCzk').addEventListener('input', updateConverter);
 
     renderShop();
+    fetchShopRate(false);
   </script>
 </body>
 </html>
@@ -1786,17 +1811,27 @@ img { max-width: 100%; height: auto; }
 
 .shop-intro { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem; }
 
-.shop-controls { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow); padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
-.shop-rate { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; background: #fffbeb;
-  border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 0.65rem 0.85rem; }
-.shop-rate label { font-size: 0.9rem; font-weight: 700; color: var(--secondary); }
-.shop-rate input { width: 5rem; text-align: center; font-weight: 800; color: var(--accent);
-  border: 1.5px solid #fcd34d; border-radius: 8px; padding: 0.4rem; font-size: 0.95rem; background:#fff; }
-.shop-rate span { font-size: 0.85rem; color: var(--text-muted); font-weight: 700; }
-.shop-search, .shop-select { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-md);
-  padding: 0.7rem 0.85rem; font-size: 0.95rem; background: #f8fafc; color: var(--text-main); font-family: inherit; }
-.shop-search:focus, .shop-select:focus { outline: none; border-color: var(--accent); }
+.shop-controls { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow); padding: 1rem 1.15rem; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+.rate-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.rate-title { font-size: 0.95rem; font-weight: 800; color: var(--secondary); }
+.rate-refresh { border: 1.5px solid var(--accent); background: #fff; color: var(--accent); font-weight: 800;
+  font-size: 0.82rem; padding: 0.35rem 0.75rem; border-radius: 999px; cursor: pointer; font-family: inherit;
+  white-space: nowrap; transition: background 0.15s, color 0.15s; }
+.rate-refresh:hover { background: var(--accent); color: #fff; }
+.rate-refresh:disabled { opacity: 0.55; cursor: default; }
+.rate-main { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
+.rate-main b { color: var(--accent); font-size: 1.5rem; }
+.rate-meta { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+.rate-conv { border-top: 1px dashed #fcd34d; padding-top: 0.6rem; margin-top: 0.15rem; }
+.rate-conv > label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.4rem; }
+.rate-conv-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.rate-conv-row input { flex: 1 1 8rem; min-width: 6rem; border: 1.5px solid #fcd34d; border-radius: 8px;
+  padding: 0.45rem 0.6rem; font-size: 0.95rem; font-weight: 700; color: var(--text-main); background: #fff; font-family: inherit; }
+.rate-conv-row input:focus { outline: none; border-color: var(--accent); }
+.rate-conv-eq { font-weight: 800; color: var(--text-muted); }
+.rate-conv-out { font-size: 1rem; font-weight: 700; color: var(--text-main); white-space: nowrap; }
+.rate-conv-out b { color: var(--map-green); font-size: 1.2rem; }
 
 .shop-count { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.85rem; }
 .shop-count span { color: var(--accent); font-weight: 800; }
