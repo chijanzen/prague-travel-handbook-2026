@@ -754,6 +754,9 @@
       <button type="button" class="main-tab-btn" onclick="switchMainTab('tab-info')">
         <span>💡</span> 實用須知
       </button>
+      <button type="button" class="main-tab-btn" onclick="switchMainTab('tab-shopping')">
+        <span>🛍️</span> 熱門代購
+      </button>
     </div>
 
     <!-- ==================== 主分頁 1：梯次、天氣與航班 ==================== -->
@@ -1463,6 +1466,44 @@
       </div>
     </section>
 
+    <!-- ==================== 主分頁 4：熱門代購 ==================== -->
+    <section id="tab-shopping" class="main-section">
+      <div class="panel-header">
+        <span class="tag">SHOPPING</span>
+        <h3>🛍️ 捷克必買・熱門代購 Top 10</h3>
+      </div>
+      <p class="shop-intro">嚴選台灣代購圈高人氣、大價差、高回購的十款捷克代表作。可自訂克朗匯率,即時試算台幣價與省錢幅度。</p>
+
+      <div class="shop-controls">
+        <div class="shop-rate">
+          <label for="rateInput">💰 克朗匯率　1 CZK ≈</label>
+          <input type="number" id="rateInput" step="0.01" value="1.42" inputmode="decimal">
+          <span>TWD</span>
+        </div>
+        <input type="text" id="shopSearch" class="shop-search" placeholder="🔍 搜尋品名 / 品牌 / 功效…">
+        <select id="shopCategory" class="shop-select">
+          <option value="all">全部商品</option>
+          <option value="護膚保養">🌿 護膚保養</option>
+          <option value="洗沐護理">🛁 洗沐護理</option>
+          <option value="特色名品">🎁 特色名品</option>
+        </select>
+      </div>
+
+      <p class="shop-count">共 <span id="shopCount">10</span> 款符合條件・價格與省錢幅度即時更新</p>
+
+      <div id="shopGrid" class="shop-grid"></div>
+      <div id="shopEmpty" class="shop-empty" style="display:none;">😅 找不到相符的商品,換個關鍵字或分類試試。</div>
+
+      <div class="shop-insights">
+        <h4>🔎 代購市場快速透析</h4>
+        <div class="shop-insight"><strong>🌿 植萃保養（代購量最大）</strong>菠丹妮 Botanicus 與蔓菲蘿 Manufaktura 回購率最高,當地價與台灣專櫃常有數倍價差,必掃。</div>
+        <div class="shop-insight"><strong>✏️ 百年特色文具</strong>KOH-I-NOOR 的重力製圖筆與刺蝟色鉛筆,台灣少見且售價高,文青最愛的手信。</div>
+        <div class="shop-insight"><strong>💎 水晶與傳統工藝</strong>波希米亞水晶、捷克隕石、手工木偶,最能傳遞東歐復古藝術感,適合送禮。</div>
+      </div>
+
+      <p class="shop-disclaimer">※ 價格為概略參考,實際以當地售價與當日匯率為準;商品圖片僅供示意。</p>
+    </section>
+
   </div>
 
   <!-- 手機專屬底部快速切換欄 -->
@@ -1487,6 +1528,22 @@
       <span class="icon">💡</span>
       <span>實用須知</span>
     </button>
+    <button type="button" class="nav-tab-action" onclick="quickNav('tab-shopping', 5)">
+      <span class="icon">🛍️</span>
+      <span>熱門代購</span>
+    </button>
+  </div>
+
+  <!-- 代購商品燈箱 -->
+  <div id="shopModal" class="shop-modal" style="display:none;" onclick="if(event.target.id==='shopModal')closeShopModal()">
+    <div class="shop-modal-box">
+      <button class="shop-modal-close" onclick="closeShopModal()">✕</button>
+      <img id="shopModalImg" src="" alt="">
+      <div class="shop-modal-body">
+        <h4 id="shopModalTitle"></h4>
+        <p id="shopModalDesc"></p>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -1562,6 +1619,7 @@
       if (targetId === 'tab-batch') btns[0].classList.add('active');
       else if (targetId === 'tab-itinerary') btns[1].classList.add('active');
       else if (targetId === 'tab-info') btns[2].classList.add('active');
+      else if (targetId === 'tab-shopping') btns[3].classList.add('active');
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1598,6 +1656,107 @@
       switchMainTab('tab-itinerary');
       showDay(dayNum);
     }
+
+    /* ===== 熱門代購 ===== */
+    const shopProducts = [
+      { rank:"TOP 1", name:"玫瑰眼霜 (Rose Eyecare Cream)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:295, twdCounterPrice:1600, specs:"15g", efficacy:"深層滋養眼周、淡化撫平細紋、改善暗沉緊緻肌膚。", reason:"菠丹妮鎮店神霜,成分溫和純粹。台灣專櫃約 NT$1,600 以上,當地購入折合僅 2～3 折,常態性斷貨。", img:"https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/1ac2ef7f-d899-5924-a7e1-0874f2b626a1/594dd933-586b-5f47-a120-80cec0c8f64d.jpg", stars:5.0, hotTag:"價差王者 🔥" },
+      { rank:"TOP 2", name:"死海泥手工皂 (Dead Sea Mud Soap)", brand:"菠丹妮 Botanicus", category:"洗沐護理", priceCzk:125, twdCounterPrice:450, specs:"70g", efficacy:"深層毛孔清潔、油脂平衡調理、緩解背部粉刺問題。", reason:"天然礦泥吸附力強且洗後不乾澀,契合台灣濕熱氣候與痘痘肌。單價親民,湊退稅與送禮首選。", img:"https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/0d8c3237-e1cc-5850-ac57-99a73f0fd7dc/594dd933-586b-5f47-a120-80cec0c8f64d.jpg", stars:4.9, hotTag:"回購冠軍 🏆" },
+      { rank:"TOP 3", name:"啤酒花豐盈洗髮精 (Beer Hair Shampoo)", brand:"蔓菲蘿 Manufaktura", category:"洗沐護理", priceCzk:259, twdCounterPrice:650, specs:"300ml", efficacy:"活絡強健髮根、控油蓬鬆、維持秀髮自然光澤。", reason:"富含捷克在地啤酒花精華與維他命 B 群,獨特清雅麥香,洗完髮根輕盈蓬鬆,長居回購榜首。", img:"", stars:4.8, hotTag:"口碑爆棚 💬" },
+      { rank:"TOP 4", name:"玫瑰臉部活膚油 (Rose Facial Oil)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:395, twdCounterPrice:1200, specs:"50ml", efficacy:"抗老撫紋、深層鎖水修護、提亮勻淨膚色。", reason:"含珍貴大馬士革玫瑰精油,吸收快不厚重。秋冬修護與冷氣房保濕神物,較專櫃具極大價格優勢。", img:"https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/6c989bb9-2e4d-5f78-9ffc-e2504b1b0997/594dd933-586b-5f47-a120-80cec0c8f64d.jpg", stars:4.9, hotTag:"保養神物 ✨" },
+      { rank:"TOP 5", name:"刺蝟彩色鉛筆 / 魔術彩繪筆", brand:"酷喜樂 KOH-I-NOOR", category:"特色名品", priceCzk:45, twdCounterPrice:180, specs:"魔術筆約 45 CZK / 刺蝟組約 1,350 CZK", efficacy:"美術塗鴉、三色漸層繪畫、質感文創桌飾。", reason:"傳承逾兩百年的捷克國寶文具。魔術筆一筆即現夢幻混色,刺蝟木質底座兼具童趣與工藝質感。", img:"https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/4269b38f-d5e3-58c8-bf1f-3a12b9aae857/67db3143-f455-545e-8083-7e2d7185ea8e.jpg", stars:4.8, hotTag:"手作經典 🦔" },
+      { rank:"TOP 6", name:"捷克奇蹟霜 (Czech Miracle Cream)", brand:"哈維利克草本藥局 Havlíkova Apotéka", category:"護膚保養", priceCzk:289, twdCounterPrice:850, specs:"30ml", efficacy:"全效滋養修護、急救敏感乾癢、強化肌膚屏障。", reason:"傳承自 1928 年有機草本蜂蠟古方,被譽為中歐「平價急救滅火器」,在台代購圈迅速竄紅。", img:"https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/1d4dfd9a-fa7b-5097-8828-c4711ba478d4/18ec7dab-47aa-53b2-87fa-63b4b98ecb38.jpg", stars:4.7, hotTag:"文青首選 🌿" },
+      { rank:"TOP 7", name:"啤酒花清透沐浴乳 (Beer Shower Gel)", brand:"蔓菲蘿 Manufaktura", category:"洗沐護理", priceCzk:239, twdCounterPrice:600, specs:"300ml", efficacy:"溫和洗淨肌膚、舒緩緊繃身心、長效保水不乾癢。", reason:"泡沫細緻好沖洗,帶有蔓菲蘿招牌的淡雅甜甜麥香,男女皆適合的洗沐入門首選。", img:"", stars:4.6, hotTag:"CP 值之王 💰" },
+      { rank:"TOP 8", name:"純乳木果油滋養霜 (Pure Shea Butter)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:260, twdCounterPrice:750, specs:"100g", efficacy:"深層潤澤乾裂(腳跟/手肘/唇周)、屏障修護。", reason:"100% 有機純粹無香料,容量大且用量極省,是秋冬及乾燥敏弱肌的萬用常備品。", img:"https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/1faac2cf-8e5a-5a01-a5a9-8654f1542858/594dd933-586b-5f47-a120-80cec0c8f64d.jpg", stars:4.8, hotTag:"萬用修護 🛡️" },
+      { rank:"TOP 9", name:"貝赫洛夫卡草本甜酒 (Becherovka)", brand:"Jan Becher", category:"特色名品", priceCzk:210, twdCounterPrice:650, specs:"500ml", efficacy:"餐前開胃助消化、捷克傳統草本利口調酒基底。", reason:"被封為卡羅維瓦利「第 13 處溫泉泉眼」,融合 30 餘種天然草本釀製,極具歷史與中歐風味。", img:"https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/c5283a3e-8a48-59d3-aed8-beafa0870c30/5c07669c-4450-5ea8-826d-d0ec4b79eb3b.jpg", stars:4.7, hotTag:"國寶名酒 🍷" },
+      { rank:"TOP 10", name:"經典溫泉薄餅 (Kolonáda Wafers)", brand:"Kolonáda", category:"特色名品", priceCzk:65, twdCounterPrice:200, specs:"175g", efficacy:"休閒零食甜點、下午茶搭配咖啡/茶飲。", reason:"捷克溫泉鄉百年經典名菓,輕脆外皮夾入濃郁榛果可可與肉桂糖霜,回烤後香氣爆發,大人小孩皆愛。", img:"https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/8a162cbb-8f49-54a4-a49a-9ca9215451d1/19fff8e5-c8d2-5bcc-b34c-43e2ef28b80a.jpg", stars:4.5, hotTag:"伴手首選 🍪" }
+    ];
+
+    let shopRate = 1.42, shopQuery = '', shopCat = 'all';
+
+    function shopFallback(text) {
+      const t = (text || '').length > 16 ? text.slice(0, 16) + '…' : text;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="400" height="300" fill="#fdf1d8"/><text x="50%" y="42%" text-anchor="middle" font-family="sans-serif" font-size="48">🛍️</text><text x="50%" y="63%" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#92400e" font-weight="bold">${t}</text><text x="50%" y="75%" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b45309">捷克代購精選 · 示意圖</text></svg>`;
+      return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+    }
+
+    function shopStars(r) {
+      let s = '';
+      for (let i = 1; i <= 5; i++) s += (i <= Math.round(r)) ? '★' : '☆';
+      return s;
+    }
+
+    function renderShop() {
+      const grid = document.getElementById('shopGrid');
+      const empty = document.getElementById('shopEmpty');
+      const count = document.getElementById('shopCount');
+      if (!grid) return;
+      const q = shopQuery.toLowerCase();
+      const list = shopProducts.filter(p => {
+        const okCat = (shopCat === 'all') || (p.category === shopCat);
+        const okQ = !q || (p.name + p.brand + p.efficacy + p.reason).toLowerCase().includes(q);
+        return okCat && okQ;
+      });
+      count.textContent = list.length;
+      grid.innerHTML = '';
+      if (list.length === 0) { empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      list.forEach(p => {
+        const twd = Math.round(p.priceCzk * shopRate);
+        const saved = p.twdCounterPrice - twd;
+        const pct = Math.round((saved / p.twdCounterPrice) * 100);
+        const fb = shopFallback(p.name);
+        const imgSrc = p.img || fb;
+        const card = document.createElement('div');
+        card.className = 'shop-card';
+        card.innerHTML = `
+          <div class="shop-card-img" onclick="openShopModal(this.querySelector('img').src, ${JSON.stringify(p.name).replace(/"/g,'&quot;')}, ${JSON.stringify(p.efficacy).replace(/"/g,'&quot;')})">
+            <img src="${imgSrc}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${fb}';">
+            <span class="shop-rank">${p.rank}</span>
+            <span class="shop-hot">${p.hotTag}</span>
+          </div>
+          <div class="shop-card-body">
+            <div class="shop-brand">${p.brand}　·　${p.specs}</div>
+            <div class="shop-name">${p.name}</div>
+            <div class="shop-stars">${shopStars(p.stars)}<small>${p.stars.toFixed(1)}</small></div>
+            <div class="shop-eff"><b>核心功效｜</b>${p.efficacy}</div>
+            <div class="shop-reason">🔍 ${p.reason}</div>
+            <div class="shop-price-row">
+              <div class="shop-price">
+                <span class="lbl">捷克當地價</span>
+                <div class="czk">${p.priceCzk} <small>CZK ≈ NT$${twd}</small></div>
+              </div>
+              <div class="shop-counter">
+                <span class="lbl">台灣專櫃價</span>
+                <div class="val">NT$${p.twdCounterPrice}</div>
+              </div>
+            </div>
+            <div class="shop-save">
+              <span class="amt">省下 NT$${saved}</span>
+              <span class="pct">省 ${pct}%</span>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function openShopModal(src, title, desc) {
+      document.getElementById('shopModalImg').src = src;
+      document.getElementById('shopModalTitle').textContent = title;
+      document.getElementById('shopModalDesc').textContent = desc;
+      document.getElementById('shopModal').style.display = 'flex';
+    }
+    function closeShopModal() {
+      document.getElementById('shopModal').style.display = 'none';
+    }
+
+    document.getElementById('rateInput').addEventListener('input', e => {
+      const v = parseFloat(e.target.value);
+      if (!isNaN(v) && v > 0) { shopRate = v; renderShop(); }
+    });
+    document.getElementById('shopSearch').addEventListener('input', e => { shopQuery = e.target.value; renderShop(); });
+    document.getElementById('shopCategory').addEventListener('change', e => { shopCat = e.target.value; renderShop(); });
+
+    renderShop();
   </script>
 </body>
 </html>
@@ -1617,4 +1776,86 @@ img { max-width: 100%; height: auto; }
 .spot-img-container { background: #f1f5f9; }
 .spot-img-container img,
 .route-card img { object-fit: contain !important; background: #f1f5f9; }
+</style>
+
+<style>
+/* ===== 熱門代購分頁(沿用手冊 --primary/--accent/--map-green 與 rem 字級)===== */
+.main-tab-btn { font-size: 0.85rem; padding: 0 0.2rem; }   /* 4 個分頁在手機也排得下 */
+.mobile-bottom-nav .nav-tab-action { min-width: 0; flex: 1; font-size: 0.72rem; }
+.mobile-bottom-nav .nav-tab-action span.icon { font-size: 1.2rem; }
+
+.shop-intro { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem; }
+
+.shop-controls { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow); padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+.shop-rate { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; background: #fffbeb;
+  border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 0.65rem 0.85rem; }
+.shop-rate label { font-size: 0.9rem; font-weight: 700; color: var(--secondary); }
+.shop-rate input { width: 5rem; text-align: center; font-weight: 800; color: var(--accent);
+  border: 1.5px solid #fcd34d; border-radius: 8px; padding: 0.4rem; font-size: 0.95rem; background:#fff; }
+.shop-rate span { font-size: 0.85rem; color: var(--text-muted); font-weight: 700; }
+.shop-search, .shop-select { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-md);
+  padding: 0.7rem 0.85rem; font-size: 0.95rem; background: #f8fafc; color: var(--text-main); font-family: inherit; }
+.shop-search:focus, .shop-select:focus { outline: none; border-color: var(--accent); }
+
+.shop-count { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.85rem; }
+.shop-count span { color: var(--accent); font-weight: 800; }
+
+.shop-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+
+.shop-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
+.shop-card-img { position: relative; height: 12rem; background: #f1f5f9; cursor: pointer; }
+.shop-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shop-rank { position: absolute; top: 0.6rem; left: 0.6rem; background: rgba(30,41,59,0.85); color: #fff;
+  font-weight: 800; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 999px; }
+.shop-hot { position: absolute; top: 0.6rem; right: 0.6rem; background: var(--accent); color: #fff;
+  font-weight: 800; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 999px; }
+.shop-card-body { padding: 0.9rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.shop-brand { font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+.shop-name { font-size: 1.05rem; font-weight: 800; color: var(--text-main); line-height: 1.35; }
+.shop-stars { color: var(--accent); font-size: 0.95rem; letter-spacing: 1px; }
+.shop-stars small { color: var(--text-muted); margin-left: 0.35rem; font-weight: 700; font-size: 0.8rem; letter-spacing: 0; }
+.shop-eff { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-md);
+  padding: 0.6rem 0.75rem; font-size: 0.9rem; color: #78350f; line-height: 1.55; }
+.shop-eff b { color: var(--secondary); }
+.shop-reason { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+.shop-price-row { display: flex; justify-content: space-between; align-items: flex-end;
+  border-top: 1px solid var(--border); padding-top: 0.65rem; margin-top: 0.15rem; }
+.shop-price .lbl, .shop-counter .lbl { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; display:block; }
+.shop-price .czk { font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-top: 0.1rem; }
+.shop-price .czk small { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+.shop-counter { text-align: right; }
+.shop-counter .val { font-size: 0.9rem; color: var(--text-muted); text-decoration: line-through; margin-top: 0.1rem; }
+.shop-save { display: flex; justify-content: space-between; align-items: center; background: #ecfdf5;
+  border: 1px solid #a7f3d0; border-radius: var(--radius-md); padding: 0.5rem 0.75rem; }
+.shop-save .amt { color: #047857; font-weight: 800; font-size: 0.9rem; }
+.shop-save .pct { background: var(--map-green); color: #fff; font-weight: 800; font-size: 0.8rem;
+  padding: 0.2rem 0.6rem; border-radius: 999px; }
+
+.shop-empty { text-align: center; color: var(--text-muted); padding: 2.5rem 1rem; background: var(--card-bg);
+  border: 1px solid var(--border); border-radius: var(--radius-lg); }
+
+.shop-insights { margin-top: 1.5rem; background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 1rem 1.15rem; }
+.shop-insights h4 { color: var(--primary); font-size: 1.05rem; margin-bottom: 0.6rem; }
+.shop-insight { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; padding: 0.55rem 0;
+  border-top: 1px dashed var(--border); }
+.shop-insight:first-of-type { border-top: none; }
+.shop-insight strong { display: block; color: var(--text-main); margin-bottom: 0.15rem; }
+
+.shop-disclaimer { font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 1rem; }
+
+.shop-modal { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.8);
+  display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.shop-modal-box { background: #fff; border-radius: var(--radius-lg); overflow: hidden; max-width: 32rem; width: 100%; position: relative; }
+.shop-modal-close { position: absolute; top: 0.6rem; right: 0.6rem; width: 2rem; height: 2rem; border: none;
+  border-radius: 999px; background: rgba(255,255,255,0.92); color: var(--text-main); font-size: 1rem; cursor: pointer; z-index: 2; }
+.shop-modal-box img { width: 100%; max-height: 60vh; object-fit: contain; background: #f1f5f9; display: block; }
+.shop-modal-body { padding: 1rem 1.15rem 1.25rem; }
+.shop-modal-body h4 { font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.4rem; }
+.shop-modal-body p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+@media (min-width: 640px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
 </style>
