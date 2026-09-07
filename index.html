@@ -1547,6 +1547,17 @@
     </div>
   </div>
 
+  <!-- 每日行程圖片燈箱 -->
+  <div id="imgLightbox" class="shop-modal" style="display:none;" onclick="if(event.target.id==='imgLightbox')closeImgLightbox()">
+    <div class="shop-modal-box">
+      <button class="shop-modal-close" onclick="closeImgLightbox()">✕</button>
+      <img id="imgLightboxImg" src="" alt="">
+      <div class="shop-modal-body">
+        <p id="imgLightboxCaption"></p>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>© 115年港洲營建事業員工旅遊 捷克-布拉格8日遊 行程手冊</p>
   </footer>
@@ -1780,6 +1791,27 @@
 
     document.getElementById('convCzk').addEventListener('input', updateConverter);
 
+    /* ===== 每日行程圖片點擊看大圖 ===== */
+    function openImgLightbox(src, caption) {
+      document.getElementById('imgLightboxImg').src = src;
+      document.getElementById('imgLightboxCaption').textContent = caption || '';
+      document.getElementById('imgLightbox').style.display = 'flex';
+    }
+    function closeImgLightbox() {
+      document.getElementById('imgLightbox').style.display = 'none';
+    }
+    (function setupItineraryLightbox() {
+      const section = document.getElementById('tab-itinerary');
+      if (!section) return;
+      section.querySelectorAll('.spot-img-container img, .route-card img, .food-card img').forEach(img => {
+        img.classList.add('zoomable');
+        img.addEventListener('click', () => openImgLightbox(img.src, img.alt));
+      });
+    })();
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeImgLightbox(); closeShopModal(); }
+    });
+
     renderShop();
     fetchShopRate(false);
   </script>
@@ -1887,6 +1919,13 @@ img { max-width: 100%; height: auto; }
 .shop-modal-close { position: absolute; top: 0.6rem; right: 0.6rem; width: 2rem; height: 2rem; border: none;
   border-radius: 999px; background: rgba(255,255,255,0.92); color: var(--text-main); font-size: 1rem; cursor: pointer; z-index: 2; }
 .shop-modal-box img { width: 100%; max-height: 60vh; object-fit: contain; background: #f1f5f9; display: block; }
+
+/* 每日行程圖片可點擊放大 */
+.spot-img-container img.zoomable, .route-card img.zoomable, .food-card img.zoomable { cursor: zoom-in; }
+.spot-img-container { position: relative; }
+.spot-img-container::after { content: "🔍 點圖放大"; position: absolute; right: 0.6rem; bottom: 0.6rem;
+  background: rgba(30,41,59,0.72); color: #fff; font-size: 0.7rem; font-weight: 700;
+  padding: 0.2rem 0.55rem; border-radius: 999px; pointer-events: none; opacity: 0.9; }
 .shop-modal-body { padding: 1rem 1.15rem 1.25rem; }
 .shop-modal-body h4 { font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.4rem; }
 .shop-modal-body p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
