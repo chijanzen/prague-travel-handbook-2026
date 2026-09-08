@@ -7,6 +7,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- PWA / 離線 -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e3a8a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="布拉格手冊">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <style>
     :root {
       --primary: #1e3a8a;
@@ -43,7 +53,7 @@
 
     header {
       background: linear-gradient(135deg, rgba(15, 23, 0.9), rgba(30, 58, 138, 0.85)), 
-                  url('https://commons.wikimedia.org/wiki/Special:FilePath/Charles_Bridge_(Karl%C5%AFv_most)%2C_Vltava_River%2C_Prague%2C_2015.jpg?width=1200') center/cover no-repeat #1e3a8a;
+                  url('hero.webp') center/cover no-repeat #1e3a8a;
       color: white;
       padding: 3rem 1.25rem 2.25rem;
       text-align: center;
@@ -141,19 +151,22 @@
     .batch-select-wrap {
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 0.5rem;
     }
     .batch-select-wrap label {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--primary);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .batch-card select {
       width: 100%;
-      height: 50px;
-      padding: 0.6rem 0.85rem;
-      font-size: 1.05rem;
-      font-weight: 600;
+      height: 52px;
+      padding: 0.6rem 2.4rem 0.6rem 0.95rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
       border: 1.5px solid var(--border);
       border-radius: 8px;
       outline: none;
@@ -162,18 +175,20 @@
       appearance: none;
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
       background-repeat: no-repeat;
-      background-position: right 1rem center;
+      background-position: right 0.85rem center;
       background-size: 1.15rem;
+      cursor: pointer;
     }
     .batch-info {
-      font-size: 1.05rem;
+      font-size: 0.88rem;
       color: var(--secondary);
       font-weight: 700;
       background: #fef3c7;
-      padding: 0.75rem;
+      padding: 0.4rem 0.75rem;
       border-radius: 8px;
       text-align: center;
       line-height: 1.4;
+      border: 1px solid #fde68a;
     }
 
     /* 天氣模組 */
@@ -255,6 +270,155 @@
       font-size: 0.92rem;
       color: var(--text-muted);
       line-height: 1.5;
+    }
+
+    /* 團費資訊 */
+    .fee-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .fee-card > h4 {
+      font-size: 1.15rem;
+      color: var(--primary);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .fee-table-wrap {
+      overflow-x: auto;
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .fee-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      min-width: 320px;
+    }
+    .fee-table th, .fee-table td {
+      padding: 0.7rem 0.6rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .fee-table thead th {
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 700;
+      border-bottom: 1px solid #dbeafe;
+    }
+    .fee-table tbody th {
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+    .fee-table .fee-cash {
+      color: #059669;
+      font-weight: 700;
+    }
+    .fee-table .fee-card-price {
+      color: #334155;
+      font-weight: 700;
+    }
+    .fee-table tbody tr:last-child td,
+    .fee-table tbody tr:last-child th {
+      border-bottom: none;
+    }
+    .fee-note {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      background: #f8fafc;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 0.85rem;
+    }
+    .fee-incexc {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .fee-box {
+      border-radius: 8px;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .fee-box.inc {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+    .fee-box.exc {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+    .fee-box .fee-box-title {
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      font-size: 0.92rem;
+    }
+    .fee-box.inc .fee-box-title {
+      color: #047857;
+    }
+    .fee-box.exc .fee-box-title {
+      color: #dc2626;
+    }
+    .fee-upgrade {
+      margin-top: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .fee-upgrade h5 {
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+    .fee-upgrade-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .fee-upgrade-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 0.75rem 0.6rem;
+      text-align: center;
+    }
+    .fee-upgrade-box .u-title {
+      font-size: 0.88rem;
+      color: #1e40af;
+      font-weight: 600;
+    }
+    .fee-upgrade-box .u-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #dc2626;
+      margin-top: 0.3rem;
+    }
+    .fee-warning {
+      font-size: 0.85rem;
+      color: #854d0e;
+      line-height: 1.6;
+      background: #fefce8;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid #fef08a;
+    }
+    @media (max-width: 480px) {
+      .fee-incexc { grid-template-columns: 1fr; }
+      .fee-upgrade-grid { grid-template-columns: 1fr; }
     }
 
     /* 行程子標籤 */
@@ -357,14 +521,14 @@
     .spot-img-container {
       width: 100%;
       height: 240px;
-      background-color: #cbd5e1;
+      background-color: #eef2f7;
       overflow: hidden;
       position: relative;
     }
     .spot-img-container img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
       transition: transform 0.3s ease;
     }
@@ -500,7 +664,8 @@
     .route-card img {
       width: 100%;
       height: 170px;
-      object-fit: cover;
+      object-fit: contain;
+      background-color: #eef2f7;
       display: block;
     }
     .route-info {
@@ -715,9 +880,37 @@
     @media (min-width: 640px) {
       body { font-size: 17px; }
       .main-tabs-nav { max-width: 700px; margin-left: auto; margin-right: auto; }
-      .batch-card { flex-direction: row; align-items: center; justify-content: space-between; }
-      .batch-select-wrap { flex-direction: row; align-items: center; gap: 0.75rem; }
-      .batch-card select { width: auto; min-width: 250px; }
+      .batch-card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+      }
+      .batch-select-wrap {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.85rem;
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+      .batch-select-wrap label {
+        white-space: nowrap;
+        font-size: 1.05rem;
+        flex-shrink: 0;
+      }
+      .batch-card select {
+        width: auto;
+        flex: 1 1 350px;
+        min-width: 330px;
+        font-size: 1.18rem;
+      }
+      .batch-info {
+        font-size: 0.88rem;
+        padding: 0.4rem 0.75rem;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
       .meta-bar { flex-direction: row; }
       .meta-item { flex: 1; }
       .map-action-bar { flex-direction: row; }
@@ -811,6 +1004,74 @@
         <div class="flight-item">
           <h4>🛬 回程：Day7(二) 星宇航空 JX102</h4>
           <p>PRG 布拉格 10:45 ➔ 13小時50分 ➔ TPE 台北 05:10(+1日)</p>
+        </div>
+      </div>
+
+      <div class="fee-card">
+        <h4>💰 團費資訊</h4>
+        <div class="fee-table-wrap">
+          <table class="fee-table">
+            <thead>
+              <tr>
+                <th>房型</th>
+                <th>現金價 / 人</th>
+                <th>刷卡價 / 人</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>雙人一室</th>
+                <td class="fee-cash">$88,500</td>
+                <td class="fee-card-price">$90,000</td>
+              </tr>
+              <tr>
+                <th>兒童佔床<br><small>(2～12歲)</small></th>
+                <td class="fee-cash">$86,500</td>
+                <td class="fee-card-price">$88,000</td>
+              </tr>
+              <tr>
+                <th>三人一室</th>
+                <td class="fee-cash">$86,500</td>
+                <td class="fee-card-price">$88,000</td>
+              </tr>
+              <tr>
+                <th>單人一室</th>
+                <td class="fee-cash">$109,500</td>
+                <td class="fee-card-price">$111,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="fee-note">
+          ↪ 歐洲地區大多以<strong>雙人房(2張單人床)</strong>為基準房型，許多飯店不提供三人房。如須三人房，將酌情安排加床(行軍床或沙發床)服務。
+        </div>
+
+        <div class="fee-incexc">
+          <div class="fee-box inc">
+            <div class="fee-box-title">✅ 費用包含</div>
+            觀光地門票、機場稅、台中—機場接送、導遊&司機小費($3,600)、500 萬履約責任險含 20 萬醫療險。
+          </div>
+          <div class="fee-box exc">
+            <div class="fee-box-title">❌ 費用不含</div>
+            護照辦理 $1,500。
+          </div>
+        </div>
+
+        <div class="fee-upgrade">
+          <h5>✈️ 自費機位升等(浮動價,依出發日與機位數量)</h5>
+          <div class="fee-upgrade-grid">
+            <div class="fee-upgrade-box">
+              <div class="u-title">豪華經濟艙</div>
+              <div class="u-val">+$36,000～45,000</div>
+            </div>
+            <div class="fee-upgrade-box">
+              <div class="u-title">商務艙</div>
+              <div class="u-val">+$140,000～170,000</div>
+            </div>
+          </div>
+          <div class="fee-warning">
+            ⚠️ 全程使用<strong>團體經濟艙</strong>機票,無法出發前預先選位或指定座位需求(靠窗/靠走道等);座位依英文姓名順序排列,同行者可能無法安排在一起。升等機位有限,請提出需求後靜候回覆;無升等需求者請搭乘經濟艙參團。
+          </div>
         </div>
       </div>
     </section>
@@ -1284,7 +1545,7 @@
           <div class="food-gallery">
             <!-- 真正 Trdelnik 實景 -->
             <div class="food-card">
-              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Trdeln%C3%ADk-Basket-20101.JPG?width=400" alt="肉桂煙囪捲" loading="lazy">
+              <img src="19.webp" alt="肉桂煙囪捲" loading="lazy">
               <div class="food-card-body">
                 <div class="food-card-title">肉桂煙囪捲 (Trdelník)</div>
                 <div class="food-price">約 80 ~ 160 CZK</div>
@@ -1294,9 +1555,7 @@
 
             <!-- 真正捷克街頭 Klobasa 實景 -->
             <div class="food-card">
-              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kielbasa.jpg?width=400" 
-                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=400&auto=format&fit=crop';" 
-                   alt="街頭烤大香腸" loading="lazy">
+              <img src="20.webp" alt="街頭烤大香腸" loading="lazy">
               <div class="food-card-body">
                 <div class="food-card-title">街頭烤大香腸 (Klobása)</div>
                 <div class="food-price">約 100 ~ 150 CZK</div>
@@ -1306,9 +1565,7 @@
 
             <!-- 真正捷克開放式三明治實景 -->
             <div class="food-card">
-              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Oblo%C5%BEen%C3%A9_chleb%C3%AD%C4%8Dky.jpg?width=400" 
-                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1525607551316-4a8e16d1f9ba?q=80&w=400&auto=format&fit=crop';" 
-                   alt="開放式三明治" loading="lazy">
+              <img src="21.webp" alt="開放式三明治" loading="lazy">
               <div class="food-card-body">
                 <div class="food-card-title">開放三明治 (Chlebíčky)</div>
                 <div class="food-price">約 45 ~ 75 CZK</div>
@@ -1318,7 +1575,7 @@
 
             <!-- 真正皮爾森生啤酒實景 -->
             <div class="food-card">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Pilsner_urquell_mug.jpg" alt="皮爾森生啤酒" loading="lazy">
+              <img src="22.webp" alt="皮爾森生啤酒" loading="lazy">
               <div class="food-card-body">
                 <div class="food-card-title">皮爾森生啤 (Pilsner)</div>
                 <div class="food-price">約 55 ~ 80 CZK</div>
@@ -1377,7 +1634,7 @@
         </div>
         <div class="spot-card">
           <div class="spot-img-container">
-            <img src="https://images.unsplash.com/photo-1506015391300-4802dc74de2e?q=80&w=1200&auto=format&fit=crop" alt="抵達台灣" loading="lazy">
+            <img src="24.webp" alt="抵達台灣" loading="lazy">
           </div>
           <div class="spot-content">
             <h4 class="spot-title">圓滿賦歸：抵達桃園國際機場</h4>
@@ -1400,7 +1657,7 @@
             <span class="gtk-icon">💰</span>
             <h4>貨幣</h4>
           </div>
-          <p>捷克克朗 <span class="highlight-text">CZK（Kč）</span>，不用歐元。約 <strong>1 克朗 ≈ 新台幣 1.5 元</strong>（僅供參考，以當日匯率為準）。大城市刷卡普及，零錢備一些付廁所與市集。</p>
+          <p>捷克克朗 <span class="highlight-text">CZK（Kč）</span>，不用歐元。約 <strong>1 克朗 ≈ 新台幣 1.4 元</strong>（僅供參考，以當日匯率為準）。大城市刷卡普及，零錢備一些付廁所與市集。</p>
         </div>
 
         <div class="gtk-card">
@@ -1730,43 +1987,28 @@
                 <div class="czk">${p.priceCzk} <small>CZK ≈ NT$${twd}</small></div>
               </div>
               <div class="shop-counter">
-                <span class="lbl">台灣專櫃價</span>
-                <div class="val">NT$${p.twdCounterPrice}</div>
+                <span class="lbl">台灣專櫃參考</span>
+                <div class="val">NT$ ${p.twdCounterPrice.toLocaleString()}</div>
               </div>
             </div>
             <div class="shop-save">
-              <span class="amt">省下 NT$${saved}</span>
+              <span class="amt">現省約 NT$ ${saved.toLocaleString()}</span>
               <span class="pct">省 ${pct}%</span>
             </div>
-          </div>`;
+          </div>
+        `;
         grid.appendChild(card);
       });
     }
 
     function openShopModal(src, title, desc) {
       document.getElementById('shopModalImg').src = src;
-      document.getElementById('shopModalTitle').textContent = title;
-      document.getElementById('shopModalDesc').textContent = desc;
+      document.getElementById('shopModalTitle').textContent = title || '';
+      document.getElementById('shopModalDesc').textContent = desc || '';
       document.getElementById('shopModal').style.display = 'flex';
     }
     function closeShopModal() {
       document.getElementById('shopModal').style.display = 'none';
-    }
-
-    function updateConverter() {
-      const el = document.getElementById('convCzk');
-      const out = document.getElementById('convTwd');
-      if (!el || !out) return;
-      const v = parseFloat(el.value);
-      out.textContent = (!isNaN(v) && v >= 0) ? Math.round(v * shopRate).toLocaleString() : '—';
-    }
-
-    function applyRate(rate, meta) {
-      shopRate = rate;
-      document.getElementById('rateValue').textContent = rate.toFixed(3);
-      document.getElementById('rateMeta').textContent = meta;
-      renderShop();
-      updateConverter();
     }
 
     async function fetchShopRate(manual) {
@@ -1775,23 +2017,43 @@
       if (btn) { btn.disabled = true; }
       if (manual) metaEl.textContent = '更新中…';
       try {
-        const res = await fetch('https://open.er-api.com/v6/latest/CZK', { cache: 'no-store' });
+        const res = await fetch('https://open.er-api.com/v6/latest/CZK');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         const twd = data && data.rates && data.rates.TWD;
-        if (!twd) throw new Error('no TWD');
-        const t = data.time_last_update_utc ? new Date(data.time_last_update_utc) : new Date();
-        const stamp = t.toLocaleDateString('zh-TW') + ' ' + t.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
-        applyRate(twd, '✅ 即時匯率・更新於 ' + stamp);
+        if (typeof twd === 'number' && twd > 0) {
+          shopRate = twd;
+          document.getElementById('rateValue').textContent = twd.toFixed(2);
+          const d = data.time_last_update_utc ? new Date(data.time_last_update_utc) : new Date();
+          const dStr = `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getDate().toString().padStart(2,'0')}`;
+          metaEl.textContent = `牌告匯率基準（更新日期：${dStr}）`;
+          renderShop();
+          updateConverter();
+        } else {
+          throw new Error('匯率無效');
+        }
       } catch (err) {
-        applyRate(shopRate, '⚠️ 即時匯率載入失敗,暫用參考值 ' + shopRate.toFixed(2) + '(請按更新重試)');
+        document.getElementById('rateValue').textContent = shopRate.toFixed(2);
+        metaEl.textContent = `使用預設參考匯率（離線或連線異常）`;
       } finally {
         if (btn) { btn.disabled = false; }
       }
     }
 
+    function updateConverter() {
+      const input = document.getElementById('convCzk');
+      const out = document.getElementById('convTwd');
+      if (!input || !out) return;
+      const v = parseFloat(input.value);
+      if (isNaN(v) || v < 0) {
+        out.textContent = '—';
+      } else {
+        out.textContent = Math.round(v * shopRate).toLocaleString();
+      }
+    }
     document.getElementById('convCzk').addEventListener('input', updateConverter);
 
-    /* ===== 每日行程圖片點擊看大圖 ===== */
+    /* ===== 每日行程圖片點擊大圖 ===== */
     function openImgLightbox(src, caption) {
       document.getElementById('imgLightboxImg').src = src;
       document.getElementById('imgLightboxCaption').textContent = caption || '';
@@ -1815,6 +2077,16 @@
     renderShop();
     fetchShopRate(false);
   </script>
+  <!-- Service Worker 註冊:首次連網開啟後即可完全離線瀏覽 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function (e) {
+          console.warn('SW 註冊失敗:', e);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
 
@@ -1826,18 +2098,14 @@ img { max-width: 100%; height: auto; }
   html { font-size: 10px; }
   body { font-size: 1rem; }
 }
-</style>
 
-<style>
 /* 景點大圖 + 行程卡:完整顯示不裁切(contain)+ 淡底色留白;美食縮圖維持 cover */
 .spot-img-container { background: #f1f5f9; }
 .spot-img-container img,
 .route-card img { object-fit: contain !important; background: #f1f5f9; }
-</style>
 
-<style>
-/* ===== 熱門代購分頁(沿用手冊 --primary/--accent/--map-green 與 rem 字級)===== */
-.main-tab-btn { font-size: 0.85rem; padding: 0 0.2rem; }   /* 4 個分頁在手機也排得下 */
+/* ===== 熱門代購分頁 ===== */
+.main-tab-btn { font-size: 0.85rem; padding: 0 0.2rem; }
 .mobile-bottom-nav .nav-tab-action { min-width: 0; flex: 1; font-size: 0.72rem; }
 .mobile-bottom-nav .nav-tab-action span.icon { font-size: 1.2rem; }
 
