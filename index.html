@@ -924,6 +924,255 @@
       body { padding-bottom: 0; }
       .spot-img-container { height: 280px; }
     }
+  
+    /* ===== 梯次人員名單 (點名／分房名冊) ===== */
+    .roster-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem 1.25rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-left: 4px solid #c65911;
+    }
+    .roster-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+    .roster-title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .roster-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0;
+    }
+    .roster-badges {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+    }
+    .badge-total {
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+    }
+    .badge-emp {
+      background: #fff7ed;
+      color: #c65911;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #fed7aa;
+    }
+    .badge-fam {
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+    }
+    .roster-legend {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.85rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      background: #fafaf9;
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      border: 1px dashed #e7e5e4;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .legend-dot-emp {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c65911;
+      display: inline-block;
+    }
+    .legend-dot-fam {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #334155;
+      display: inline-block;
+    }
+    .roster-search-box {
+      width: 100%;
+    }
+    .roster-search-box input {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.95rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      background: #f8fafc;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .roster-search-box input:focus {
+      background: #fff;
+      border-color: #c65911;
+      box-shadow: 0 0 0 3px rgba(198, 89, 17, 0.15);
+    }
+    .roster-table-wrap {
+      overflow-x: auto;
+      max-height: 420px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      transition: max-height 0.3s ease;
+      -webkit-overflow-scrolling: touch;
+    }
+    .roster-table-wrap.expanded {
+      max-height: none;
+    }
+    .roster-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      min-width: 380px;
+    }
+    .roster-table thead th {
+      position: sticky;
+      top: 0;
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      padding: 0.65rem 0.5rem;
+      text-align: center;
+      border-bottom: 2px solid #cbd5e1;
+      z-index: 2;
+    }
+    .roster-table tbody td {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      text-align: center;
+    }
+    .roster-table tbody tr:nth-child(even) {
+      background: #fafafa;
+    }
+    .roster-table tbody tr:hover {
+      background: #fffbeb;
+    }
+    .roster-name-cell {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+    .roster-name-emp {
+      font-weight: 800;
+      color: #c65911;
+      font-size: 1rem;
+    }
+    .roster-name-fam {
+      font-weight: 700;
+      color: #334155;
+      font-size: 0.95rem;
+    }
+    .role-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      line-height: 1.2;
+    }
+    .role-emp {
+      background: #fff7ed;
+      color: #c65911;
+      border: 1px solid #fed7aa;
+    }
+    .role-fam {
+      background: #f8fafc;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+    .room-tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.18rem 0.5rem;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    .room-triple {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: #fde68a;
+    }
+    .room-single {
+      background: #fce7f3;
+      color: #9d174d;
+      border-color: #fbcfe8;
+    }
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      margin: 0.1rem;
+      white-space: nowrap;
+    }
+    .tag-biz { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .tag-prem { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .tag-veg { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .tag-child { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+    .tag-note { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+    .roster-footer {
+      display: flex;
+      justify-content: center;
+      padding-top: 0.65rem;
+    }
+    .roster-expand-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: #c65911;
+      font-weight: 700;
+      font-size: 0.86rem;
+      padding: 0.45rem 1.3rem;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.2s ease;
+    }
+    .roster-expand-btn:hover {
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
   </style>
 </head>
 <body>
@@ -958,12 +1207,12 @@
         <div class="batch-select-wrap">
           <label for="batchSelect">🗓 選擇您的出發梯次：</label>
           <select id="batchSelect" onchange="switchBatch()">
-            <option value="0">第一梯次 (2026/11/11 ~ 2026/11/18)</option>
-            <option value="1">第二梯次 (2026/11/18 ~ 2026/11/25)</option>
-            <option value="2">第二-1梯次 (2026/11/20 ~ 2026/11/27)</option>
-            <option value="3">第三梯次 (2026/11/25 ~ 2026/12/02)</option>
-            <option value="4">第四梯次 (2026/12/02 ~ 2026/12/09)</option>
-            <option value="5">第五梯次 (2026/12/09 ~ 2026/12/16)</option>
+            <option value="0">第1梯次 (2026/11/11(三) ~ 2026/11/18(三))</option>
+            <option value="1">第2梯次 (2026/11/18(三) ~ 2026/11/25(三))</option>
+            <option value="2">第3梯次 (2026/11/20(五) ~ 2026/11/27(五))</option>
+            <option value="3">第4梯次 (2026/11/25(三) ~ 2026/12/02(三))</option>
+            <option value="4">第5梯次 (2026/12/02(三) ~ 2026/12/09(三))</option>
+            <option value="5">第6梯次 (2026/12/09(三) ~ 2026/12/16(三))</option>
           </select>
         </div>
         <div id="batchText" class="batch-info">
@@ -971,7 +1220,51 @@
         </div>
       </div>
 
-      <div class="weather-widget">
+      <!-- 梯次同仁名單（點名／分房冊） -->
+      <div class="roster-card" id="rosterCard">
+        <div class="roster-header">
+          <div class="roster-title-row">
+            <h4 class="roster-title">
+              <span>👥</span> <span id="rosterBatchTitle">第1梯次 團員名冊</span>
+            </h4>
+            <div class="roster-badges" id="rosterBadges">
+              <span class="badge-total">總計 34 人</span>
+              <span class="badge-emp">員工 16</span>
+              <span class="badge-fam">眷屬 18</span>
+            </div>
+          </div>
+          <div class="roster-legend">
+            <span style="font-weight:700;">名冊標示：</span>
+            <span class="legend-item"><span class="legend-dot-emp"></span> <strong style="color:#c65911;">橘字</strong>：港洲同仁（員工）</span>
+            <span class="legend-item"><span class="legend-dot-fam"></span> <strong style="color:#334155;">黑字</strong>：隨行眷屬</span>
+          </div>
+          <div class="roster-search-box">
+            <input type="text" id="rosterSearchInput" placeholder="🔍 快速搜尋同仁姓名、員工／眷屬、房型或特殊需求..." oninput="handleRosterSearch()">
+          </div>
+        </div>
+        <div class="roster-table-wrap" id="rosterTableWrap">
+          <table class="roster-table">
+            <thead>
+              <tr>
+                <th style="width: 46px;">編號</th>
+                <th style="width: 110px;">姓名（身份）</th>
+                <th style="width: 96px;">分房配置</th>
+                <th>備註 / 特殊需求</th>
+              </tr>
+            </thead>
+            <tbody id="rosterTableBody">
+              <!-- 動態載入名冊 -->
+            </tbody>
+          </table>
+        </div>
+        <div class="roster-footer">
+          <button type="button" class="roster-expand-btn" id="rosterExpandBtn" onclick="toggleRosterExpand()">
+            展開全部名單 ▾
+          </button>
+        </div>
+      </div>
+
+<div class="weather-widget">
         <div class="weather-widget-header">
           <h4>🌤️ 梯次氣候與穿搭指南</h4>
           <a id="weatherLiveLink" class="live-weather-link" href="https://www.google.com/search?q=Prague+weather" target="_blank" rel="noopener noreferrer">
@@ -1882,6 +2175,12 @@
       document.getElementById("wFeel").innerText = b.feel;
       document.getElementById("wSunset").innerText = b.sunset;
       document.getElementById("wAdvice").innerHTML = `🧣 <strong>穿搭叮嚀：</strong>${b.advice}`;
+
+      if (typeof renderRoster === "function") {
+        const searchInput = document.getElementById("rosterSearchInput");
+        if (searchInput) searchInput.value = "";
+        renderRoster(parseInt(idx, 10));
+      }
     }
 
     function switchMainTab(targetId) {
@@ -2090,6 +2389,109 @@
 
     renderShop();
     fetchShopRate(false);
+
+    /* ===== 梯次名單資料庫 ===== */
+    const rosterData = [{"batchIndex": 0, "sheetName": "第1梯", "summary": {"total": 34, "employee": 16, "family": 18, "adult": 33, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "鄭慶仁", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "陳美齡", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "李燕玲", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "來回飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "陳良融", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭鴻茹", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "陳柏宏", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳浚瑋", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳芮珊", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "陳明煇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳子喬", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "張資寅", "room": "雙人房6", "diet": "素食", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴建樺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭凱仁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "丘雅菁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "吳枝福", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "涂琪苓", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "陳嗣易", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳瀅如", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "楊尊權", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "楊守仁", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "鄭嘉和", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "曾冠傑", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 23, "name": "紀伊庭", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "陳暐臻", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "紀龍煌", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "紀宏澤", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "余奕臻", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "沈俞均", "room": "雙人房14", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "沈淑珍", "room": "雙人房15", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "紀柏豪", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "李彥寬", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "魏子澄", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "李懿庭", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王詩婷", "room": "單人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 1, "sheetName": "第2梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 36, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "陳朝國", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊惠美", "room": "雙人房1", "diet": "素食", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "陳瑋鑫", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 4, "name": "詹燕珠", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "陳維鎧", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "胡淑芳", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳允中", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳炳旭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "方玉梅", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "陳任宏", "room": "單人1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 11, "name": "張銘華", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "程睿翔", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "張瑋凌", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林妤軒", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "林從仁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "張廖年厚", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "陳亮娪", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳蔚寧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "李育欣", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳雅媚", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳亞綸", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳書嫚", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "吳巧玉", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "廖淑芬", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 25, "name": "康閎翔", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "趙依萱", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "張詠絍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 28, "name": "張廷道", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 29, "name": "黃千惠", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "阮騰賦", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "戴玉玲", "room": "雙人房12", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "廖泓叡", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "李咨萱", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "陳惠忠", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "曾晏佳", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "林冠霖", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李雅軒", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 2, "sheetName": "第3梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 34, "child": 3, "infant": 0}, "members": [{"no": 1, "name": "李華銘", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "吳淑惠", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "孫銘忠", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "周靜絹", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "蔡明清", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "歐惠華", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "王馨瑩", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "邱瑞揚", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "韓美麗", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "劉燕山", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "徐碧枝", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴畇蓁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "林宜欣", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "蔡樹勛", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "廖珮吟", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "沈裕家", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "沈元鈞", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "王俊惠", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "黃韻如", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 20, "name": "王甯加", "room": "三人房2", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "余宛蒨", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "董偉傑", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "董宥禾", "room": "三人房3", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "余旭洲", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "于美倫", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "康惠菁", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鐘馨玫", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "鐘新佑", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "鐘張美慧", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "陳俊廷", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林純靖", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "羅有成", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊欣儀", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王愛群", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "王妤馨", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "陳建樺", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李怡青", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 3, "sheetName": "第4梯", "summary": {"total": 38, "employee": 23, "family": 15, "adult": 37, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "李進榮", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "廖涵云", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "薛惠如", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "郭啓明", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "郭繐菱", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "郭曜誠", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "潘曉菁", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "黃而彤", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "王豐傑", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳雅靜", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "王彥勛", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "王思喬", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "王炳偉", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林佳慧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "鍾詠竹", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "黃建豪", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "曾筠雅", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "李秉哲", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "張桂月", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳浚銘", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "張名蕙", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳俞安", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "郭信佑", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "郭楷辰", "room": "雙人房12", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "魏曉雙", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "蘇郁茹", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "謝子敬", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝碧玉", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂玟潔", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "曾雅慧", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "陳怡君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "江詩婷", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "林仲億", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "張友珩", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "章祐瑋", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "趙天騰", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "林哲民", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "江函諭", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 4, "sheetName": "第5梯", "summary": {"total": 34, "employee": 24, "family": 10, "adult": 34, "child": 0, "infant": 0}, "members": [{"no": 1, "name": "陳家豪", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "許家毓", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 3, "name": "謝其萬", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "方素慧", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭資樺", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "蔡毓庭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "謝瑞籐", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "劉晏誠", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "石嘉薇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "劉惠娟", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "童郁綺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "梁妙君", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭問堂", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "方麗娟", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "黃桀霆", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "周可瞳", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "洪義凱", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "魏可傑", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "陳怡穎", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "張詩涵", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "蔡宗敏", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "鍾玉珍", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "陳品樺", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林鍾桂", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "曹嘉庭", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "謝妤嫻", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鄭憲鴻", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "回程飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝莉娜", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "王俊傑", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "錢羿廷", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林鑫宏", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "陳竑安", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊榮豪", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴承威", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 5, "sheetName": "第6梯", "summary": {"total": 38, "employee": 21, "family": 17, "adult": 36, "child": 2, "infant": 0}, "members": [{"no": 1, "name": "洪西川", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊媚如", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "洪梓銘", "room": "單人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "洪瑄佑", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "洪梓毓", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "張正明", "room": "雙人房3", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 7, "name": "楊景竣", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "馬中興", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "王愛雲", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "鄭清源", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "江鳳秋", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "鄭光廷", "room": "單人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "楊舒媛", "room": "單人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "陳佳苑", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 15, "name": "侯建成", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "郭建興", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "郭昱昊", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "郭翰珽", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "陳星暐", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "廖盈如", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳宥緁", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 22, "name": "陳宥綸", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "林永祥", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林千越", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "羅曉萍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "羅玉姬", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "蘇品潔", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "陳渤錞", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂美蓉", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "何思蔓", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "陳文修", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "高淑美", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "洪婷鈞", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴筱雯", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "黃俊哲", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "黃靖凱", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李虹豌", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "林蕙君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}];
+
+    let currentRosterBatch = 0;
+
+    function renderRoster(batchIdx, keyword) {
+      currentRosterBatch = batchIdx;
+      const b = rosterData[batchIdx];
+      if (!b) return;
+
+      const titleEl = document.getElementById("rosterBatchTitle");
+      if (titleEl) {
+        titleEl.innerText = `第${batchIdx + 1}梯次 團員名冊`;
+      }
+
+      const badgesEl = document.getElementById("rosterBadges");
+      if (badgesEl) {
+        let h = `<span class="badge-total">總計 ${b.summary.total} 人</span>`;
+        h += `<span class="badge-emp">員工 ${b.summary.employee}</span>`;
+        h += `<span class="badge-fam">眷屬 ${b.summary.family}</span>`;
+        if (b.summary.child) h += `<span class="badge-sub" style="background:#fef9c3; color:#854d0e;">兒童 ${b.summary.child}</span>`;
+        if (b.summary.infant) h += `<span class="badge-sub">嬰兒 ${b.summary.infant}</span>`;
+        badgesEl.innerHTML = h;
+      }
+
+      const tbody = document.getElementById("rosterTableBody");
+      if (!tbody) return;
+
+      const kw = (keyword || "").trim().toLowerCase();
+      const filtered = b.members.filter(m => {
+        if (!kw) return true;
+        return (m.name && m.name.toLowerCase().includes(kw)) ||
+               (m.role && m.role.toLowerCase().includes(kw)) ||
+               (m.room && m.room.toLowerCase().includes(kw)) ||
+               (m.diet && m.diet.toLowerCase().includes(kw)) ||
+               (m.seat && m.seat.toLowerCase().includes(kw)) ||
+               (m.note && m.note.toLowerCase().includes(kw));
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="padding:1.5rem; text-align:center; color:var(--text-muted);">無符合「${keyword}」的同仁名單</td></tr>`;
+        return;
+      }
+
+      let rowsHtml = "";
+      filtered.forEach(m => {
+        let roomClass = "room-tag";
+        if (m.room.includes("三人")) roomClass += " room-triple";
+        else if (m.room.includes("單人")) roomClass += " room-single";
+
+        const isEmp = m.isEmployee;
+        const nameClass = isEmp ? "roster-name-emp" : "roster-name-fam";
+        const roleBadge = isEmp ? '<span class="role-badge role-emp">員工</span>' : '<span class="role-badge role-fam">眷屬</span>';
+
+        let tagsHtml = "";
+        if (m.seat === "商務") tagsHtml += '<span class="tag-badge tag-biz">✈️ 商務艙</span>';
+        else if (m.seat === "豪經") tagsHtml += '<span class="tag-badge tag-prem">💺 豪經艙</span>';
+
+        if (m.diet) tagsHtml += `<span class="tag-badge tag-veg">🥗 ${m.diet}</span>`;
+        if (m.note === "兒童餐") tagsHtml += '<span class="tag-badge tag-child">🍼 兒童餐</span>';
+        else if (m.note) tagsHtml += `<span class="tag-badge tag-note">ℹ️ ${m.note}</span>`;
+
+        if (!tagsHtml) tagsHtml = '<span style="color:#94a3b8;">—</span>';
+
+        rowsHtml += `
+          <tr>
+            <td style="color:#64748b; font-weight:600;">${m.no}</td>
+            <td>
+              <div class="roster-name-cell">
+                <span class="${nameClass}">${m.name}</span>
+                ${roleBadge}
+              </div>
+            </td>
+            <td><span class="${roomClass}">${m.room || "—"}</span></td>
+            <td>${tagsHtml}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = rowsHtml;
+    }
+
+    function handleRosterSearch() {
+      const input = document.getElementById("rosterSearchInput");
+      renderRoster(currentRosterBatch, input ? input.value : "");
+    }
+
+    function toggleRosterExpand() {
+      const wrap = document.getElementById("rosterTableWrap");
+      const btn = document.getElementById("rosterExpandBtn");
+      if (!wrap || !btn) return;
+      if (wrap.classList.contains("expanded")) {
+        wrap.classList.remove("expanded");
+        btn.innerHTML = "展開全部名單 ▾";
+        wrap.scrollTop = 0;
+      } else {
+        wrap.classList.add("expanded");
+        btn.innerHTML = "收合名單 ▴";
+      }
+    }
+
+    // 初始化名冊
+    renderRoster(0);
   </script>
   <!-- Service Worker 註冊:首次連網開啟後即可完全離線瀏覽 -->
   <script>
@@ -2100,6 +2502,109 @@
         });
       });
     }
+
+    /* ===== 梯次名單資料庫 ===== */
+    const rosterData = [{"batchIndex": 0, "sheetName": "第1梯", "summary": {"total": 34, "employee": 16, "family": 18, "adult": 33, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "鄭慶仁", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "陳美齡", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "李燕玲", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "來回飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "陳良融", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭鴻茹", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "陳柏宏", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳浚瑋", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳芮珊", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "陳明煇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳子喬", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "張資寅", "room": "雙人房6", "diet": "素食", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴建樺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭凱仁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "丘雅菁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "吳枝福", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "涂琪苓", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "陳嗣易", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳瀅如", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "楊尊權", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "楊守仁", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "鄭嘉和", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "曾冠傑", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 23, "name": "紀伊庭", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "陳暐臻", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "紀龍煌", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "紀宏澤", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "余奕臻", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "沈俞均", "room": "雙人房14", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "沈淑珍", "room": "雙人房15", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "紀柏豪", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "李彥寬", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "魏子澄", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "李懿庭", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王詩婷", "room": "單人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 1, "sheetName": "第2梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 36, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "陳朝國", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊惠美", "room": "雙人房1", "diet": "素食", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "陳瑋鑫", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 4, "name": "詹燕珠", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "陳維鎧", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "胡淑芳", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳允中", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳炳旭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "方玉梅", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "陳任宏", "room": "單人1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 11, "name": "張銘華", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "程睿翔", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "張瑋凌", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林妤軒", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "林從仁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "張廖年厚", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "陳亮娪", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳蔚寧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "李育欣", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳雅媚", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳亞綸", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳書嫚", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "吳巧玉", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "廖淑芬", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 25, "name": "康閎翔", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "趙依萱", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "張詠絍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 28, "name": "張廷道", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 29, "name": "黃千惠", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "阮騰賦", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "戴玉玲", "room": "雙人房12", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "廖泓叡", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "李咨萱", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "陳惠忠", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "曾晏佳", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "林冠霖", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李雅軒", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 2, "sheetName": "第3梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 34, "child": 3, "infant": 0}, "members": [{"no": 1, "name": "李華銘", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "吳淑惠", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "孫銘忠", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "周靜絹", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "蔡明清", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "歐惠華", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "王馨瑩", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "邱瑞揚", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "韓美麗", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "劉燕山", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "徐碧枝", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴畇蓁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "林宜欣", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "蔡樹勛", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "廖珮吟", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "沈裕家", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "沈元鈞", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "王俊惠", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "黃韻如", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 20, "name": "王甯加", "room": "三人房2", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "余宛蒨", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "董偉傑", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "董宥禾", "room": "三人房3", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "余旭洲", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "于美倫", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "康惠菁", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鐘馨玫", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "鐘新佑", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "鐘張美慧", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "陳俊廷", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林純靖", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "羅有成", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊欣儀", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王愛群", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "王妤馨", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "陳建樺", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李怡青", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 3, "sheetName": "第4梯", "summary": {"total": 38, "employee": 23, "family": 15, "adult": 37, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "李進榮", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "廖涵云", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "薛惠如", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "郭啓明", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "郭繐菱", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "郭曜誠", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "潘曉菁", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "黃而彤", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "王豐傑", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳雅靜", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "王彥勛", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "王思喬", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "王炳偉", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林佳慧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "鍾詠竹", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "黃建豪", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "曾筠雅", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "李秉哲", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "張桂月", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳浚銘", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "張名蕙", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳俞安", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "郭信佑", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "郭楷辰", "room": "雙人房12", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "魏曉雙", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "蘇郁茹", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "謝子敬", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝碧玉", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂玟潔", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "曾雅慧", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "陳怡君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "江詩婷", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "林仲億", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "張友珩", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "章祐瑋", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "趙天騰", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "林哲民", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "江函諭", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 4, "sheetName": "第5梯", "summary": {"total": 34, "employee": 24, "family": 10, "adult": 34, "child": 0, "infant": 0}, "members": [{"no": 1, "name": "陳家豪", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "許家毓", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 3, "name": "謝其萬", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "方素慧", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭資樺", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "蔡毓庭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "謝瑞籐", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "劉晏誠", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "石嘉薇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "劉惠娟", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "童郁綺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "梁妙君", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭問堂", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "方麗娟", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "黃桀霆", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "周可瞳", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "洪義凱", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "魏可傑", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "陳怡穎", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "張詩涵", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "蔡宗敏", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "鍾玉珍", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "陳品樺", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林鍾桂", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "曹嘉庭", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "謝妤嫻", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鄭憲鴻", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "回程飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝莉娜", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "王俊傑", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "錢羿廷", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林鑫宏", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "陳竑安", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊榮豪", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴承威", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 5, "sheetName": "第6梯", "summary": {"total": 38, "employee": 21, "family": 17, "adult": 36, "child": 2, "infant": 0}, "members": [{"no": 1, "name": "洪西川", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊媚如", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "洪梓銘", "room": "單人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "洪瑄佑", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "洪梓毓", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "張正明", "room": "雙人房3", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 7, "name": "楊景竣", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "馬中興", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "王愛雲", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "鄭清源", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "江鳳秋", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "鄭光廷", "room": "單人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "楊舒媛", "room": "單人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "陳佳苑", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 15, "name": "侯建成", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "郭建興", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "郭昱昊", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "郭翰珽", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "陳星暐", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "廖盈如", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳宥緁", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 22, "name": "陳宥綸", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "林永祥", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林千越", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "羅曉萍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "羅玉姬", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "蘇品潔", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "陳渤錞", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂美蓉", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "何思蔓", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "陳文修", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "高淑美", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "洪婷鈞", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴筱雯", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "黃俊哲", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "黃靖凱", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李虹豌", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "林蕙君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}];
+
+    let currentRosterBatch = 0;
+
+    function renderRoster(batchIdx, keyword) {
+      currentRosterBatch = batchIdx;
+      const b = rosterData[batchIdx];
+      if (!b) return;
+
+      const titleEl = document.getElementById("rosterBatchTitle");
+      if (titleEl) {
+        titleEl.innerText = `第${batchIdx + 1}梯次 團員名冊`;
+      }
+
+      const badgesEl = document.getElementById("rosterBadges");
+      if (badgesEl) {
+        let h = `<span class="badge-total">總計 ${b.summary.total} 人</span>`;
+        h += `<span class="badge-emp">員工 ${b.summary.employee}</span>`;
+        h += `<span class="badge-fam">眷屬 ${b.summary.family}</span>`;
+        if (b.summary.child) h += `<span class="badge-sub" style="background:#fef9c3; color:#854d0e;">兒童 ${b.summary.child}</span>`;
+        if (b.summary.infant) h += `<span class="badge-sub">嬰兒 ${b.summary.infant}</span>`;
+        badgesEl.innerHTML = h;
+      }
+
+      const tbody = document.getElementById("rosterTableBody");
+      if (!tbody) return;
+
+      const kw = (keyword || "").trim().toLowerCase();
+      const filtered = b.members.filter(m => {
+        if (!kw) return true;
+        return (m.name && m.name.toLowerCase().includes(kw)) ||
+               (m.role && m.role.toLowerCase().includes(kw)) ||
+               (m.room && m.room.toLowerCase().includes(kw)) ||
+               (m.diet && m.diet.toLowerCase().includes(kw)) ||
+               (m.seat && m.seat.toLowerCase().includes(kw)) ||
+               (m.note && m.note.toLowerCase().includes(kw));
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="padding:1.5rem; text-align:center; color:var(--text-muted);">無符合「${keyword}」的同仁名單</td></tr>`;
+        return;
+      }
+
+      let rowsHtml = "";
+      filtered.forEach(m => {
+        let roomClass = "room-tag";
+        if (m.room.includes("三人")) roomClass += " room-triple";
+        else if (m.room.includes("單人")) roomClass += " room-single";
+
+        const isEmp = m.isEmployee;
+        const nameClass = isEmp ? "roster-name-emp" : "roster-name-fam";
+        const roleBadge = isEmp ? '<span class="role-badge role-emp">員工</span>' : '<span class="role-badge role-fam">眷屬</span>';
+
+        let tagsHtml = "";
+        if (m.seat === "商務") tagsHtml += '<span class="tag-badge tag-biz">✈️ 商務艙</span>';
+        else if (m.seat === "豪經") tagsHtml += '<span class="tag-badge tag-prem">💺 豪經艙</span>';
+
+        if (m.diet) tagsHtml += `<span class="tag-badge tag-veg">🥗 ${m.diet}</span>`;
+        if (m.note === "兒童餐") tagsHtml += '<span class="tag-badge tag-child">🍼 兒童餐</span>';
+        else if (m.note) tagsHtml += `<span class="tag-badge tag-note">ℹ️ ${m.note}</span>`;
+
+        if (!tagsHtml) tagsHtml = '<span style="color:#94a3b8;">—</span>';
+
+        rowsHtml += `
+          <tr>
+            <td style="color:#64748b; font-weight:600;">${m.no}</td>
+            <td>
+              <div class="roster-name-cell">
+                <span class="${nameClass}">${m.name}</span>
+                ${roleBadge}
+              </div>
+            </td>
+            <td><span class="${roomClass}">${m.room || "—"}</span></td>
+            <td>${tagsHtml}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = rowsHtml;
+    }
+
+    function handleRosterSearch() {
+      const input = document.getElementById("rosterSearchInput");
+      renderRoster(currentRosterBatch, input ? input.value : "");
+    }
+
+    function toggleRosterExpand() {
+      const wrap = document.getElementById("rosterTableWrap");
+      const btn = document.getElementById("rosterExpandBtn");
+      if (!wrap || !btn) return;
+      if (wrap.classList.contains("expanded")) {
+        wrap.classList.remove("expanded");
+        btn.innerHTML = "展開全部名單 ▾";
+        wrap.scrollTop = 0;
+      } else {
+        wrap.classList.add("expanded");
+        btn.innerHTML = "收合名單 ▴";
+      }
+    }
+
+    // 初始化名冊
+    renderRoster(0);
   </script>
 </body>
 </html>
@@ -2217,4 +2722,253 @@ img { max-width: 100%; height: auto; }
 
 @media (min-width: 640px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 900px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
-</style>
+
+    /* ===== 梯次人員名單 (點名／分房名冊) ===== */
+    .roster-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem 1.25rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-left: 4px solid #c65911;
+    }
+    .roster-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+    .roster-title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .roster-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0;
+    }
+    .roster-badges {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+    }
+    .badge-total {
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+    }
+    .badge-emp {
+      background: #fff7ed;
+      color: #c65911;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #fed7aa;
+    }
+    .badge-fam {
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+    }
+    .roster-legend {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.85rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      background: #fafaf9;
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      border: 1px dashed #e7e5e4;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .legend-dot-emp {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c65911;
+      display: inline-block;
+    }
+    .legend-dot-fam {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #334155;
+      display: inline-block;
+    }
+    .roster-search-box {
+      width: 100%;
+    }
+    .roster-search-box input {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.95rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      background: #f8fafc;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .roster-search-box input:focus {
+      background: #fff;
+      border-color: #c65911;
+      box-shadow: 0 0 0 3px rgba(198, 89, 17, 0.15);
+    }
+    .roster-table-wrap {
+      overflow-x: auto;
+      max-height: 420px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      transition: max-height 0.3s ease;
+      -webkit-overflow-scrolling: touch;
+    }
+    .roster-table-wrap.expanded {
+      max-height: none;
+    }
+    .roster-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      min-width: 380px;
+    }
+    .roster-table thead th {
+      position: sticky;
+      top: 0;
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      padding: 0.65rem 0.5rem;
+      text-align: center;
+      border-bottom: 2px solid #cbd5e1;
+      z-index: 2;
+    }
+    .roster-table tbody td {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      text-align: center;
+    }
+    .roster-table tbody tr:nth-child(even) {
+      background: #fafafa;
+    }
+    .roster-table tbody tr:hover {
+      background: #fffbeb;
+    }
+    .roster-name-cell {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+    .roster-name-emp {
+      font-weight: 800;
+      color: #c65911;
+      font-size: 1rem;
+    }
+    .roster-name-fam {
+      font-weight: 700;
+      color: #334155;
+      font-size: 0.95rem;
+    }
+    .role-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      line-height: 1.2;
+    }
+    .role-emp {
+      background: #fff7ed;
+      color: #c65911;
+      border: 1px solid #fed7aa;
+    }
+    .role-fam {
+      background: #f8fafc;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+    .room-tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.18rem 0.5rem;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    .room-triple {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: #fde68a;
+    }
+    .room-single {
+      background: #fce7f3;
+      color: #9d174d;
+      border-color: #fbcfe8;
+    }
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      margin: 0.1rem;
+      white-space: nowrap;
+    }
+    .tag-biz { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .tag-prem { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .tag-veg { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .tag-child { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+    .tag-note { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+    .roster-footer {
+      display: flex;
+      justify-content: center;
+      padding-top: 0.65rem;
+    }
+    .roster-expand-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: #c65911;
+      font-weight: 700;
+      font-size: 0.86rem;
+      padding: 0.45rem 1.3rem;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.2s ease;
+    }
+    .roster-expand-btn:hover {
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
+  </style>
