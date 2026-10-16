@@ -509,6 +509,44 @@
       font-weight: 600;
       color: var(--text-main);
     }
+    .hotel-link {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 700;
+      transition: color 0.15s;
+    }
+    .hotel-link:hover {
+      color: var(--accent);
+    }
+    .hotel-tel {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      margin-left: 0.25rem;
+    }
+    .hotel-tel:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    .hotel-map-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      text-decoration: none;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+    }
+    .hotel-map-pill:hover {
+      background: #dbeafe;
+    }
 
     /* 景點圖文卡片 */
     .spot-card {
@@ -1228,8 +1266,8 @@
               <span>👥</span> <span id="rosterBatchTitle">第1梯次 團員名冊</span>
             </h4>
             <div class="roster-badges" id="rosterBadges">
-              <span class="badge-total">總計 34 人</span>
-              <span class="badge-emp">員工 16</span>
+              <span class="badge-total">總計 35 人</span>
+              <span class="badge-emp">員工 17</span>
               <span class="badge-fam">眷屬 18</span>
             </div>
           </div>
@@ -1292,12 +1330,12 @@
 
       <div class="flight-strip">
         <div class="flight-item">
-          <h4>🛫 去程：Day2(四) 星宇航空 JX101</h4>
-          <p>TPE 台北 00:05 ➔ 13小時50分 ➔ PRG 布拉格 08:15</p>
+          <h4>🛫 去程：Day1(三) 星宇航空 JX101</h4>
+          <p>TPE 台北 23:45 ➔ PRG 布拉格 08:00</p>
         </div>
         <div class="flight-item">
           <h4>🛬 回程：Day7(二) 星宇航空 JX102</h4>
-          <p>PRG 布拉格 10:45 ➔ 13小時50分 ➔ TPE 台北 05:10(+1日)</p>
+          <p>PRG 布拉格 10:30 ➔ TPE 台北 07:20(+1日)</p>
         </div>
       </div>
 
@@ -1343,11 +1381,11 @@
         <div class="fee-incexc">
           <div class="fee-box inc">
             <div class="fee-box-title">✅ 費用包含</div>
-            觀光地門票、機場稅、台中—機場接送、導遊&司機小費($3,600)、500 萬履約責任險含 20 萬醫療險。
+            觀光地門票、機場稅、台中—機場接送、領隊&導遊&司機服務費(每日€12×8天，共€96歐元)、500 萬履約責任險含 20 萬醫療險。
           </div>
           <div class="fee-box exc">
             <div class="fee-box-title">❌ 費用不含</div>
-            護照辦理 $1,500。
+            護照辦理 $1,500、行李小費(每人每件€2~5歐元)、房間小費(每房€1~2歐元)。
           </div>
         </div>
 
@@ -1377,9 +1415,9 @@
           <button class="day-btn active" onclick="showDay(1)">Day 1</button>
           <button class="day-btn" onclick="showDay(2)">Day 2 CK古鎮</button>
           <button class="day-btn" onclick="showDay(3)">Day 3 城堡&遊船</button>
-          <button class="day-btn" onclick="showDay(4)">Day 4 人骨&Outlet</button>
-          <button class="day-btn" onclick="showDay(5)">Day 5 市區觀光</button>
-          <button class="day-btn" onclick="showDay(6)">Day 6 慕夏&自由行</button>
+          <button class="day-btn" onclick="showDay(4)">Day 4 市區觀光</button>
+          <button class="day-btn" onclick="showDay(5)">Day 5 人骨&Outlet</button>
+          <button class="day-btn" onclick="showDay(6)">Day 6 新城&自由行</button>
           <button class="day-btn" onclick="showDay(7)">Day 7</button>
           <button class="day-btn" onclick="showDay(8)">Day 8</button>
         </div>
@@ -1406,8 +1444,8 @@
             <img src="01.webp" alt="搭乘星宇航空啟程" loading="lazy">
           </div>
           <div class="spot-content">
-            <h4 class="spot-title">啟程飛行：搭乘星宇航空直飛布拉格</h4>
-            <p class="spot-desc">班機由桃園國際機場出發，於機上享用精緻餐食並稍作休息，養精蓄銳準備迎接浪漫的捷克波希米亞之旅。</p>
+            <h4 class="spot-title">啟程飛行：搭乘星宇航空飛往《百塔之城》布拉格</h4>
+            <p class="spot-desc">今日團體集合於公司，搭車前往桃園國際機場，搭乘豪華客機飛往《百塔之城》布拉格。班機將於翌日早晨抵達，謹祝您夜晚愉快！</p>
             <div class="map-action-bar">
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Taiwan+Taoyuan+International+Airport" target="_blank" rel="noopener noreferrer">🧭 桃園國際機場 地標位址</a>
             </div>
@@ -1428,13 +1466,16 @@
           </div>
           <div class="meta-item">
             <h5>🏨 住宿</h5>
-            <p>Hotel OLDINN 或 Hotel Bellevue</p>
+            <p>
+              <a class="hotel-link" href="https://www.hoteloldinn.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Hotel OLDINN ↗</a>
+              <a class="hotel-tel" href="tel:+420388288888">(+420-388-288 888)</a>
+              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Hotel+OLDINN+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+            </p>
           </div>
         </div>
 
         <div class="spot-card">
           <div class="spot-img-container">
-            <!-- 直接使用維基百科直連網址與 Unsplash 雙重備援 -->
             <img src="02.webp" 
                  alt="契斯科庫倫洛夫古鎮全景與彩繪塔" loading="lazy">
           </div>
@@ -1487,16 +1528,20 @@
       <div id="day-pane-3" class="day-panel">
         <div class="panel-header">
           <span class="tag">Day 3</span>
-          <h3>契斯科庫倫洛夫 ➔ 25公里 ➔ 捷克布傑約維采 ➔ 12公里 ➔ 赫魯博卡城堡 ➔ 145公里 ➔ 布拉格 ➔ 跳舞的房子 ➔ 伏爾他瓦河遊船</h3>
+          <h3>契斯科庫倫洛夫 Český Krumlov ➔ 25公里 ➔ 捷克布傑約維采 ➔ 12公里 ➔ 赫魯博卡城堡 (Hluboka Castle) ➔ 145公里 ➔ 布拉格 Prague ➔ 跳舞的房子 ➔ 伏爾他瓦河遊船 Vltava Cruise</h3>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
             <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：傳統捷克午餐 ｜ 晚餐：傳統捷克晚餐</p>
+            <p>早餐：飯店內 ｜ 中餐：Hotel Štekl-Erb捷克三道式套 ｜ 晚餐：啤酒醬豬肘</p>
           </div>
           <div class="meta-item">
             <h5>🏨 住宿</h5>
-            <p>Art Nouveau Palace 或 Marriott Hotel Prague 或 Hilton prague old town</p>
+            <p>
+              <a class="hotel-link" href="https://www.palacehotel.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Art Nouveau Palace ↗</a>
+              <a class="hotel-tel" href="tel:+420224093181">(+420-224-093 181)</a>
+              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Art+Nouveau+Palace+Hotel+Prague" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+            </p>
           </div>
         </div>
 
@@ -1508,7 +1553,7 @@
           <div class="spot-content">
             <h4 class="spot-title">捷克布傑約維采</h4>
             <p class="spot-desc">
-              舊稱波希米亞布德維斯是捷克城市，南捷克州的首府和最大城市，天主教捷克布傑約維采教區和南捷克的中心。在途中，我們會在布傑約維采短暫停留。這是一座迷人的歷史小鎮，被稱為原創百威啤酒的故鄉。在這裡，您可以在主廣場上稍作漫步，參孫噴泉所在的廣場-普熱米斯爾·奧托卡二世廣場以及黑塔。百威啤酒源於該地，13世紀起該地就以釀造啤酒而知名。當地最著名的啤酒公司是布德瓦啤酒。
+              舊稱波希米亞布德維斯是捷克城市，南捷克州的首府和最大城市，天主教捷克布傑約維采教區和南捷克的中心。在途中，我們會在布傑約維采短暫停留。這是一座迷人的歷史小鎮，被稱為原創百威啤酒的故鄉。在這裡，您可以在主廣場上稍作漫步，參孫噴泉所在的廣場－普熱米斯爾·奧托卡二世廣場以及黑塔。百威啤酒源於該地，13世紀起該地就以釀造啤酒而知名。當地最著名的啤酒公司是布德瓦啤酒。
             </p>
             <div class="map-action-bar">
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Premysl+Otakar+II+Square+Ceske+Budejovice" target="_blank" rel="noopener noreferrer">🧭 奧托卡二世廣場 地標位址</a>
@@ -1517,7 +1562,7 @@
           </div>
         </div>
 
-        <!-- 真正赫魯博卡城堡外觀 -->
+        <!-- 赫魯博卡城堡外觀 -->
         <div class="spot-card">
           <div class="spot-img-container">
             <img src="05.webp" 
@@ -1534,7 +1579,7 @@
           </div>
         </div>
 
-        <!-- 真正跳舞的房子雙塔建築 -->
+        <!-- 跳舞的房子雙塔建築 -->
         <div class="spot-card">
           <div class="spot-img-container">
             <img src="06.webp" alt="布拉格跳舞的房子" loading="lazy">
@@ -1542,7 +1587,7 @@
           <div class="spot-content">
             <h4 class="spot-title">跳舞的房子 (Tančící dům)</h4>
             <p class="spot-desc">
-              「跳舞的房子」(Tančící dům)位於捷克布拉格伏爾塔瓦河畔，是當代解構主義建築的傑作。這棟建築由加拿大建築師法蘭克·蓋瑞(Frank Gehry)與克羅埃西亞籍建築師弗拉多・米盧尼克(Vlado Milunić) 合作設計，於1996年完工。其造型靈感源自好萊塢傳奇舞伴弗雷德與琴吉，因此又名「弗雷德與琴吉之屋」。建築由兩座相互依偎、扭轉的塔樓組成：一座是以混凝土為主的實體，代表男舞者；另一座則是呈現婀娜曲線的玻璃塔，象徵穿著裙擺的女舞者。這種大膽的動態美感，打破了傳統建築的對稱與剛性，現已成為布拉格除古城外的另一座標誌性地標。
+              「跳舞的房子」（Tančící dům）位於捷克布拉格伏爾塔瓦河畔，是當代解構主義建築的傑作。這棟建築由加拿大建築師法蘭克·蓋瑞（Frank Gehry）與克羅埃西亞籍建築師弗拉多·米盧尼克（Vlado Milunić）合作設計，於1996年完工。其造型靈感源自好萊塢傳奇舞伴弗雷德與琴吉，因此又名「弗雷德與琴吉之屋」。建築由兩座相互依偎、扭轉的塔樓組成：一座是以混凝土為主的實體，代表男舞者；另一座則是呈現婀娜曲線的玻璃塔，象徵穿著裙擺的女舞者。這種大膽的動態美感，打破了傳統建築的對稱與剛性，現已成為布拉格除古城外的另一座標誌性地標。
             </p>
             <div class="map-action-bar">
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Dancing+House+Prague" target="_blank" rel="noopener noreferrer">🧭 跳舞的房子 地標位址</a>
@@ -1558,7 +1603,7 @@
           <div class="spot-content">
             <h4 class="spot-title">伏爾他瓦河遊船 (Vltava Cruise)</h4>
             <p class="spot-desc">
-              捷克著名文學家卡夫卡曾寫給女友一封信中說：「我最喜歡划著我的小船沿伏爾他瓦河逆流而上，然後仰臥在船中順流而下，欣賞不同形式的橋.........。」一個城市，能有條美麗的河流蜿蜒其中，如同為這個城市畫上了一條柔美的線條，城裡也就有了個能讓戀人依偎漫步的浪漫場景。
+              伏爾他瓦河遊船：捷克著名文學家卡夫卡曾寫給女友一封信中說：我最喜歡划著我的小船沿伏爾他瓦河逆流而上，然後仰臥在船中順流而下，欣賞不同形式的橋。一個城市，能有條美麗的河流蜿蜒其中，如同為這個城市畫上了一條柔美的線條，城裡也就有了個能讓戀人依偎漫步的浪漫場景。
             </p>
             <div class="map-action-bar">
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Steamboats+Vltava+Cruise" target="_blank" rel="noopener noreferrer">🧭 伏爾他瓦河遊船碼頭 地標位址</a>
@@ -1567,24 +1612,134 @@
         </div>
       </div>
 
-      <!-- DAY 4 -->
+      <!-- DAY 4 (布拉格市區觀光 & 慕夏美術館) -->
       <div id="day-pane-4" class="day-panel">
         <div class="panel-header">
           <span class="tag">Day 4</span>
-          <h3>布拉格 ➔ 70公里 ➔ 庫特納霍拉 Kutná Hora ➔ 聖母升天和施洗者聖約翰教堂 ➔ 人骨教堂 ➔ 聖芭芭拉教堂 ➔ 65公里 ➔ OUTLET (Fashion Arena Prague Outlet) ➔ 布拉格</h3>
+          <h3>第 4 天 布拉格 Prague(市區觀光) ➔ 慕夏美術館 ➔ 在布拉格城堡裡穿越不同世紀 Prague Castle ➔ 聖維特大教堂 St. Vitus Cathedral ➔ 布拉格城堡 Prague Castle ➔ 布拉格黃金巷 Golden Lane ➔ 華倫斯坦宮 ➔ 小區廣場 Malostranske ➔ 布拉格列儂牆到查理大橋上尋見浪漫的真諦 Charles Bridge ➔ 舊城廣場 ➔ 布拉格老城天文鐘 Old Town ➔ 火藥塔 Powder Tower, Prague ➔ 布拉格</h3>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
             <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：傳統捷克午餐 ｜ 晚餐：傳統捷克晚餐</p>
+            <p>早餐：飯店內 ｜ 中餐：查理士橋畔餐廳(三道式餐點) ｜ 晚餐：伏爾他瓦河遊船自助餐</p>
           </div>
           <div class="meta-item">
             <h5>🏨 住宿</h5>
-            <p>Art Nouveau Palace 或 Marriott Hotel Prague 或 Hilton prague old town</p>
+            <p>
+              <a class="hotel-link" href="https://www.palacehotel.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Art Nouveau Palace ↗</a>
+              <a class="hotel-tel" href="tel:+420224093181">(+420-224-093 181)</a>
+              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Art+Nouveau+Palace+Hotel+Prague" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+            </p>
           </div>
         </div>
 
-        <!-- 真正的人骨教堂內部大吊燈照片 -->
+        <!-- 聖維特大教堂、布拉格城堡、慕夏美術館 -->
+        <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="11.webp" 
+                 alt="聖維特大教堂哥德式雙塔與布拉格城堡" loading="lazy">
+          </div>
+          <div class="spot-content">
+            <h4 class="spot-title">布拉格市區觀光、慕夏美術館、聖維特大教堂、布拉格城堡</h4>
+            <p class="spot-desc">
+              <strong>布拉格市區觀光：</strong>晨曦中迎接第一道陽光落映眼簾，體驗伏爾他瓦河上布拉格的夢幻氣息，猶如置身於時光幻影絕美的中古世紀！走在中古世紀靜靜的街道上，曾經風起雲湧的歷史歲月，幻想著極盛時期萬人擾嚷洶湧的繁華景象，心靈更添平靜！邂逅布拉格就讓我們從古堡皇宮開始。<br><br>
+              <strong>慕夏美術館：</strong>布拉格慕夏美術館位於18世紀的薩瓦林宮（Savarin Palace）內，是一座充滿歷史風華的宮殿建築。美術館收藏捷克著名藝術家阿爾豐斯·慕夏(Alfons Mucha)的經典作品，包括海報、繪畫與手稿，展現他獨特的新藝術風格。結合宮殿優雅空間與藝術之美，透過細膩的觀賞體驗，旅客都能輕鬆感受慕夏作品中的精緻與魅力。<br><br>
+              <strong>聖維特大教堂 (St. Vitus Cathedral)：</strong>最巨大雄偉的教堂是整個城堡境內最顯眼的建築物，同時也是歐洲最美的教堂。1344年布拉格升為總教區後，查理四世希望有座可以容納多人、加冕和安息等作用的教堂，便下令擴建，於1929年完全竣工，因此，除了哥德式的尖塔鐘樓外，也融入了文藝復興、巴洛克的風格，如網狀拱頂、玫瑰窗和金色大門等，是世界三大哥德式教堂之一。<br>
+              <span style="color:#dc2626; font-weight:700;">※ 聖維特教堂例行性於周日上午舉辦彌撒，遇教堂彌撒或其他節慶因素沒有辦法入內參觀，行程順序將前後調整，或改由城堡區聖喬治教堂替代。</span><br><br>
+              <strong>布拉格城堡 (Prague Castle)：</strong>矗立在布拉格《城堡區》Hradčany山崗上的巨無霸《布拉格城堡》Prague Castle是布拉格最顯著的地標。這座城堡佔地高達7萬平方公尺，是金氏世界紀錄上全世界最大的古堡，不僅是捷克共和國的象徵，也讓布拉格躋身全球最美城市之一，到豐富的藝術收藏和精美的建築設計。世界上最大的城堡非布拉格城堡莫屬！在城堡裡悠閒漫步，欣賞在一千多年來作為歷任捷克國王、皇帝及總統官邸的布拉格城堡之美。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mucha+Museum+Prague" target="_blank" rel="noopener noreferrer">🧭 慕夏美術館 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Castle" target="_blank" rel="noopener noreferrer">🧭 布拉格城堡 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St.+Vitus+Cathedral+Prague" target="_blank" rel="noopener noreferrer">🧭 聖維特大教堂 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 黃金巷彩色小屋照片 -->
+        <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="12.webp" 
+                 alt="布拉格黃金巷彩色小屋" loading="lazy">
+          </div>
+          <div class="spot-content">
+            <h4 class="spot-title">布拉格黃金巷、華倫斯坦宮、小區廣場、布拉格列儂牆</h4>
+            <p class="spot-desc">
+              <strong>布拉格黃金巷 (Golden Lane)：</strong>位於布拉格城堡內，一條保留了中世紀風格的巷子。數間又矮又窄接連著的房子，外牆漆著繽紛的顏色，原是侍衛的住所，一度淪為窮人集散地，最後是16世紀一群鍊金士於此煉製黃金而得名。目前作為觀光開放，有畫廊、商店、展覽館。另外，別忘了參觀22號小屋，這裡是世界知名的布拉格作家法蘭茲．卡夫卡（Franz Kafka）的故居。參觀過黃金巷，布拉格城堡之旅才算完整，這條小巷與古城牆接鄰，呈現出令人驚豔的別緻街景。魯道夫二世皇帝以渴望找到傳說中長生不老藥與點金石而聞名，據說為魯道夫二世皇帝效力的煉金術士就是居住在這些色彩繽紛的小屋裡。<br><br>
+              <strong>華倫斯坦宮：</strong>華倫斯坦宮（Wallenstein Palace）是位於捷克布拉格的一座巴洛克式宮殿，始建於1623年，由阿爾布雷希特·馮·華倫斯坦（Albrecht von Wallenstein）下令興建，用來展示他的財富和權力。宮殿內設有一座大型的庭院，以及許多裝飾豐富的房間和大廳，包括一個富麗堂皇的宴會廳，現在用作音樂會場所。此外，華倫斯坦宮也是布拉格的國家畫廊所在地，收藏了大量捷克藝術家的作品，以及一些歐洲藝術家的作品。遊客可以在這裡欣賞精美的建築設計。<br><br>
+              <strong>小區廣場 (Malostranske)：</strong>周圍有著一系列歷史宮殿及保護建築，曾作為市場、政府活動和執行司法等場所，現今則因附近有多家餐廳及旅遊景點，吸引遊客前來。<br><br>
+              <strong>布拉格列儂牆：</strong>布拉格的列儂牆（Lennon Wall）是一個著名的塗鴉牆，位於城市的查理大橋對岸的馬爾斯區。這個牆壁在1980年代成為了紀念約翰·列儂的地方，後來逐漸成為了反共主義的符號，許多人都會在這裡留下自己的塗鴉和訊息。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Golden+Lane+Prague" target="_blank" rel="noopener noreferrer">🧭 黃金巷 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wallenstein+Palace+Prague" target="_blank" rel="noopener noreferrer">🧭 華倫斯坦宮 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Malostranske+namesti+Prague" target="_blank" rel="noopener noreferrer">🧭 小區廣場 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Lennon+Wall+Prague" target="_blank" rel="noopener noreferrer">🧭 列儂牆 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 查理大橋橋面雕像照片 -->
+        <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="13.webp" alt="查理大橋橋面與聖者雕像" loading="lazy">
+          </div>
+          <div class="spot-content">
+            <h4 class="spot-title">查理士橋畔餐廳 與 到查理大橋上尋見浪漫的真諦 (Charles Bridge)</h4>
+            <p class="spot-desc">
+              <strong>查理士橋畔餐廳：</strong>安排於布拉格市區最美麗的觀光景點查理橋下的 MLYNEC RESTAURANT 查理士橋畔餐廳享用西餐、享用美食，MLYNEC 曾多度入選米其林推薦的指南，安排前湯、主餐(鮭魚)、甜點，在優雅的環境內享受法式浪漫融合捷克料理供法的美食饗宴。<br><br>
+              <strong>到查理大橋上尋見浪漫的真諦 (Charles Bridge)：</strong>查理大橋總是為藝術家、攝影師與詩人們提供源源不絕的靈感。遠景中布拉格城堡的剪影浮現，巴洛克時期的雕像佇立橋的兩側，無庸置疑這裡就是全歐洲最漂亮的地方。東歐現存最古老的石橋。建於十四世紀，全長520公尺，兩旁聳立了30座雕像，108聖者的古橋，已然成為布拉格觀光生活的代表。橋兩端有哥德式橋，兩側欄杆上有以宗教故事為題的15座聖像，偶有街頭藝人或民俗藝品賣者吆喝其間，輕鬆有趣；它也同時是連結舊城區和布拉格城堡區的唯一橋樑。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Charles+Bridge+Prague" target="_blank" rel="noopener noreferrer">🧭 查理大橋 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mlynec+Restaurant+Prague" target="_blank" rel="noopener noreferrer">🧭 MLYNEC 橋畔餐廳 地標位址</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 老城天文鐘金色鐘面照片 -->
+        <div class="spot-card">
+          <div class="spot-img-container">
+            <img src="14.webp" alt="布拉格老城天文鐘特寫" loading="lazy">
+          </div>
+          <div class="spot-content">
+            <h4 class="spot-title">舊城廣場、布拉格老城天文鐘 (Old Town)、火藥塔 (Powder Tower, Prague)</h4>
+            <p class="spot-desc">
+              <strong>舊城廣場：</strong>布拉格舊城的中央地帶，鋪滿石板道路，聚集許多觀光客廣場一角有文藝復興時期的拱型建築，已改成咖啡廳、禮品店，還有不少小吃攤和街頭藝人在此演出、舊城廣場座落著美麗的提恩教堂與胡斯紀念碑鐫刻著：愛真實、說真實、守衛真實三名言。<br><br>
+              <strong>布拉格老城天文鐘 (Old Town)：</strong>壯麗的市民會館是全球最大、保存狀態最好的建築物之一，在這裡，時間彷彿回到了神奇的蒸氣時代。市民會館是珍貴的新藝術風格建築，在寬廣的共和國廣場上一個鮮明的地標建築，過去通往銀礦庫特納霍拉的重要貿易路線就是從這裡經過。由於這個地點具備戰略重要性，因此捷克的統治者最初就是在這裡建造宮殿，傳統上加冕遊行也是以這裡作為起點，如今卻只剩下緊鄰市民會館的哥德式火藥塔依舊屹立在原地見證過往的輝煌。舊市政廳這座地標佇立在舊城廣場上已然好幾個世紀。因為吸睛的天文鐘和足以俯瞰布拉格歷史城區的高塔，舊市政廳始終都是最熱門的景點。其哥德式建築始建於1338年。天文鐘是中世紀的科學奇蹟。每一天，從早上九點一直到晚上九點，布拉格的遊人都能站在舊市政廳前欣賞天文鐘，看十二使徒輪流出來打招呼。這件驚人的科技結晶如今已運作了六百年，天文鐘在每個整點都會活過來，演出引人入勝的表演。<br><br>
+              <strong>火藥塔 (Powder Tower, Prague)：</strong>建於1475年，是布拉格舊城門，17世紀時曾用來貯藏火藥後改稱火藥塔，如果登上65公尺的高塔，可遠眺市區，欣賞外觀華麗的新市政廳以及新城區的瓦茲拉夫廣場等，體會布拉格「百塔之城」的風情。
+            </p>
+            <div class="map-action-bar">
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 舊城廣場 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Astronomical+Clock" target="_blank" rel="noopener noreferrer">🧭 老城天文鐘 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Powder+Tower+Prague" target="_blank" rel="noopener noreferrer">🧭 火藥塔 地標位址</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 5 (庫特納霍拉 & OUTLET) -->
+      <div id="day-pane-5" class="day-panel">
+        <div class="panel-header">
+          <span class="tag">Day 5</span>
+          <h3>布拉格 Prague ➔ 70 公里 ➔ 庫特納霍拉 Kutná Hora ➔ 聖母升天和施洗者聖約翰教堂 ➔ 人骨教堂 ➔ 聖芭芭拉教堂 ➔ 65 公里 ➔ OUTLET (Fashion Arena Prague Outlet) ➔ 布拉格</h3>
+        </div>
+        <div class="meta-bar">
+          <div class="meta-item">
+            <h5>🍽 餐食安排</h5>
+            <p>早餐：飯店內 ｜ 中餐：傳統捷克午餐(橄欖什錦沙拉，高麗菜肉捲) ｜ 晚餐：上海多味中式晚餐</p>
+          </div>
+          <div class="meta-item">
+            <h5>🏨 住宿</h5>
+            <p>
+              <a class="hotel-link" href="https://www.marriott.com/en-us/hotels/prgdt-prague-marriott-hotel/overview/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Marriott Hotel Prague ↗</a>
+              <a class="hotel-tel" href="tel:+420222888888">(+420-222-888 888)</a>
+              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Prague+Marriott+Hotel" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- 人骨教堂內部大吊燈照片 -->
         <div class="spot-card">
           <div class="spot-img-container">
             <img src="08.webp" 
@@ -1594,8 +1749,8 @@
             <h4 class="spot-title">庫特納霍拉 Kutná Hora、聖母升天和施洗者聖約翰教堂、人骨教堂</h4>
             <p class="spot-desc">
               <strong>庫特納霍拉 Kutná Hora：</strong>是捷克共和國中波希米亞州的一個城市。這座城市在十二世紀由日爾曼人作為定居點而創建。13世紀末時已發展為波希米亞地區最具活力和最富裕的城市之一。<br><br>
-              <strong>聖母升天和施洗者聖約翰教堂：</strong>巴洛克哥德式教堂。<br><br>
-              <strong>人骨教堂：</strong>聯合國教科文組織列為世界遺產的塞德萊茨骸骨教堂，位於庫特納霍拉，聽起來很恐怖，但其實這些骸骨來自於中世紀的黑死病與戰爭後的死者，19世紀時由木雕藝術家弗朗提謝克・林特(František Rint) 將這些骸骨重新整理並藝術化擺放。繼續前往庫特納霍拉的歷史中心，在中世紀餐廳品嚐傳統的捷克午餐。在舊城區的鵝卵石街道上輕鬆漫步後，經過一所前耶穌會學院，欣賞美麗的風景。
+              <strong>聖母升天和施洗者聖約翰教堂：</strong>一座巴洛克哥德式教堂屬於庫特納霍拉的世界文化遺產區域，內部融合哥德樣式與巴洛克樣式。<br><br>
+              <strong>人骨教堂：</strong>聯合國教科文組織列為世界遺產的塞德萊茨骸骨教堂，位於庫特納霍拉，聽起來很恐怖，但其實這些骸骨來自於中世紀的黑死病與戰爭後的死者，19 世紀時由木雕藝術家弗朗提謝克·林特（František Rint）將這些骸骨重新整理並藝術化擺放。繼續前往庫特納霍拉的歷史中心，在中世紀餐廳品嚐傳統的捷克午餐。在舊城區的鵝卵石街道上輕鬆漫步後，經過一所前耶穌會學院，欣賞美麗的風景。
             </p>
             <div class="map-action-bar">
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Sedlec+Ossuary+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 人骨教堂 地標位址</a>
@@ -1604,7 +1759,7 @@
           </div>
         </div>
 
-        <!-- 真正的聖芭芭拉教堂三峰尖塔哥德式建築照片 -->
+        <!-- 聖芭芭拉教堂三峰尖塔哥德式建築照片 -->
         <div class="spot-card">
           <div class="spot-img-container">
             <img src="09.webp" 
@@ -1613,7 +1768,7 @@
           <div class="spot-content">
             <h4 class="spot-title">聖芭芭拉教堂</h4>
             <p class="spot-desc">
-              這是庫特納霍拉皇家城鎮的哥德式地標，也是聯合國教科文組織世界遺產。壯麗的飛扶壁與獨特的三峰式尖頂外觀，見證了中世紀銀礦之都的無上榮耀。
+              這是庫特納霍拉皇家城鎮的哥德式地標，也是聯合國教科文組織世界遺產。這座宏偉的晚期哥德式大教堂，始建於14世紀後半，是捷克最傑出的哥德式建築之一。其建造歷時數百年，期間因戰爭等因素多次中斷，展現了不同時期的建築風格演變。教堂內部精美的彩繪玻璃與宏偉的管風琴，皆是藝術與信仰的結晶，令人讚嘆。
             </p>
             <div class="map-action-bar">
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St+Barbara's+Cathedral+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 聖芭芭拉教堂 地標位址</a>
@@ -1654,140 +1809,43 @@
         </div>
       </div>
 
-      <!-- DAY 5 -->
-      <div id="day-pane-5" class="day-panel">
-        <div class="panel-header">
-          <span class="tag">Day 5</span>
-          <h3>布拉格 Prague (市區觀光) ➔ 在布拉格城堡裡穿越不同世紀 ➔ 聖維特大教堂 ➔ 布拉格城堡 ➔ 布拉格黃金巷 ➔ 華倫斯坦宮 ➔ 小區廣場 ➔ 布拉格列儂牆 ➔ 查理大橋 ➔ 舊城廣場 ➔ 布拉格老城天文鐘 ➔ 火藥塔 ➔ 布拉格</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：查理士橋畔餐廳 (三道式餐點) ｜ 晚餐：中式晚餐 (貼心安排下午茶：咖啡+蛋糕)</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>Art Nouveau Palace 或 Marriott Hotel Prague 或 Hilton prague old town</p>
-          </div>
-        </div>
-
-        <!-- 真正聖維特大教堂照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="11.webp" 
-                 alt="聖維特大教堂哥德式雙塔" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">布拉格市區觀光、布拉格城堡、聖維特大教堂</h4>
-            <p class="spot-desc">
-              <strong>布拉格市區觀光：</strong>晨曦中迎接第一道陽光落映眼簾，體驗伏爾他瓦河上布拉格的夢幻氣息，猶如置身於時光幻影絕美的中古世紀！走在中古世紀靜靜的街道上，曾經風起雲湧的歷史歲月，幻想著極盛時期萬人擾嚷洶湧的繁華景象，心靈更添平靜！邂逅布拉格就讓我們從古堡皇宮開始。<br><br>
-              <strong>在布拉格城堡裡穿越不同世紀 (Prague Castle)：</strong>世界上最大的城堡非布拉格城堡莫屬！在城堡裡悠閒漫步，欣賞在一千多年來作為歷任捷克國王、皇帝及總統官邸的布拉格城堡之美。矗立在布拉格《城堡區》Hradčany山崗上的巨無霸《布拉格城堡》Prague Castle是布拉格最顯著的地標。這座城堡佔地高達7萬平方公尺，是金氏世界紀錄上全世界最大的古堡，不僅是捷克共和國的象徵，也讓布拉格躋身全球最美城市之一，到豐富的藝術收藏和精美的建築設計。<br><br>
-              <strong>聖維特大教堂 (St. Vitus Cathedral)：</strong>最巨大雄偉的教堂是整個城堡境內最顯眼的建築物，同時也是歐洲最美的教堂。1344年布拉格升為總教區後，查理四世希望有座可以容納多人、加冕和安息等作用的教堂，便下令擴建，於1929年完全竣工，因此，除了哥德式的尖塔鐘樓外，也融入了文藝復興、巴洛克的風格，如網狀拱頂、玫瑰窗和金色大門等，是世界三大哥德式教堂之一。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Castle" target="_blank" rel="noopener noreferrer">🧭 布拉格城堡 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St.+Vitus+Cathedral+Prague" target="_blank" rel="noopener noreferrer">🧭 聖維特大教堂 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 真正黃金巷彩色小屋照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="12.webp" 
-                 alt="布拉格黃金巷彩色小屋" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">布拉格黃金巷、華倫斯坦宮、小區廣場、布拉格列儂牆</h4>
-            <p class="spot-desc">
-              <strong>布拉格黃金巷 (Golden Lane)：</strong>位於布拉格城堡內，一條保留了中世紀風格的巷子。數間又矮又窄接連著的房子，外牆漆著繽紛的顏色，原是侍衛的住所，一度淪為窮人集散地，最後是16世紀一群鍊金士於此煉製黃金而得名。目前作為觀光開放，有畫廊、商店、展覽館。另外，別忘了參觀22號小屋，這裡是世界知名的布拉格作家法蘭茲·卡夫卡(Franz Kafka)的故居。參觀過黃金巷，布拉格城堡之旅才算完整，這條小巷與古城牆接鄰，呈現出令人驚豔的別緻街景。魯道夫二世皇帝以渴望找到傳說中長生不老藥與點金石而聞名，據說為魯道夫二世皇帝效力的煉金術士就是居住在這些色彩繽紛的小屋裡。<br><br>
-              <strong>華倫斯坦宮：</strong>華倫斯坦宮(Wallenstein Palace)是位於捷克布拉格的一座巴洛克式宮殿，始建於1623年，由阿爾布雷希特·馮·華倫斯坦(Albrecht von Wallenstein)下令興建，用來展示他的財富和權力。宮殿內設有一座大型的庭院，以及許多裝飾豐富的房間和大廳，包括一個富麗堂皇的宴會廳，現在用作音樂會場所。此外，華倫斯坦宮也是布拉格的國家畫廊所在地，收藏了大量捷克藝術家的作品，以及一些歐洲藝術家的作品。遊客可以在這裡欣賞精美的建築設計。<br><br>
-              <strong>小區廣場 (Malostranske)：</strong>周圍有著一系列歷史宮殿及保護建築，曾作為市場、政府活動和執行司法等場所，現今則因附近有多家餐廳及旅遊景點，吸引遊客前來。<br><br>
-              <strong>布拉格列儂牆：</strong>布拉格的列儂牆(Lennon Wall)是一個著名的塗鴉牆，位於城市的查理大橋對岸的馬爾斯區。這個牆壁在1980年代成為了紀念約翰·列儂的地方，後來逐漸成為了反共主義的符號，許多人都會在這裡留下自己的塗鴉和訊息。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Golden+Lane+Prague" target="_blank" rel="noopener noreferrer">🧭 黃金巷 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wallenstein+Palace+Prague" target="_blank" rel="noopener noreferrer">🧭 華倫斯坦宮 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Malostranske+namesti+Prague" target="_blank" rel="noopener noreferrer">🧭 小區廣場 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Lennon+Wall+Prague" target="_blank" rel="noopener noreferrer">🧭 列儂牆 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 真正查理大橋橋面雕像照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="13.webp" alt="查理大橋橋面與聖者雕像" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">查理大橋 (Charles Bridge) 與查理士橋畔餐廳</h4>
-            <p class="spot-desc">
-              <strong>到查理大橋上尋見浪漫的真諦：</strong>查理大橋總是為藝術家、攝影師與詩人們提供源源不絕的靈感。遠景中布拉格城堡的剪影浮現，巴洛克時期的雕像佇立橋的兩側，無庸置疑這裡就是全歐洲最漂亮的地方。東歐現存最古老的石橋。建於十四世紀，全長520公尺，兩旁聳立了30座雕像，108聖者的古橋，已然成為布拉格觀光生活的代表。橋兩端有哥德式橋塔，兩側欄杆上有以宗教故事為題的15座聖像，偶有街頭藝人或民俗藝品賣者吆喝其間，輕鬆有趣；它也同時是連結舊城區和布拉格城堡區的唯一橋樑。<br><br>
-              <strong>查理士橋畔餐廳：</strong>安排於布拉格市區最美麗的觀光景點查理橋下的 MLYNEC RESTAURANT 查理士橋畔餐廳享用西餐、享用美食，MLYNEC 曾多度入選米其林推薦的指南，安排前湯、主餐(鮭魚)、甜點，在優雅的環境內享受法式浪漫融合捷克料理供法的美食饗宴。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Charles+Bridge+Prague" target="_blank" rel="noopener noreferrer">🧭 查理大橋 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mlynec+Restaurant+Prague" target="_blank" rel="noopener noreferrer">🧭 MLYNEC 橋畔餐廳 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 真正老城天文鐘金色鐘面照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="14.webp" alt="布拉格老城天文鐘特寫" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">布拉格老城天文鐘、火藥塔、舊城廣場、聖尼古拉斯教堂</h4>
-            <p class="spot-desc">
-              <strong>布拉格老城天文鐘 (Old Town)：</strong>壯麗的市民會館是全球最大、保存狀態最好的建築物之一，在這裡，時間彷彿回到了神奇的蒸氣時代。市民會館是珍貴的新藝術風格建築，在寬廣的共和國廣場上一個鮮明的地標建築，過去通往銀礦庫特納霍拉的重要貿易路線就是從這裡經過。由於這個地點具備戰略重要性，因此捷克的統治者最初就是在這裡建造宮殿，傳統上加冕遊行也是以這裡作為起點，如今卻只剩下緊鄰市民會館的哥德式火藥塔依舊屹立在原地見證過往的輝煌。舊市政廳這座地標佇立在舊城廣場上已然好幾個世紀。因為吸睛的天文鐘和足以俯瞰布拉格歷史城區的高塔，舊市政廳始終都是最熱門的景點。其哥德式建築始建於1338年。天文鐘是中世紀的科學奇蹟。每一天，從早上九點一直到晚上九點，布拉格的遊人都能站在舊市政廳前欣賞天文鐘，看十二使徒輪流出來打招呼。這件驚人的科技結晶如今已運作了六百年，天文鐘在每個整點都會活過來，演出引人入勝的表演。<br><br>
-              <strong>火藥塔 (Powder Tower, Prague)：</strong>建於1475年，是布拉格舊城門，17世紀時曾用來貯藏火藥後改稱火藥塔，如果登上65公尺的高塔，可遠眺市區，欣賞外觀華麗的新市政廳以及新城區的瓦茲拉夫廣場等，體會布拉格「百塔之城」的風情。<br><br>
-              <strong>舊城廣場：</strong>布拉格舊城的中央地帶，鋪滿石板道路，聚集許多觀光客。廣場一角有文藝復興時期的拱型建築，已改成咖啡廳、禮品店，還有不少小吃攤和街頭藝人在此演出。舊城廣場座落著美麗的提恩教堂與胡斯紀念碑鐫刻著：「愛真實、說真實、守衛真實」三名言。<br><br>
-              <strong>聖尼古拉斯教堂：</strong>位於老城廣場，另一座同名教堂則位於小區。聖尼古拉教堂建於1732年，由當時最傑出的建築師 Kilian Ignaz Dientzenhofer 設計而成，內部以華美的壁畫聞名。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Astronomical+Clock" target="_blank" rel="noopener noreferrer">🧭 老城天文鐘 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Powder+Tower+Prague" target="_blank" relnoopener noreferrer">🧭 火藥塔 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 舊城廣場 地標位址</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- DAY 6 -->
       <div id="day-pane-6" class="day-panel">
         <div class="panel-header">
           <span class="tag">Day 6</span>
-          <h3>布拉格 ➔ 新城區 Nové Město ➔ 慕夏美術館 ➔ 下午自由活動 ➔ 布拉格</h3>
+          <h3>布拉格 ➔ 新城區 Nové Město ➔ 下午自由活動 ➔ 布拉格</h3>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
             <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：捷克風味烤肋排料理 ｜ 晚餐：發500捷克克朗自理</p>
+            <p>早餐：飯店內 ｜ 中餐：捷克風味烤肋排料理 ｜ 晚餐：發500捷克克郎自理（貼心安排：Municipal house café 下午茶 咖啡+蛋糕）</p>
           </div>
           <div class="meta-item">
             <h5>🏨 住宿</h5>
-            <p>Art Nouveau Palace 或 Marriott Hotel Prague 或 Hilton prague old town</p>
+            <p>
+              <a class="hotel-link" href="https://www.marriott.com/en-us/hotels/prgdt-prague-marriott-hotel/overview/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Marriott Hotel Prague ↗</a>
+              <a class="hotel-tel" href="tel:+420222888888">(+420-222-888 888)</a>
+              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Prague+Marriott+Hotel" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+            </p>
           </div>
         </div>
 
-        <!-- 真正慕夏代表畫作 -->
         <div class="spot-card">
           <div class="spot-img-container">
             <img src="15.webp" 
-                 alt="慕夏美術館新藝術風格名作《四季》" loading="lazy">
+                 alt="布拉格新城區與帕拉迪姆購物中心" loading="lazy">
           </div>
           <div class="spot-content">
-            <h4 class="spot-title">新城區 Nové Město、慕夏美術館、帕拉迪姆購物中心</h4>
+            <h4 class="spot-title">新城區 Nové Město、Municipal house café 下午茶、帕拉迪姆購物中心</h4>
             <p class="spot-desc">
               <strong>新城區 Nové Město：</strong>位於伏爾塔瓦河右岸、舊城區南方，是查理四世在14世紀時建立的城市，雖名為「新城」，實際上卻是歷史悠遠，面積更是老城區的三倍，以壯麗的哥德式與巴洛克式教堂聞名，當中最知名的地標為瓦茲拉夫廣場與國家博物館，前者為新城區的商業中心，隨處可見別出心裁的小店與特色咖啡廳；後者則是捷克尊榮的象徵，近代改革後的商業門市都在此生根發芽。<br><br>
-              <strong>慕夏美術館：</strong>布拉格慕夏美術館位於18世紀的薩瓦林宮(Savarin Palace)內，是一座充滿歷史風華的宮殿建築。美術館收藏捷克著名藝術家阿爾豐斯·慕夏(Alfons Mucha)的經典作品，包括海報、繪畫與手稿，展現他獨特的新藝術風格。結合宮殿優雅空間與藝術之美，透過細膩的觀賞體驗，旅客都能輕鬆感受慕夏作品中的精緻與魅力。<br><br>
-              <strong>帕拉迪姆購物中心：</strong>位於捷克共和國布拉格市中心，於2007年開幕。該購物中心擁有170家商店和30家餐廳，零售面積達39,000平方公尺(420,000平方英尺)。此外，該建築內還設有總面積達19,500平方公尺(210,000平方英尺)的辦公空間。它是捷克共和國最大的購物中心之一，正對面是另一家購物中心—科特瓦百貨公司。
+              <strong>Municipal house café 下午茶(咖啡+蛋糕)：</strong>貼心安排於布拉格新藝術風格地標「市民會館（Municipal House）」內的百年皇家咖啡廳享用精緻下午茶（咖啡+蛋糕），感受典雅華麗的波希米亞午茶時光。<br><br>
+              <strong>帕拉迪姆購物中心：</strong>位於捷克共和國布拉格市中心，於2007年開幕。該購物中心擁有170家商店和30家餐廳，零售面積達39,000平方公尺（420,000平方英尺）。此外，該建築內還設有總面積達19,500平方公尺（210,000平方英尺）的辦公空間。它是捷克共和國最大的購物中心之一，正對面是另一家購物中心－科特瓦百貨公司。
             </p>
             <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mucha+Museum+Prague" target="_blank" rel="noopener noreferrer">🧭 慕夏美術館 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Palladium+Shopping+Center+Prague" target="_blank" rel="noopener noreferrer">🧭 帕拉迪姆購物中心 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wenceslas+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 瓦茲拉夫廣場 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Kavarna+Obecni+dum+Municipal+House+Cafe+Prague" target="_blank" rel="noopener noreferrer">🧭 Municipal House Café 地標位址</a>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Palladium+Shopping+Center+Prague" target="_blank" rel="noopener noreferrer">🧭 帕拉迪姆購物中心 地標位址</a>
             </div>
           </div>
         </div>
@@ -1941,65 +1999,65 @@
     <!-- ==================== 主分頁 3：實用資訊 GOOD TO KNOW ==================== -->
     <section id="tab-info" class="main-section">
       <div class="gtk-banner">
-        <h4>📌 行前與當地都用得上的重點提醒</h4>
-        <p>初冬的布拉格<strong>濕冷、日照短</strong>，<strong>保暖</strong>與<strong>防扒手</strong>是兩大關鍵！</p>
+        <h4>🎁 特別贈送 ＆ 行前重點提醒</h4>
+        <p><strong>特別贈送：</strong>① 歐規雙圓孔轉接頭／枚、② 捷克克朗 300 元。<br>初冬的布拉格<strong>濕冷、日照短</strong>，<strong>保暖</strong>與<strong>防扒手</strong>是兩大關鍵！為確保您有一趟美好的旅行，請詳閱以下注意事項。</p>
       </div>
 
       <div class="gtk-grid">
         <div class="gtk-card">
           <div class="gtk-card-header">
-            <span class="gtk-icon">💰</span>
-            <h4>貨幣</h4>
+            <span class="gtk-icon">🔌</span>
+            <h4>電壓差異與插座</h4>
           </div>
-          <p>捷克克朗 <span class="highlight-text">CZK（Kč）</span>，不用歐元。約 <strong>1 克朗 ≈ 新台幣 1.4 元</strong>（僅供參考，以當日匯率為準）。大城市刷卡普及，零錢備一些付廁所與市集。</p>
+          <p>捷克電壓為 <span class="highlight-text">230V / 50Hz</span>（台灣為 110V / 60Hz）。<strong>台灣帶去的 110V 專用電器（如吹風機、電捲棒等）絕對不能直接插上！</strong>手機、筆電、相機等充電器大多標示 100V–240V 寬電壓，直接插上轉接頭即可使用，不需變壓器。插座主要為 <strong>E 型</strong>（相容 C 型兩腳圓插頭和 F 型 Schuko 插座）。</p>
         </div>
 
         <div class="gtk-card">
           <div class="gtk-card-header">
-            <span class="gtk-icon">🧣</span>
-            <h4>天氣與穿著</h4>
+            <span class="gtk-icon">💶</span>
+            <h4>小費說明</h4>
           </div>
-          <p>11 月中～12 月中約 <span class="highlight-text">-1°C ～ 7°C</span>，濕冷有風，約 <strong>16:00 天黑</strong>。厚外套、圍巾、手套、發熱衣與<strong>好走防滑的鞋必備</strong>，石板路多。</p>
+          <p>本行程<strong>已包含領隊、導遊、司機之服務費</strong>（每位貴賓每日 €12 歐元 × 8 天，共計 €96 歐元）。<br><strong>以下費用不包含：</strong><br>1. 行李小費：每人每件 <span class="highlight-text">€2～5 歐元</span>。<br>2. 房間小費：每房 <span class="highlight-text">€1～2 歐元</span>。<br>公廁多需付費 10–20 克朗，請備些許零錢。</p>
         </div>
 
         <div class="gtk-card">
           <div class="gtk-card-header">
-            <span class="gtk-icon">⏰</span>
-            <h4>時差</h4>
+            <span class="gtk-icon">🧳</span>
+            <h4>航班與行李規定</h4>
           </div>
-          <p>冬令時間捷克比台灣<strong>慢 7 小時</strong>。當地中午，台灣是晚上 7 點。</p>
+          <p>直飛歐洲航班每位可<strong>免費托運兩件限重 23 公斤</strong>的行李，另可<strong>手提一件限重 7 公斤</strong>的行李（超重需自付加收費用，實際依航空公司公告為準）。團體座位由航空公司依英文姓名順序統一安排，無法於出發前預先選位或指定靠窗／走道，領隊將盡最大協助。</p>
         </div>
 
         <div class="gtk-card">
           <div class="gtk-card-header">
-            <span class="gtk-icon">🎒</span>
-            <h4>防扒手</h4>
+            <span class="gtk-icon">🏨</span>
+            <h4>住宿飯店注意事項</h4>
           </div>
-          <p><strong>查理大橋、天文鐘、舊城廣場</strong>與地鐵、電車人多處特別注意隨身財物。背包背前面，護照與現金分開放。</p>
+          <p>• 房間內嚴禁吸菸，違者罰鍰須自行負擔；吧台零食與冰箱酒水皆需付費。<br>• 電熱水壺僅供煮水，不可放入咖啡粉、茶葉、火鍋料、泡麵等；請勿攜帶電湯匙或使用多插頭延長線以免跳電。<br>• <strong>浴室地板多無排水孔，請勿泡澡以免水溢出；於浴缸內盥洗時務必將浴簾放入浴缸內</strong>，避免弄濕地毯影響樓下房客而遭飯店求償。<br>• 歐洲古城與冬季日夜溫差大，飯店房間僅設置冬天必備之暖氣，無冷氣設備。</p>
         </div>
 
         <div class="gtk-card">
           <div class="gtk-card-header">
             <span class="gtk-icon">🛍</span>
-            <h4>退稅 Tax Free</h4>
+            <h4>退稅規定 Tax Free</h4>
           </div>
-          <p>同一店家單次消費達門檻可辦退稅，<strong>Outlet 與精品店最划算</strong>。索取退稅單，離境於機場蓋章。伴手食品到超市 <strong>Billa／Albert</strong> 買更便宜。</p>
+          <p>1. 購物前先確認商家是否貼有「Global Blue」、「Tax Refund」貼紙。<br>2. 結帳時出示護照領取退稅單並<strong>親筆簽上姓名</strong>，妥善保管收據與退稅單。<br>3. 離境時於機場將<strong>購買物品、收據、退稅單</strong>一併出示給退稅櫃檯人員蓋章。請務必留意領隊宣達之退稅流程並保留齊全單據。</p>
         </div>
 
         <div class="gtk-card">
           <div class="gtk-card-header">
-            <span class="gtk-icon">🔌</span>
-            <h4>電壓與插座</h4>
+            <span class="gtk-icon">🛡️</span>
+            <h4>行前必讀與安全守則</h4>
           </div>
-          <p>歐規 <strong>220V</strong>，圓形雙孔 <strong>Type E／F</strong>。帶萬用轉接頭，充電寶（行動電源）與吹風機留意電壓規格。</p>
+          <p>• 建議啟程前自行投保旅遊防疫、海外醫療等保險，並攜帶常備藥品。<br>• <strong>未滿 14 歲兒童進入申根區規定：</strong>須提供能證明彼此關係之文件或父母（監護人）同意書並翻譯成英文，建議至戶政事務所辦理<strong>英文戶籍謄本</strong>（申請至少需 6 個工作天）。<br>• <strong>財物安全：</strong>貴重物品、錢財與護照請務必隨身攜帶或存放飯店保險箱，切勿留置於遊覽車上或行李箱內（依歐洲保險法規，置於車上或房內遺失無法尋求賠償）。</p>
         </div>
 
         <div class="gtk-card">
           <div class="gtk-card-header">
-            <span class="gtk-icon">🍽</span>
-            <h4>小費與禮儀</h4>
+            <span class="gtk-icon">💰</span>
+            <h4>貨幣與時差</h4>
           </div>
-          <p>餐廳可給約 <strong>10% 小費</strong>（或湊整數）。公廁多需付費 <strong>10–20 克朗</strong>。教堂參觀請輕聲、勿開閃光燈。</p>
+          <p>捷克使用捷克克朗 <span class="highlight-text">CZK（Kč）</span>，約 <strong>1 克朗 ≈ 新台幣 1.4～1.5 元</strong>（以當日匯率為準）。冬令時間捷克比台灣<strong>慢 7 小時</strong>（當地中午 12 點為台灣晚上 7 點）。</p>
         </div>
 
         <div class="gtk-card">
@@ -2068,7 +2126,7 @@
       <span class="icon">🗺️</span>
       <span>每日行程</span>
     </button>
-    <button type="button" class="nav-tab-action" onclick="quickNavDay(4, 2)">
+    <button type="button" class="nav-tab-action" onclick="quickNavDay(5, 2)">
       <span class="icon">🛍️</span>
       <span>Outlet</span>
     </button>
@@ -2391,7 +2449,7 @@
     fetchShopRate(false);
 
     /* ===== 梯次名單資料庫 ===== */
-    const rosterData = [{"batchIndex": 0, "sheetName": "第1梯", "summary": {"total": 34, "employee": 16, "family": 18, "adult": 33, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "鄭慶仁", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "陳美齡", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "李燕玲", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "來回飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "陳良融", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭鴻茹", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "陳柏宏", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳浚瑋", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳芮珊", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "陳明煇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳子喬", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "張資寅", "room": "雙人房6", "diet": "素食", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴建樺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭凱仁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "丘雅菁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "吳枝福", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "涂琪苓", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "陳嗣易", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳瀅如", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "楊尊權", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "楊守仁", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "鄭嘉和", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "曾冠傑", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 23, "name": "紀伊庭", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "陳暐臻", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "紀龍煌", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "紀宏澤", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "余奕臻", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "沈俞均", "room": "雙人房14", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "沈淑珍", "room": "雙人房15", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "紀柏豪", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "李彥寬", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "魏子澄", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "李懿庭", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王詩婷", "room": "單人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 1, "sheetName": "第2梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 36, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "陳朝國", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊惠美", "room": "雙人房1", "diet": "素食", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "陳瑋鑫", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 4, "name": "詹燕珠", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "陳維鎧", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "胡淑芳", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳允中", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳炳旭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "方玉梅", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "陳任宏", "room": "單人1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 11, "name": "張銘華", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "程睿翔", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "張瑋凌", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林妤軒", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "林從仁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "張廖年厚", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "陳亮娪", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳蔚寧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "李育欣", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳雅媚", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳亞綸", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳書嫚", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "吳巧玉", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "廖淑芬", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 25, "name": "康閎翔", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "趙依萱", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "張詠絍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 28, "name": "張廷道", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 29, "name": "黃千惠", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "阮騰賦", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "戴玉玲", "room": "雙人房12", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "廖泓叡", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "李咨萱", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "陳惠忠", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "曾晏佳", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "林冠霖", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李雅軒", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 2, "sheetName": "第3梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 34, "child": 3, "infant": 0}, "members": [{"no": 1, "name": "李華銘", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "吳淑惠", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "孫銘忠", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "周靜絹", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "蔡明清", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "歐惠華", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "王馨瑩", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "邱瑞揚", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "韓美麗", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "劉燕山", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "徐碧枝", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴畇蓁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "林宜欣", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "蔡樹勛", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "廖珮吟", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "沈裕家", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "沈元鈞", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "王俊惠", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "黃韻如", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 20, "name": "王甯加", "room": "三人房2", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "余宛蒨", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "董偉傑", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "董宥禾", "room": "三人房3", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "余旭洲", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "于美倫", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "康惠菁", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鐘馨玫", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "鐘新佑", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "鐘張美慧", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "陳俊廷", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林純靖", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "羅有成", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊欣儀", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王愛群", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "王妤馨", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "陳建樺", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李怡青", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 3, "sheetName": "第4梯", "summary": {"total": 38, "employee": 23, "family": 15, "adult": 37, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "李進榮", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "廖涵云", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "薛惠如", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "郭啓明", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "郭繐菱", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "郭曜誠", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "潘曉菁", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "黃而彤", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "王豐傑", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳雅靜", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "王彥勛", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "王思喬", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "王炳偉", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林佳慧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "鍾詠竹", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "黃建豪", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "曾筠雅", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "李秉哲", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "張桂月", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳浚銘", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "張名蕙", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳俞安", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "郭信佑", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "郭楷辰", "room": "雙人房12", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "魏曉雙", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "蘇郁茹", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "謝子敬", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝碧玉", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂玟潔", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "曾雅慧", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "陳怡君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "江詩婷", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "章祐瑋", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "張友珩", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "林仲億", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "趙天騰", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "林哲民", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "江函諭", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 4, "sheetName": "第5梯", "summary": {"total": 34, "employee": 24, "family": 10, "adult": 34, "child": 0, "infant": 0}, "members": [{"no": 1, "name": "陳家豪", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "許家毓", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 3, "name": "謝其萬", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "方素慧", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭資樺", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "蔡毓庭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "謝瑞籐", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "劉晏誠", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "石嘉薇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "劉惠娟", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "童郁綺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "梁妙君", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭問堂", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "方麗娟", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "黃桀霆", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "周可瞳", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "洪義凱", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "魏可傑", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "陳怡穎", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "張詩涵", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "蔡宗敏", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "鍾玉珍", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "陳品樺", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林鍾桂", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "曹嘉庭", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "謝妤嫻", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鄭憲鴻", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "回程飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝莉娜", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "王俊傑", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "錢羿廷", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林鑫宏", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "陳竑安", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊榮豪", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴承威", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 5, "sheetName": "第6梯", "summary": {"total": 38, "employee": 21, "family": 17, "adult": 36, "child": 2, "infant": 0}, "members": [{"no": 1, "name": "洪西川", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊媚如", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "洪梓銘", "room": "單人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "洪瑄佑", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "洪梓毓", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "張正明", "room": "雙人房3", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 7, "name": "楊景竣", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "馬中興", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "王愛雲", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "鄭清源", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "江鳳秋", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "鄭光廷", "room": "單人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "楊舒媛", "room": "單人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "陳佳苑", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 15, "name": "侯建成", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "郭建興", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "郭昱昊", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "郭翰珽", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "陳星暐", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "廖盈如", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳宥緁", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 22, "name": "陳宥綸", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "林永祥", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林千越", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "羅曉萍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "羅玉姬", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "蘇品潔", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "陳渤錞", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂美蓉", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "何思蔓", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "陳文修", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "高淑美", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "洪婷鈞", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴筱雯", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "黃俊哲", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "黃靖凱", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李虹豌", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "林蕙君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}];
+    const rosterData = [{"batchIndex": 0, "sheetName": "第1梯", "summary": {"total": 35, "employee": 17, "family": 18, "adult": 34, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "鄭慶仁", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "陳美齡", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "李燕玲", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "來回飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "陳良融", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭鴻茹", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "陳柏宏", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳浚瑋", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳芮珊", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "陳明煇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳子喬", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "張資寅", "room": "雙人房6", "diet": "素食", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴建樺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭凱仁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "丘雅菁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "吳枝福", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "涂琪苓", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "陳嗣易", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳瀅如", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "楊尊權", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "楊守仁", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "鄭嘉和", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "曾冠傑", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 23, "name": "紀伊庭", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "陳暐臻", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "紀龍煌", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "紀宏澤", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "余奕臻", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "沈俞均", "room": "雙人房14", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "沈淑珍", "room": "雙人房15", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "紀柏豪", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "李彥寬", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "魏子澄", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "李懿庭", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王詩婷", "room": "單人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "鞏月熙", "room": "單人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 1, "sheetName": "第2梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 36, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "陳朝國", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊惠美", "room": "雙人房1", "diet": "素食", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "陳瑋鑫", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 4, "name": "詹燕珠", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "陳維鎧", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "胡淑芳", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳允中", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳炳旭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "方玉梅", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "陳任宏", "room": "單人1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 11, "name": "張銘華", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "程睿翔", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "張瑋凌", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林妤軒", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "林從仁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "張廖年厚", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "陳亮娪", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳蔚寧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "李育欣", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳雅媚", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳亞綸", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳書嫚", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "吳巧玉", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "廖淑芬", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 25, "name": "康閎翔", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "趙依萱", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "張詠絍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 28, "name": "張廷道", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 29, "name": "黃千惠", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "阮騰賦", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "戴玉玲", "room": "雙人房12", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "廖泓叡", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "李咨萱", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "陳惠忠", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "曾晏佳", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "林冠霖", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李雅軒", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 2, "sheetName": "第3梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 34, "child": 3, "infant": 0}, "members": [{"no": 1, "name": "李華銘", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "吳淑惠", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "孫銘忠", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "周靜絹", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "蔡明清", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "歐惠華", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "王馨瑩", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "邱瑞揚", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "韓美麗", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "劉燕山", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "徐碧枝", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴畇蓁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "林宜欣", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "蔡樹勛", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "廖珮吟", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "沈裕家", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "沈元鈞", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "王俊惠", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "黃韻如", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 20, "name": "王甯加", "room": "三人房2", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "余宛蒨", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "董偉傑", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "董宥禾", "room": "三人房3", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "余旭洲", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "于美倫", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "康惠菁", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鐘馨玫", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "鐘新佑", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "鐘張美慧", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "陳俊廷", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林純靖", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "羅有成", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊欣儀", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王愛群", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "王妤馨", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "陳建樺", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李怡青", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 3, "sheetName": "第4梯", "summary": {"total": 38, "employee": 23, "family": 15, "adult": 37, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "李進榮", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "廖涵云", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "薛惠如", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "郭啓明", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "郭繐菱", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "郭曜誠", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "潘曉菁", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "黃而彤", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "王豐傑", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳雅靜", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "王彥勛", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "王思喬", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "王炳偉", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林佳慧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "鍾詠竹", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "黃建豪", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "曾筠雅", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "李秉哲", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "張桂月", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳浚銘", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "張名蕙", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳俞安", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "郭信佑", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "郭楷辰", "room": "雙人房12", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "魏曉雙", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "蘇郁茹", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "謝子敬", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝碧玉", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂玟潔", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "曾雅慧", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "陳怡君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "江詩婷", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "章祐瑋", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "張友珩", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "林仲億", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "趙天騰", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "林哲民", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "江函諭", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 4, "sheetName": "第5梯", "summary": {"total": 34, "employee": 24, "family": 10, "adult": 34, "child": 0, "infant": 0}, "members": [{"no": 1, "name": "陳家豪", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "許家毓", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 3, "name": "謝其萬", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "方素慧", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭資樺", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "蔡毓庭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "謝瑞籐", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "劉晏誠", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "石嘉薇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "劉惠娟", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "童郁綺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "梁妙君", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭問堂", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "方麗娟", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "黃桀霆", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "周可瞳", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "洪義凱", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "魏可傑", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "陳怡穎", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "張詩涵", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "蔡宗敏", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "鍾玉珍", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "陳品樺", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林鍾桂", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "曹嘉庭", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "謝妤嫻", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鄭憲鴻", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "回程飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝莉娜", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "王俊傑", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "錢羿廷", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林鑫宏", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "陳竑安", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊榮豪", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴承威", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 5, "sheetName": "第6梯", "summary": {"total": 38, "employee": 21, "family": 17, "adult": 36, "child": 2, "infant": 0}, "members": [{"no": 1, "name": "洪西川", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊媚如", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "洪梓銘", "room": "單人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "洪瑄佑", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "洪梓毓", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "張正明", "room": "雙人房3", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 7, "name": "楊景竣", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "馬中興", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "王愛雲", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "鄭清源", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "江鳳秋", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "鄭光廷", "room": "單人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "楊舒媛", "room": "單人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "陳佳苑", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 15, "name": "侯建成", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "郭建興", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "郭昱昊", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "郭翰珽", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "陳星暐", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "廖盈如", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳宥緁", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 22, "name": "陳宥綸", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "林永祥", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林千越", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "羅曉萍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "羅玉姬", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "蘇品潔", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "陳渤錞", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂美蓉", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "何思蔓", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "陳文修", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "高淑美", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "洪婷鈞", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴筱雯", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "黃俊哲", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "黃靖凱", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李虹豌", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "林蕙君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}];
 
     let currentRosterBatch = 0;
 
@@ -2502,109 +2560,6 @@
         });
       });
     }
-
-    /* ===== 梯次名單資料庫 ===== */
-    const rosterData = [{"batchIndex": 0, "sheetName": "第1梯", "summary": {"total": 34, "employee": 16, "family": 18, "adult": 33, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "鄭慶仁", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "陳美齡", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "李燕玲", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "來回飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "陳良融", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭鴻茹", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "陳柏宏", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳浚瑋", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳芮珊", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "陳明煇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳子喬", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "張資寅", "room": "雙人房6", "diet": "素食", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴建樺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭凱仁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "丘雅菁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "吳枝福", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "涂琪苓", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "陳嗣易", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳瀅如", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "楊尊權", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "楊守仁", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "鄭嘉和", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "曾冠傑", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 23, "name": "紀伊庭", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "陳暐臻", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "紀龍煌", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "紀宏澤", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "余奕臻", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "沈俞均", "room": "雙人房14", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "沈淑珍", "room": "雙人房15", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "紀柏豪", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "李彥寬", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "魏子澄", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "李懿庭", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王詩婷", "room": "單人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 1, "sheetName": "第2梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 36, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "陳朝國", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊惠美", "room": "雙人房1", "diet": "素食", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "陳瑋鑫", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 4, "name": "詹燕珠", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "陳維鎧", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "胡淑芳", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳允中", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳炳旭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "方玉梅", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "陳任宏", "room": "單人1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 11, "name": "張銘華", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "程睿翔", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "張瑋凌", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林妤軒", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "林從仁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "張廖年厚", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "陳亮娪", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳蔚寧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "李育欣", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳雅媚", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳亞綸", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳書嫚", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "吳巧玉", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "廖淑芬", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 25, "name": "康閎翔", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "趙依萱", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "張詠絍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 28, "name": "張廷道", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 29, "name": "黃千惠", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "阮騰賦", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "戴玉玲", "room": "雙人房12", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "廖泓叡", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "李咨萱", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "陳惠忠", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "曾晏佳", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "林冠霖", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李雅軒", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 2, "sheetName": "第3梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 34, "child": 3, "infant": 0}, "members": [{"no": 1, "name": "李華銘", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "吳淑惠", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "孫銘忠", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "周靜絹", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "蔡明清", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "歐惠華", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "王馨瑩", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "邱瑞揚", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "韓美麗", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "劉燕山", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "徐碧枝", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴畇蓁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "林宜欣", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "蔡樹勛", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "廖珮吟", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "沈裕家", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "沈元鈞", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "王俊惠", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "黃韻如", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 20, "name": "王甯加", "room": "三人房2", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "余宛蒨", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "董偉傑", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "董宥禾", "room": "三人房3", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "余旭洲", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "于美倫", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "康惠菁", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鐘馨玫", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "鐘新佑", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "鐘張美慧", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "陳俊廷", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林純靖", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "羅有成", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊欣儀", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王愛群", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "王妤馨", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "陳建樺", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李怡青", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 3, "sheetName": "第4梯", "summary": {"total": 38, "employee": 23, "family": 15, "adult": 37, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "李進榮", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "廖涵云", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "薛惠如", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "郭啓明", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "郭繐菱", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "郭曜誠", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "潘曉菁", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "黃而彤", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "王豐傑", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳雅靜", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "王彥勛", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "王思喬", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "王炳偉", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林佳慧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "鍾詠竹", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "黃建豪", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "曾筠雅", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "李秉哲", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "張桂月", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳浚銘", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "張名蕙", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳俞安", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "郭信佑", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "郭楷辰", "room": "雙人房12", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "魏曉雙", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "蘇郁茹", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "謝子敬", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝碧玉", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂玟潔", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "曾雅慧", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "陳怡君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "江詩婷", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "章祐瑋", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "張友珩", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "林仲億", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "趙天騰", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "林哲民", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "江函諭", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 4, "sheetName": "第5梯", "summary": {"total": 34, "employee": 24, "family": 10, "adult": 34, "child": 0, "infant": 0}, "members": [{"no": 1, "name": "陳家豪", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "許家毓", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 3, "name": "謝其萬", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "方素慧", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭資樺", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "蔡毓庭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "謝瑞籐", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "劉晏誠", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "石嘉薇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "劉惠娟", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "童郁綺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "梁妙君", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭問堂", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "方麗娟", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "黃桀霆", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "周可瞳", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "洪義凱", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "魏可傑", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "陳怡穎", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "張詩涵", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "蔡宗敏", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "鍾玉珍", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "陳品樺", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林鍾桂", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "曹嘉庭", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "謝妤嫻", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鄭憲鴻", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "回程飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝莉娜", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "王俊傑", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "錢羿廷", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林鑫宏", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "陳竑安", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊榮豪", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴承威", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 5, "sheetName": "第6梯", "summary": {"total": 38, "employee": 21, "family": 17, "adult": 36, "child": 2, "infant": 0}, "members": [{"no": 1, "name": "洪西川", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊媚如", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "洪梓銘", "room": "單人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "洪瑄佑", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "洪梓毓", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "張正明", "room": "雙人房3", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 7, "name": "楊景竣", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "馬中興", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "王愛雲", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "鄭清源", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "江鳳秋", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "鄭光廷", "room": "單人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "楊舒媛", "room": "單人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "陳佳苑", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 15, "name": "侯建成", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "郭建興", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "郭昱昊", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "郭翰珽", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "陳星暐", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "廖盈如", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳宥緁", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 22, "name": "陳宥綸", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "林永祥", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林千越", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "羅曉萍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "羅玉姬", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "蘇品潔", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "陳渤錞", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂美蓉", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "何思蔓", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "陳文修", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "高淑美", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "洪婷鈞", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴筱雯", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "黃俊哲", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "黃靖凱", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李虹豌", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "林蕙君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}];
-
-    let currentRosterBatch = 0;
-
-    function renderRoster(batchIdx, keyword) {
-      currentRosterBatch = batchIdx;
-      const b = rosterData[batchIdx];
-      if (!b) return;
-
-      const titleEl = document.getElementById("rosterBatchTitle");
-      if (titleEl) {
-        titleEl.innerText = `第${batchIdx + 1}梯次 團員名冊`;
-      }
-
-      const badgesEl = document.getElementById("rosterBadges");
-      if (badgesEl) {
-        let h = `<span class="badge-total">總計 ${b.summary.total} 人</span>`;
-        h += `<span class="badge-emp">員工 ${b.summary.employee}</span>`;
-        h += `<span class="badge-fam">眷屬 ${b.summary.family}</span>`;
-        if (b.summary.child) h += `<span class="badge-sub" style="background:#fef9c3; color:#854d0e;">兒童 ${b.summary.child}</span>`;
-        if (b.summary.infant) h += `<span class="badge-sub">嬰兒 ${b.summary.infant}</span>`;
-        badgesEl.innerHTML = h;
-      }
-
-      const tbody = document.getElementById("rosterTableBody");
-      if (!tbody) return;
-
-      const kw = (keyword || "").trim().toLowerCase();
-      const filtered = b.members.filter(m => {
-        if (!kw) return true;
-        return (m.name && m.name.toLowerCase().includes(kw)) ||
-               (m.role && m.role.toLowerCase().includes(kw)) ||
-               (m.room && m.room.toLowerCase().includes(kw)) ||
-               (m.diet && m.diet.toLowerCase().includes(kw)) ||
-               (m.seat && m.seat.toLowerCase().includes(kw)) ||
-               (m.note && m.note.toLowerCase().includes(kw));
-      });
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="padding:1.5rem; text-align:center; color:var(--text-muted);">無符合「${keyword}」的同仁名單</td></tr>`;
-        return;
-      }
-
-      let rowsHtml = "";
-      filtered.forEach(m => {
-        let roomClass = "room-tag";
-        if (m.room.includes("三人")) roomClass += " room-triple";
-        else if (m.room.includes("單人")) roomClass += " room-single";
-
-        const isEmp = m.isEmployee;
-        const nameClass = isEmp ? "roster-name-emp" : "roster-name-fam";
-        const roleBadge = isEmp ? '<span class="role-badge role-emp">員工</span>' : '<span class="role-badge role-fam">眷屬</span>';
-
-        let tagsHtml = "";
-        if (m.seat === "商務") tagsHtml += '<span class="tag-badge tag-biz">✈️ 商務艙</span>';
-        else if (m.seat === "豪經") tagsHtml += '<span class="tag-badge tag-prem">💺 豪經艙</span>';
-
-        if (m.diet) tagsHtml += `<span class="tag-badge tag-veg">🥗 ${m.diet}</span>`;
-        if (m.note === "兒童餐") tagsHtml += '<span class="tag-badge tag-child">🍼 兒童餐</span>';
-        else if (m.note) tagsHtml += `<span class="tag-badge tag-note">ℹ️ ${m.note}</span>`;
-
-        if (!tagsHtml) tagsHtml = '<span style="color:#94a3b8;">—</span>';
-
-        rowsHtml += `
-          <tr>
-            <td style="color:#64748b; font-weight:600;">${m.no}</td>
-            <td>
-              <div class="roster-name-cell">
-                <span class="${nameClass}">${m.name}</span>
-                ${roleBadge}
-              </div>
-            </td>
-            <td><span class="${roomClass}">${m.room || "—"}</span></td>
-            <td>${tagsHtml}</td>
-          </tr>
-        `;
-      });
-      tbody.innerHTML = rowsHtml;
-    }
-
-    function handleRosterSearch() {
-      const input = document.getElementById("rosterSearchInput");
-      renderRoster(currentRosterBatch, input ? input.value : "");
-    }
-
-    function toggleRosterExpand() {
-      const wrap = document.getElementById("rosterTableWrap");
-      const btn = document.getElementById("rosterExpandBtn");
-      if (!wrap || !btn) return;
-      if (wrap.classList.contains("expanded")) {
-        wrap.classList.remove("expanded");
-        btn.innerHTML = "展開全部名單 ▾";
-        wrap.scrollTop = 0;
-      } else {
-        wrap.classList.add("expanded");
-        btn.innerHTML = "收合名單 ▴";
-      }
-    }
-
-    // 初始化名冊
-    renderRoster(0);
   </script>
 </body>
 </html>
