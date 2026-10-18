@@ -31,10 +31,12 @@ header.top p{margin:0;color:var(--room-dim);font-size:13px}
 /* stage */
 .player{background:#000;border-radius:10px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45);width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)));margin-inline:auto}
 @supports (height:100dvh){.player{width:min(100%,max(320px,calc((100dvh - 118px) * 16 / 9)))}}
-.player:fullscreen{width:100%}
-.player:fullscreen{display:flex;flex-direction:column;justify-content:center;border-radius:0}
+.player:fullscreen,.player.fs-fallback{width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;border-radius:0;background:#000}
+.player.fs-fallback{position:fixed;inset:0;z-index:1000;height:100dvh}
+.player:fullscreen .controls,.player.fs-fallback .controls{width:100%;box-sizing:border-box;padding-bottom:max(10px,env(safe-area-inset-bottom,0px))}
 .stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;cursor:pointer;background:var(--sea);max-width:100%}
-.player:fullscreen .stage{max-height:calc(100vh - 64px);width:auto;margin:0 auto}
+.player:fullscreen .stage,.player.fs-fallback .stage{flex:none;width:min(100vw,calc((100vh - 64px) * 16 / 9));margin:0 auto}
+@supports (height:100dvh){.player.fs-fallback .stage{width:min(100vw,calc((100dvh - 64px) * 16 / 9))}}
 .frame{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;transform:scale(var(--k,.5));font-family:var(--f-body);color:var(--ink)}
 .frame canvas{position:absolute;inset:0;width:1920px;height:1080px}
 .layer{position:absolute;will-change:opacity,transform}
@@ -759,9 +761,20 @@ $("stage").addEventListener("dblclick",e=>{e.preventDefault();toggleFS()});
 seek.addEventListener("input",()=>go(parseFloat(seek.value)));
 document.addEventListener("keydown",e=>{if((e.target.tagName==="INPUT"||e.target.tagName==="SELECT")&&e.code!=="Space")return;
   if(e.code==="Space"){e.preventDefault();toggle()}else if(e.code==="ArrowRight")go(state.T+5);else if(e.code==="ArrowLeft")go(state.T-5);else if(e.key==="f"||e.key==="F")toggleFS()});
-function toggleFS(){const p=$("player");try{if(document.fullscreenElement)document.exitFullscreen();else p.requestFullscreen().catch(()=>{})}catch(e){}}
+function fsFallback(on){const p=$("player");p.classList.toggle("fs-fallback",on);document.documentElement.style.overflow=on?"hidden":"";setTimeout(resize,60)}
+function toggleFS(){const p=$("player");
+  if(p.classList.contains("fs-fallback")){fsFallback(false);return}
+  const fsEl=document.fullscreenElement||document.webkitFullscreenElement;
+  if(fsEl){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return}
+  const req=p.requestFullscreen||p.webkitRequestFullscreen;
+  if(!req){fsFallback(true);return}   /* iPhone Safari: no element fullscreen */
+  try{const r=req.call(p);const lock=()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock("landscape").catch(()=>{})}catch(e){}};
+    if(r&&r.then)r.then(lock).catch(()=>fsFallback(true));else lock()}catch(e){fsFallback(true)}}
 $("fs").addEventListener("click",toggleFS);
-document.addEventListener("fullscreenchange",()=>setTimeout(resize,60));
+document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement){try{screen.orientation&&screen.orientation.unlock&&screen.orientation.unlock()}catch(e){}}setTimeout(resize,60)});
+document.addEventListener("webkitfullscreenchange",()=>setTimeout(resize,60));
+window.addEventListener("orientationchange",()=>setTimeout(resize,250));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("player").classList.contains("fs-fallback"))fsFallback(false)});
 window.addEventListener("pagehide",stopVoice);
 
 /* chapters */
