@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="115年港洲營建事業員工旅遊 捷克布拉格 8 日遊 每日行程地圖動畫導覽（含配音與配樂）">
+<style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>布拉格 8 日行程導覽</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap">
+<style>
+/* Layout: dark screening room around a 16:9 "atlas film" stage; controls + chapter list below. */
+:root{
+  color-scheme:dark;
+  --room:#12161d; --room-2:#1b212b; --room-line:#2a3240; --room-fg:#e9e6df; --room-dim:#9aa3b2;
+  /* film palette (fixed look inside the frame) */
+  --sea:#bcd9df; --land:#eceee6; --cz:#fbf6ea; --ink:#1c2840; --ink-2:#56607a;
+  --roof:#cf3a28; --river:#5fa6bb; --water:#a7d0da; --gold:#d99a1c; --park:#cfe0c0; --paper:#fffdf8;
+  --f-display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+body{background:var(--room);color:var(--room-fg);font-family:var(--f-body);min-height:100%}
+.wrap{max-width:none;margin:0 auto;padding-block:10px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+header.top{width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)));margin-inline:auto;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px}
+header.top h1{margin:0;font-family:var(--f-display);font-weight:900;font-size:clamp(17px,2.2vw,22px);letter-spacing:.02em;text-wrap:balance}
+header.top p{margin:0;color:var(--room-dim);font-size:13px}
+
+/* stage */
+.player{background:#000;border-radius:10px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45);width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)));margin-inline:auto}
+@supports (height:100dvh){.player{width:min(100%,max(320px,calc((100dvh - 118px) * 16 / 9)))}}
+.player:fullscreen{width:100%}
+.player:fullscreen{display:flex;flex-direction:column;justify-content:center;border-radius:0}
+.stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;cursor:pointer;background:var(--sea);max-width:100%}
+.player:fullscreen .stage{max-height:calc(100vh - 64px);width:auto;margin:0 auto}
+.frame{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;transform:scale(var(--k,.5));font-family:var(--f-body);color:var(--ink)}
+.frame canvas{position:absolute;inset:0;width:1920px;height:1080px}
+.layer{position:absolute;will-change:opacity,transform}
+
+/* day badge */
+.badge{left:72px;top:64px;width:760px;isolation:isolate}
+.badge::before{content:"";position:absolute;inset:-90px -160px -70px -110px;z-index:-1;background:radial-gradient(ellipse at 32% 42%,rgba(251,246,234,.95) 0%,rgba(251,246,234,.8) 42%,rgba(251,246,234,0) 72%)}
+.badge:empty::before{display:none}
+.badge .kicker{font-family:var(--f-mono);font-weight:600;font-size:22px;letter-spacing:.24em;color:var(--roof)}
+.badge h2{margin:6px 0 0;font-family:var(--f-display);font-weight:900;font-size:64px;line-height:1.12;letter-spacing:.01em;text-shadow:0 2px 0 var(--paper),0 0 18px rgba(255,253,248,.9)}
+.badge .route{margin-top:10px;font-size:22px;color:var(--ink-2);font-weight:500;text-shadow:0 0 10px var(--paper),0 0 4px var(--paper)}
+.badge .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:10px;background:rgba(255,253,248,.94);border:1.5px solid rgba(28,40,64,.14);border-radius:999px;padding:8px 18px 8px 8px;font-size:20px;font-weight:500;box-shadow:0 4px 14px rgba(28,40,64,.08)}
+.chip b{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;font-size:17px;color:#fff;background:var(--ink)}
+.chip.meal b{background:var(--gold)}
+
+/* day ribbon */
+.ribbon{right:72px;top:64px;display:flex;gap:8px;font-family:var(--f-mono);font-weight:600}
+.ribbon span{width:46px;height:46px;display:grid;place-items:center;border-radius:50%;font-size:19px;background:rgba(255,253,248,.85);color:var(--ink-2);border:1.5px solid rgba(28,40,64,.12);transition:background .4s,color .4s,transform .4s}
+.ribbon span.on{background:var(--roof);color:#fff;border-color:var(--roof);transform:scale(1.12)}
+.ribbon span.done{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* photo cards */
+.card{right:72px;top:140px;width:780px;background:var(--paper);border-radius:6px;box-shadow:0 26px 60px rgba(28,40,64,.28),0 2px 0 rgba(28,40,64,.06);padding:14px 14px 26px}
+.card img{display:block;width:100%;aspect-ratio:1200/655;object-fit:cover;border-radius:3px}
+.card .txt{padding:20px 14px 0;display:flex;flex-direction:column;gap:6px}
+.card .n{font-family:var(--f-mono);font-size:18px;font-weight:600;color:var(--roof);letter-spacing:.14em;text-transform:uppercase}
+.card h3{margin:0;font-family:var(--f-display);font-weight:900;font-size:44px;line-height:1.2;text-wrap:balance}
+.card p{margin:4px 0 0;font-size:24px;line-height:1.6;color:var(--ink-2)}
+.card.textonly{top:300px;padding:30px 34px 34px;border-top:8px solid var(--roof)}
+.card.textonly .txt{padding:0}
+
+/* caption */
+.caption{left:0;right:0;bottom:56px;display:flex;justify-content:center;pointer-events:none}
+.caption span{max-width:1400px;background:rgba(28,40,64,.88);color:#fff;font-size:32px;font-weight:500;line-height:1.45;padding:12px 30px;border-radius:8px;text-align:center;letter-spacing:.02em}
+
+/* map meta */
+.meta{left:72px;bottom:44px;font-family:var(--f-mono);font-size:17px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px;text-shadow:0 0 6px var(--paper)}
+
+/* full-frame title cards */
+.full{inset:0;overflow:hidden;background:var(--ink)}
+.full img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.full .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,24,38,.86) 0%,rgba(18,24,38,.55) 46%,rgba(18,24,38,0) 75%)}
+.full .t{position:absolute;left:120px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;gap:18px;color:#fff;width:980px}
+.full .k{font-family:var(--f-mono);font-size:24px;letter-spacing:.3em;color:#ffcfb8}
+.full h1{margin:0;font-family:var(--f-display);font-weight:900;font-size:124px;line-height:1.08;letter-spacing:.02em}
+.full .s{font-size:34px;font-weight:500;opacity:.92}
+.full .facts{display:flex;flex-wrap:wrap;gap:14px;margin-top:22px}
+.full .facts span{font-size:24px;border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 22px}
+
+/* food strip */
+.food{right:72px;top:150px;width:800px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.pola{background:var(--paper);padding:12px 12px 16px;border-radius:4px;box-shadow:0 16px 36px rgba(28,40,64,.25)}
+.pola img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:2px}
+.pola div{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:10px;font-size:24px;font-weight:700}
+.pola small{font-family:var(--f-mono);font-size:18px;color:var(--roof);font-weight:600;white-space:nowrap}
+
+/* big play */
+.bigplay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(10,14,22,.06);transition:opacity .25s}
+.bigplay button{width:clamp(56px,9vw,104px);height:clamp(56px,9vw,104px);border-radius:50%;border:none;background:var(--roof);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.bigplay svg{width:42%;height:42%;margin-left:8%}
+.bigplay.off{opacity:0;pointer-events:none}
+
+/* controls */
+.controls{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--room-2)}
+.controls button{background:none;border:none;color:var(--room-fg);cursor:pointer;width:38px;height:38px;border-radius:8px;display:grid;place-items:center;flex:none}
+.controls button:hover{background:var(--room-line)}
+.controls button:focus-visible,.chap:focus-visible,.bigplay button:focus-visible{outline:2px solid #ffb199;outline-offset:2px}
+.controls svg{width:20px;height:20px}
+.time{font-family:var(--f-mono);font-size:13px;color:var(--room-dim);font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
+.track{position:relative;flex:1;min-width:0;height:38px;display:flex;align-items:center}
+.track input{width:100%;margin:0;accent-color:var(--roof);cursor:pointer;position:relative;z-index:1;background:transparent}
+.ticks{position:absolute;left:0;right:0;top:4px;height:6px;pointer-events:none}
+.ticks i{position:absolute;top:0;width:2px;height:6px;background:var(--room-dim);opacity:.6}
+
+.chapters{width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)));margin-inline:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.chap{all:unset;box-sizing:border-box;cursor:pointer;padding:10px 12px;border-radius:8px;background:var(--room-2);border:1px solid var(--room-line);display:flex;flex-direction:column;gap:3px;min-width:0}
+.chap:hover{border-color:#4a5568}
+.chap.on{border-color:var(--roof);background:#2a1d1c}
+.chap .d{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:#ff9a80}
+.chap .h{font-size:14px;font-weight:700;line-height:1.35}
+.chap .m{font-family:var(--f-mono);font-size:11px;color:var(--room-dim)}
+.note{color:var(--room-dim);font-size:12px;margin:0 auto;width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)))}
+.caption .who{display:inline-block;font-weight:700;margin-right:14px;padding:0 12px;border-radius:6px;font-size:26px;vertical-align:2px}
+.caption .who.f{background:#cf3a28}.caption .who.m{background:#2f7890}
+.controls .tog{opacity:.45}.controls .tog.on{opacity:1;color:#ffb199}
+.settings{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:13px;color:var(--room-dim)}
+.settings label{color:var(--room-fg);font-weight:500}
+.settings select{background:var(--room-2);color:var(--room-fg);border:1px solid var(--room-line);border-radius:6px;padding:6px 8px;font:inherit;max-width:100%;min-width:0}
+@media (max-width:560px){.controls{gap:6px;padding:8px}.time{font-size:11px}}
+@media (prefers-reduced-motion:reduce){.ribbon span{transition:none}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <h1><a href="../" style="color:inherit;text-decoration:none;opacity:.7;font-size:.7em;margin-right:.6em">← 回手冊</a>捷克・布拉格 8 日遊｜每日行程地圖導覽</h1>
+    <p>115年港洲營建事業員工旅遊・雙人對談解說・按 F 或雙擊畫面全螢幕</p>
+  </header>
+
+  <div class="player" id="player">
+    <div class="stage" id="stage" aria-label="行程導覽影片" role="region">
+      <div class="frame" id="frame">
+        <canvas id="map"></canvas>
+        <div class="layer meta" id="meta"><span id="scale"></span><span id="coord"></span></div>
+        <div class="layer badge" id="badge"></div>
+        <div class="layer ribbon" id="ribbon"></div>
+        <div id="cards"></div>
+        <div class="layer food" id="food"></div>
+        <div class="layer caption" id="caption"><span id="captext"></span></div>
+        <div class="layer full" id="intro">
+          <img class="heroimg" alt="">
+          <div class="shade"></div>
+          <div class="t">
+            <div class="k">PRAHA · ČESKO · 2026</div>
+            <h1>捷克・布拉格<br>8 日遊</h1>
+            <div class="s">115年港洲營建事業員工旅遊　每日行程地圖導覽</div>
+            <div class="facts"><span>星宇航空直飛</span><span>契斯科庫倫洛夫</span><span>布拉格城堡</span><span>庫特納霍拉</span></div>
+          </div>
+        </div>
+        <div class="layer full" id="outro">
+          <img class="heroimg" alt="">
+          <div class="shade"></div>
+          <div class="t">
+            <div class="k">SEE YOU IN PRAGUE</div>
+            <h1>圓滿賦歸</h1>
+            <div class="s">出發前記得帶上這幾件事</div>
+            <div class="facts"><span>230V・E 型插座（贈轉接頭）</span><span>1 克朗 ≈ NT$1.5</span><span>比台灣慢 7 小時</span><span>洋蔥式穿搭・2–8°C</span><span>護照財物隨身・防扒手</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bigplay" id="bigplay"><button type="button" id="bigbtn" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l15 8-15 8z"/></svg></button></div>
+    </div>
+    <div class="controls">
+      <button type="button" id="play" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor" id="playicon"><path d="M6 4l15 8-15 8z"/></svg></button>
+      <span class="time" id="time">0:00 / 3:20</span>
+      <div class="track"><div class="ticks" id="ticks"></div><input type="range" id="seek" min="0" max="200" step="0.05" value="0" aria-label="播放進度"></div>
+      <button type="button" id="vo" class="tog on" aria-pressed="true" aria-label="配音" title="配音"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+      <button type="button" id="mu" class="tog on" aria-pressed="true" aria-label="配樂" title="配樂"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></button>
+      <button type="button" id="fs" aria-label="全螢幕"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </div>
+
+  <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
+
+  <nav class="chapters" id="chapters" aria-label="章節"></nav>
+  <p class="note">點畫面或按空白鍵播放／暫停，雙擊畫面或按 F 全螢幕，← → 前後跳 5 秒；麥克風與音符按鈕可分別開關解說與配樂。地圖為示意，地標位置依手冊 Google 地圖連結標示。</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+const IMG = "../";   /* 圖片資料夾 */
+const TOTAL = 200;
+const W = 1920, H = 1080;
+
+/* ---------- places [lon, lat] ---------- */
+const P = {
+  TPE:[121.233,25.077], PRG:[14.262,50.101],
+  CKcastle:[14.3158,48.8127], CKsq:[14.3150,48.8106], OLDINN:[14.3156,48.8102],
+  CB:[14.4743,48.9745], HLU:[14.4417,49.0517],
+  dance:[14.4141,50.0755], dock:[14.4143,50.0727], anp:[14.4270,50.0848],
+  mucha:[14.4268,50.0839], castle:[14.3995,50.0905], vitus:[14.4005,50.0909], golden:[14.4038,50.0925],
+  wallen:[14.4073,50.0894], malo:[14.4036,50.0878], lennon:[14.4067,50.0862], bridge:[14.4112,50.0865],
+  mlynec:[14.4135,50.0855], clock:[14.4206,50.0870], ots:[14.4213,50.0876], powder:[14.4278,50.0870],
+  sedlec:[15.2882,49.9620], assum:[15.2905,49.9601], barbara:[15.2630,49.9446], outlet:[14.5537,50.0723], marriott:[14.4316,50.0884],
+  wenc:[14.4282,50.0812], obecni:[14.4282,50.0874], palladium:[14.4296,50.0893], imperial:[14.4321,50.0911], cihelna:[14.4096,50.0888], havel:[14.4210,50.0848]
+};
+
+/* ---------- days ---------- */
+const DAYS = [
+ {n:"1",t0:9,t1:26,title:"啟程・飛往百塔之城",route:"公司 → 桃園國際機場 → 布拉格",meal:"機上餐食",hotel:"機上"},
+ {n:"2",t0:26,t1:50,title:"契斯科庫倫洛夫",route:"布拉格 → 173 km → 契斯科庫倫洛夫",meal:"烤鴨風味料理／肉類拼盤",hotel:"Hotel OLDINN"},
+ {n:"3",t0:50,t1:80,title:"城堡・遊船",route:"庫倫洛夫 → 布傑約維采 → 赫魯博卡城堡 → 布拉格",meal:"三道式套餐／啤酒醬豬肘",hotel:"Art Nouveau Palace"},
+ {n:"4",t0:80,t1:124,title:"布拉格市區觀光",route:"慕夏美術館 → 城堡區 → 查理大橋 → 舊城廣場",meal:"MLYNEC 三道式／遊船自助餐",hotel:"Art Nouveau Palace"},
+ {n:"5",t0:124,t1:150,title:"人骨教堂・Outlet",route:"布拉格 → 70 km → 庫特納霍拉 → 65 km → Outlet",meal:"傳統捷克午餐／中式晚餐",hotel:"Marriott Prague"},
+ {n:"6",t0:150,t1:180,title:"新城區・自由行",route:"瓦茲拉夫廣場 → 市民會館 → 帕拉迪姆 → 自由活動",meal:"烤肋排／500 克朗自理",hotel:"Marriott Prague"},
+ {n:"7–8",t0:180,t1:192,title:"圓滿賦歸",route:"布拉格哈維爾機場 → 桃園國際機場",meal:"機上餐食",hotel:"溫暖的家"}
+];
+
+/* ---------- camera keyframes ---------- */
+const K = [
+ {t:0, c:P.TPE, z:7.2, fx:.33},
+ {t:14, c:P.TPE, z:7.2, fx:.33},
+ {t:21, c:[68,43], z:4.25, fx:.5},
+ {t:24.5, c:[15.0,49.6], z:6.9, fx:.5},
+ {t:27, c:[14.9,49.45], z:7.5, fx:.5},
+ {t:33.5, c:[14.9,49.45], z:7.5, fx:.5},
+ {t:37, c:[14.3160,48.8105], z:15.3, fx:.31},
+ {t:50, c:[14.3160,48.8105], z:15.3, fx:.31},
+ {t:53, c:[14.40,48.94], z:10.2, fx:.31},
+ {t:59, c:[14.40,48.94], z:10.2, fx:.31},
+ {t:61, c:[14.44,49.02], z:10.6, fx:.31},
+ {t:65.5, c:[14.44,49.02], z:10.6, fx:.31},
+ {t:67.5, c:[14.55,49.55], z:8.1, fx:.5},
+ {t:70.5, c:[14.55,49.55], z:8.1, fx:.5},
+ {t:72.5, c:[14.4150,50.0790], z:15.0, fx:.30},
+ {t:80, c:[14.4150,50.0800], z:15.0, fx:.30},
+ {t:82.5, c:[14.4150,50.0875], z:14.6, fx:.5},
+ {t:85, c:[14.4150,50.0875], z:14.6, fx:.5},
+ {t:87, c:[14.4268,50.0845], z:16.0, fx:.31},
+ {t:89.5, c:[14.4268,50.0845], z:16.0, fx:.31},
+ {t:92, c:[14.4022,50.0910], z:16.3, fx:.31},
+ {t:99, c:[14.4030,50.0910], z:16.3, fx:.31},
+ {t:101, c:[14.4062,50.0882], z:16.3, fx:.31},
+ {t:105.5, c:[14.4062,50.0880], z:16.3, fx:.31},
+ {t:107.5, c:[14.4112,50.0863], z:16.4, fx:.31},
+ {t:112, c:[14.4120,50.0863], z:16.4, fx:.31},
+ {t:114, c:[14.4232,50.0872], z:16.4, fx:.31},
+ {t:119.5, c:[14.4240,50.0872], z:16.4, fx:.31},
+ {t:122, c:[14.4150,50.0878], z:14.7, fx:.5},
+ {t:124, c:[14.4150,50.0878], z:14.7, fx:.5},
+ {t:126, c:[14.85,50.01], z:9.9, fx:.31},
+ {t:130, c:[14.85,50.01], z:9.9, fx:.31},
+ {t:132, c:[15.2780,49.9535], z:14.4, fx:.31},
+ {t:141, c:[15.2780,49.9535], z:14.4, fx:.31},
+ {t:143, c:[14.88,50.02], z:9.9, fx:.31},
+ {t:146, c:[14.88,50.02], z:9.9, fx:.31},
+ {t:147.5, c:[14.50,50.08], z:12.3, fx:.31},
+ {t:150, c:[14.50,50.08], z:12.3, fx:.31},
+ {t:152.5, c:[14.4285,50.0850], z:16.0, fx:.31},
+ {t:162.5, c:[14.4290,50.0860], z:16.0, fx:.31},
+ {t:164.5, c:[14.4205,50.0878], z:15.1, fx:.31},
+ {t:180, c:[14.4205,50.0878], z:15.1, fx:.31},
+ {t:182, c:[14.36,50.095], z:12.2, fx:.31},
+ {t:185, c:[14.36,50.095], z:12.2, fx:.31},
+ {t:188, c:[68,43], z:4.25, fx:.5},
+ {t:191.5, c:P.TPE, z:6.6, fx:.5},
+ {t:200, c:P.TPE, z:6.6, fx:.5}
+];
+
+/* ---------- routes ---------- */
+const R = [
+ {k:"flight",t0:15,t1:23.8,until:26,pts:"gc:TPE:PRG",label:"JX101・約 15 小時"},
+ {k:"drive",t0:27.5,t1:33.5,until:50,label:"173 km",pts:[P.PRG,[14.35,50.06],[14.52,50.0],[14.66,49.79],[14.66,49.41],[14.69,49.18],[14.47,48.98],[14.40,48.90],[14.35,48.84],P.CKcastle]},
+ {k:"drive",t0:52,t1:56,until:80,label:"25 km",pts:[P.OLDINN,[14.33,48.83],[14.37,48.86],[14.43,48.92],P.CB]},
+ {k:"drive",t0:59,t1:61,until:80,label:"12 km",pts:[P.CB,[14.455,49.01],P.HLU]},
+ {k:"drive",t0:65.5,t1:71.5,until:80,label:"145 km",pts:[P.HLU,[14.56,49.12],[14.62,49.20],[14.66,49.41],[14.70,49.60],[14.65,49.80],[14.52,49.98],[14.43,50.045],[14.417,50.066],P.dance]},
+ {k:"boat",t0:75.5,t1:79.5,until:80,pts:[P.dock,[14.4125,50.0765],[14.4103,50.0812],[14.4110,50.0865],[14.4130,50.0893],[14.4152,50.0915],[14.4182,50.0935]]},
+ {k:"drive",t0:89.5,t1:92,until:124,pts:[P.mucha,[14.4240,50.0853],[14.4195,50.0890],[14.4150,50.0897],[14.4100,50.0905],[14.4065,50.0935],[14.4010,50.0935],[14.3985,50.0920],P.castle]},
+ {k:"walk",t0:93,t1:96.5,until:124,pts:[P.castle,P.vitus,[14.4025,50.0915],P.golden]},
+ {k:"walk",t0:99.5,t1:104.5,until:124,pts:[P.golden,[14.4052,50.0918],[14.4060,50.0905],P.wallen,[14.4050,50.0885],P.malo,[14.4050,50.0868],P.lennon]},
+ {k:"walk",t0:106,t1:110,until:124,pts:[P.lennon,[14.4085,50.0864],[14.4140,50.0865],P.mlynec]},
+ {k:"walk",t0:112.5,t1:118,until:124,pts:[P.mlynec,[14.4142,50.0862],[14.4175,50.0862],[14.4195,50.0868],P.clock,P.ots,[14.4235,50.0874],[14.4255,50.0873],P.powder]},
+ {k:"drive",t0:124.8,t1:130,until:150,label:"70 km",pts:[P.marriott,[14.50,50.07],[14.60,50.075],[14.80,50.08],[15.00,50.05],[15.17,50.02],[15.25,49.985],P.sedlec]},
+ {k:"walk",t0:133,t1:136,until:150,pts:[P.sedlec,P.assum,[15.280,49.955],[15.270,49.949],P.barbara]},
+ {k:"drive",t0:141.5,t1:146,until:150,label:"65 km",pts:[P.barbara,[15.25,49.975],[15.17,50.02],[15.00,50.05],[14.80,50.078],[14.62,50.072],P.outlet]},
+ {k:"drive",t0:147.6,t1:149.6,until:150,pts:[P.outlet,[14.50,50.078],[14.46,50.085],P.marriott]},
+ {k:"walk",t0:153.5,t1:158,until:180,pts:[P.wenc,[14.4262,50.0840],[14.4270,50.0860],P.obecni,P.palladium]},
+ {k:"opt",t0:163,t1:164.6,until:180,pts:[P.palladium,P.imperial]},
+ {k:"opt",t0:167.5,t1:169.5,until:180,pts:[P.palladium,[14.4250,50.0873],[14.4175,50.0862],[14.4110,50.0880],P.cihelna]},
+ {k:"opt",t0:172,t1:173.6,until:180,pts:[P.palladium,[14.4255,50.0868],[14.4225,50.0855],P.havel]},
+ {k:"drive",t0:181,t1:184.5,until:192,pts:[P.marriott,[14.40,50.085],[14.33,50.09],[14.29,50.097],P.PRG]},
+ {k:"flight",t0:185,t1:190.8,until:192,pts:"gc:PRG:TPE",label:"JX102"}
+];
+
+/* ---------- pins ---------- */
+const PINS = [
+ {p:P.TPE,t0:10,t1:26,k:"air",name:"桃園國際機場",a:"r"},
+ {p:P.PRG,t0:23.6,t1:34,k:"air",name:"布拉格哈維爾機場",a:"l"},
+ {p:P.CKcastle,t0:33.5,t1:50,k:"no",n:1,name:"庫倫洛夫城堡",a:"t"},
+ {p:P.CKsq,t0:38.5,t1:50,k:"no",n:2,name:"市政廣場",a:"l"},
+ {p:P.OLDINN,t0:44,t1:50,k:"hotel",name:"Hotel OLDINN",a:"b"},
+ {p:P.CB,t0:56,t1:80,k:"no",n:1,name:"布傑約維采",a:"r"},
+ {p:P.HLU,t0:61,t1:80,k:"no",n:2,name:"赫魯博卡城堡",a:"r"},
+ {p:P.dance,t0:72,t1:80,k:"no",n:3,name:"跳舞的房子",a:"r"},
+ {p:P.dock,t0:75.5,t1:80,k:"no",n:4,name:"遊船碼頭",a:"r"},
+ {p:P.anp,t0:77.5,t1:80,k:"hotel",name:"Art Nouveau Palace",a:"r"},
+ {p:P.mucha,t0:86.5,t1:124,k:"no",n:1,name:"慕夏美術館",a:"b"},
+ {p:P.vitus,t0:92.5,t1:124,k:"no",n:2,name:"聖維特大教堂",a:"t"},
+ {p:P.castle,t0:92,t1:124,k:"no",n:3,name:"布拉格城堡",a:"l"},
+ {p:P.golden,t0:96.4,t1:124,k:"no",n:4,name:"黃金巷",a:"r"},
+ {p:P.wallen,t0:101.3,t1:124,k:"no",n:5,name:"華倫斯坦宮",a:"r"},
+ {p:P.malo,t0:102.6,t1:124,k:"no",n:6,name:"小區廣場",a:"l"},
+ {p:P.lennon,t0:104.4,t1:124,k:"no",n:7,name:"列儂牆",a:"b"},
+ {p:P.bridge,t0:107.6,t1:124,k:"no",n:8,name:"查理大橋",a:"t"},
+ {p:P.mlynec,t0:109.8,t1:124,k:"meal",name:"MLYNEC 午餐",a:"b"},
+ {p:P.clock,t0:114.6,t1:124,k:"no",n:9,name:"天文鐘",a:"b"},
+ {p:P.ots,t0:115.2,t1:124,k:"no",n:10,name:"舊城廣場",a:"t"},
+ {p:P.powder,t0:117.9,t1:124,k:"no",n:11,name:"火藥塔",a:"r"},
+ {p:P.anp,t0:120,t1:124,k:"hotel",name:"Art Nouveau Palace",a:"b"},
+ {p:P.sedlec,t0:130,t1:150,k:"no",n:1,name:"人骨教堂",a:"r"},
+ {p:P.assum,t0:133.4,t1:150,k:"no",n:2,name:"聖母升天教堂",a:"r"},
+ {p:P.barbara,t0:135.9,t1:150,k:"no",n:3,name:"聖芭芭拉教堂",a:"l"},
+ {p:P.outlet,t0:146,t1:150,k:"no",n:4,name:"Fashion Arena Outlet",a:"b"},
+ {p:P.marriott,t0:149.4,t1:150,k:"hotel",name:"Marriott",a:"r"},
+ {p:P.wenc,t0:152.6,t1:180,k:"no",n:1,name:"瓦茲拉夫廣場",a:"r"},
+ {p:P.obecni,t0:156.6,t1:180,k:"meal",name:"市民會館下午茶",a:"l"},
+ {p:P.palladium,t0:157.9,t1:180,k:"no",n:3,name:"帕拉迪姆（解散）",a:"r"},
+ {p:P.imperial,t0:164.5,t1:180,k:"opt",name:"帝國咖啡館",a:"r"},
+ {p:P.cihelna,t0:169.4,t1:180,k:"opt",name:"天鵝岸",a:"l"},
+ {p:P.havel,t0:173.5,t1:180,k:"opt",name:"哈維爾市集",a:"b"},
+ {p:P.PRG,t0:184.4,t1:192,k:"air",name:"布拉格哈維爾機場",a:"l"},
+ {p:P.TPE,t0:190.6,t1:200,k:"air",name:"桃園國際機場",a:"r"}
+];
+
+/* ---------- cards ---------- */
+const CARDS = [
+ {t0:10,t1:16,img:"01",n:"Day 1 · JX101",h:"星宇航空直飛布拉格",p:"團體於公司集合，搭車前往桃園國際機場。23:45 起飛，翌日早晨 08:00 抵達。"},
+ {t0:37.5,t1:43.6,img:"02",n:"Český Krumlov",h:"庫倫洛夫城堡",p:"四十棟建築組成，規模在捷克僅次於布拉格城堡。從城堡區俯瞰紅瓦白牆與 S 形河灣。"},
+ {t0:43.6,t1:49.6,img:"03",n:"Náměstí Svornosti",h:"舊城區・市政廣場",p:"巷弄裡滿是木造玩具與波希米亞水晶小店。推薦現烤肉桂煙囪捲 Trdelník、刺蝟色鉛筆。"},
+ {t0:56,t1:60.6,img:"04",n:"České Budějovice",h:"布傑約維采・奧托卡二世廣場",p:"南捷克首府、原創百威啤酒的故鄉。漫步參孫噴泉所在的廣場，遠望黑塔。"},
+ {t0:61,t1:65.8,img:"05",n:"Zámek Hluboká",h:"赫魯博卡城堡",p:"以溫莎城堡為靈感的白色宮殿，花園與自然風光環繞，捷克最美城堡之一。"},
+ {t0:71.8,t1:75.5,img:"06",n:"Tančící dům · 1996",h:"跳舞的房子",p:"法蘭克・蓋瑞與米盧尼克合作的解構主義名作，又名「弗雷德與琴吉之屋」。"},
+ {t0:75.5,t1:80,img:"07",n:"Vltava Cruise",h:"伏爾他瓦河遊船",p:"順流欣賞一座座橋，卡夫卡最愛的布拉格視角。"},
+ {t0:86.5,t1:92,text:1,n:"Mucha Museum",h:"慕夏美術館",p:"位於 18 世紀薩瓦林宮，收藏阿爾豐斯・慕夏的海報、繪畫與手稿，新藝術風格代表。"},
+ {t0:92,t1:99,img:"11",n:"Pražský hrad",h:"布拉格城堡・聖維特大教堂",p:"金氏世界紀錄最大古堡，佔地 7 萬平方公尺；聖維特為世界三大哥德式教堂之一。※ 週日彌撒時順序可能調整。"},
+ {t0:99,t1:105.8,img:"12",n:"Malá Strana",h:"黃金巷・華倫斯坦宮・列儂牆",p:"黃金巷 22 號是卡夫卡故居；華倫斯坦宮建於 1623 年；穿過小區廣場來到列儂牆。"},
+ {t0:105.8,t1:112.5,img:"13",n:"Karlův most",h:"查理大橋・MLYNEC 午餐",p:"東歐現存最古老石橋，全長 520 公尺、兩側 30 座雕像。午餐在橋畔米其林推薦餐廳。"},
+ {t0:112.5,t1:120,img:"14",n:"Staroměstské náměstí",h:"舊城廣場・天文鐘・火藥塔",p:"運轉 600 年的天文鐘每逢整點十二使徒現身；1475 年建成的火藥塔高 65 公尺。"},
+ {t0:130.5,t1:136,img:"08",n:"Kutná Hora · UNESCO",h:"人骨教堂・聖母升天教堂",p:"19 世紀木雕家林特以黑死病與戰亂遺骨排列成藝術；鄰近教堂融合哥德與巴洛克。"},
+ {t0:136,t1:141.5,img:"09",n:"Chrám sv. Barbory",h:"聖芭芭拉教堂",p:"始建於 14 世紀後半的晚期哥德式大教堂，彩繪玻璃與管風琴令人讚嘆。"},
+ {t0:145.6,t1:150,img:"10",n:"Fashion Arena",h:"Outlet 血拼",p:"服務中心出示護照領 VIP Day Pass 再享 9 折；同店單日滿 2,001 克朗可退稅。"},
+ {t0:152,t1:157.4,img:"15",n:"Nové Město",h:"新城區・瓦茲拉夫廣場",p:"14 世紀查理四世所建，面積是舊城區的三倍，國家博物館矗立廣場端點。"},
+ {t0:157.4,t1:162.6,text:1,n:"Obecní dům",h:"市民會館下午茶",p:"新藝術風格地標內的百年咖啡廳，咖啡＋蛋糕。之後在帕拉迪姆購物中心解散，自由活動。"},
+ {t0:163,t1:167.5,img:"16",n:"Café Imperial",h:"帝國咖啡館",p:"帕拉迪姆斜對面步行 3 分鐘，滿室百年馬賽克陶瓷浮雕。"},
+ {t0:167.5,t1:172,img:"17",n:"Cihelná",h:"伏爾他瓦河天鵝岸",p:"查理大橋北側河灘，傍晚拍下夕陽灑在城堡與大橋上的明信片畫面。"},
+ {t0:172,t1:176,img:"18",n:"Havelské tržiště",h:"哈維爾露天市集",p:"布拉格最悠久的露天市集：莓果、手作木雕、天文鐘磁鐵。"},
+ {t0:181,t1:186,img:"23",n:"Day 7 · JX102",h:"布拉格哈維爾機場",p:"10:30 起飛，翌日 07:20 抵達桃園。離境前記得辦理退稅蓋章。"}
+];
+
+const FOOD = {t0:176,t1:180.4,items:[
+ {img:"19",h:"肉桂煙囪捲",p:"80–160 CZK"},{img:"20",h:"街頭烤香腸",p:"100–150 CZK"},
+ {img:"21",h:"開放三明治",p:"45–75 CZK"},{img:"22",h:"皮爾森生啤",p:"55–80 CZK"}]};
+
+/* chapters in film time; narration is one dialogue file per chapter */
+const CHV=[[0,9],[9,26],[26,50],[50,80],[80,124],[124,150],[150,180],[180,192],[192,200]];
+const DLG=[[["小晴", "哈囉大家好，我是小晴！"], ["阿哲", "我是阿哲！今年港洲的員工旅遊，要去捷克布拉格八天！"], ["小晴", "沒錯，今天我們就跟著地圖，一天一天，帶大家先走一遍。"]], [["阿哲", "第一天其實很輕鬆，晚上在公司集合，坐車去桃園機場。"], ["小晴", "搭星宇航空直飛，晚上十一點四十五分起飛。"], ["阿哲", "飛大概十五個小時，睡一覺醒來……"], ["小晴", "當地早上八點，就到布拉格了！而且捷克比台灣慢七個小時，等於多賺一天。"]], [["阿哲", "一下飛機我們先不進市區，直接往南開一百七十三公里。"], ["小晴", "目的地是契斯科庫倫洛夫，公認捷克最美的中世紀小鎮。"], ["阿哲", "聽說這裡連麥當勞都沒有？"], ["小晴", "對啊！伏爾他瓦河在這裡繞了一個 S 形，從城堡往下看，整片都是紅屋頂。"], ["阿哲", "晚上就住在廣場旁邊，記得去買一個現烤的肉桂煙囪捲！"]], [["小晴", "第三天早上，先到南捷克的首府，布傑約維采。"], ["阿哲", "這裡是百威啤酒的老家，正港的原創百威喔。"], ["小晴", "接著是白色的赫魯博卡城堡，靈感來自英國溫莎城堡，根本是童話。"], ["阿哲", "下午一路北上一百四十五公里，回到布拉格。"], ["小晴", "先去看那棟歪歪扭扭的，跳舞的房子，"], ["阿哲", "再坐船遊伏爾他瓦河，一座橋接著一座橋，難怪卡夫卡最愛這個角度。"]], [["阿哲", "第四天就是重頭戲了，布拉格市區一日遊！"], ["小晴", "早上先看慕夏美術館，接著坐車上山，到全世界最大的古堡，布拉格城堡。"], ["阿哲", "裡面的聖維特大教堂，是世界三大哥德式教堂之一，記得抬頭看那片玫瑰窗。"], ["小晴", "然後一路往下走，黃金巷、華倫斯坦宮、小區廣場，再到列儂牆拍照。"], ["阿哲", "中午走過查理大橋，就在橋邊的米其林推薦餐廳吃午餐。"], ["小晴", "下午到舊城廣場，整點的時候，天文鐘的十二使徒會出來打招呼！"], ["阿哲", "晚上再搭遊船吃自助餐，看布拉格夜景，完美。"]], [["小晴", "第五天往東開七十公里，到銀礦古城庫特納霍拉。"], ["阿哲", "這裡有一間很特別的人骨教堂，用數萬人的骨骸做裝飾。"], ["小晴", "聽起來有點毛，但其實很震撼。旁邊的聖芭芭拉教堂也超美。"], ["阿哲", "回程就是大家最期待的……Outlet！"], ["小晴", "記得先拿護照去服務中心領 VIP 折扣卡，同一家店買滿兩千零一克朗，就可以退稅。"]], [["阿哲", "第六天，我們從新城區的瓦茲拉夫廣場出發。"], ["小晴", "下午在市民會館的百年咖啡廳喝下午茶，然後……"], ["阿哲", "自由活動！"], ["小晴", "可以去帝國咖啡館坐坐，傍晚到河邊的天鵝岸拍城堡夕陽，或是逛逛哈維爾市集。"], ["阿哲", "晚餐每人發五百克朗，煙囪捲、烤香腸，再配一杯皮爾森生啤，剛剛好。"], ["小晴", "不過冬天四點多就天黑了，記得結伴同行喔。"]], [["阿哲", "第七天早上就要去機場了，離境前記得辦退稅。"], ["小晴", "搭星宇航空回台灣，第八天早上七點二十分抵達桃園。"], ["阿哲", "八天七夜，圓滿結束！"]], [["小晴", "出發前記得帶轉接頭、穿洋蔥式保暖衣物，護照錢包隨身帶好。"], ["阿哲", "我們布拉格見！"], ["小晴", "拜拜～"]]];
+let AUD_DUR=[12.43, 19.39, 26.14, 28.13, 42.98, 27.82, 31.2, 11.09, 8.28];   /* seconds of each dialogue file */
+const CAPT=[[0.0, 2.32, 7.97], [0.0, 5.13, 9.2, 12.48], [0.0, 5.04, 11.21, 13.76, 21.19], [0.0, 4.15, 8.58, 14.87, 18.83, 22.26], [0.0, 3.87, 11.4, 18.77, 26.22, 31.41, 38.31], [0.0, 5.14, 10.93, 17.3, 19.73], [0.0, 4.25, 10.74, 11.64, 19.25, 26.69], [0.0, 3.78, 8.72], [0.0, 5.62, 7.13]];   /* line start times inside each file */
+const VOICE_DIR="voice/";
+
+/* static map labels */
+const LABELS = [
+ {p:[15.45,49.80],t:"捷　克",zmin:5.6,zmax:9.2,s:"country"},
+ {p:[11.2,50.75],t:"德　國",zmin:6.2,zmax:9,s:"country2"},
+ {p:[15.2,48.12],t:"奧地利",zmin:6.2,zmax:9,s:"country2"},
+ {p:[17.6,50.85],t:"波　蘭",zmin:6.2,zmax:9,s:"country2"},
+ {p:[18.9,48.75],t:"斯洛伐克",zmin:6.2,zmax:9,s:"country2"},
+ {p:[120.95,23.7],t:"台　灣",zmin:3,zmax:8,s:"country2",dx:120},
+ {p:[103,35],t:"中　國",zmin:3.5,zmax:5.5,s:"country2"},
+ {p:[78,62],t:"俄羅斯",zmin:3.5,zmax:5.5,s:"country2"},
+ {p:[14.42,50.075],t:"布拉格",zmin:6.4,zmax:11.6,s:"city"},
+ {p:[13.38,49.75],t:"皮爾森",zmin:7,zmax:10.5,s:"town"},
+ {p:[16.61,49.20],t:"布爾諾",zmin:7,zmax:10.5,s:"town"},
+ {p:[14.66,49.41],t:"塔波爾",zmin:7.4,zmax:10.5,s:"town"},
+ {p:[14.315,48.80],t:"契斯科庫倫洛夫",zmin:7,zmax:9.6,s:"town"},
+ {p:[15.268,49.948],t:"庫特納霍拉",zmin:7.4,zmax:12.6,s:"town"},
+ {p:[14.398,50.0927],t:"城堡區",zmin:13.4,zmax:20,s:"district"},
+ {p:[14.4045,50.0868],t:"小城區",zmin:13.4,zmax:20,s:"district"},
+ {p:[14.4195,50.0893],t:"舊城區",zmin:13.4,zmax:20,s:"district"},
+ {p:[14.4235,50.0795],t:"新城區",zmin:13.4,zmax:20,s:"district"},
+ {p:[14.3955,50.0825],t:"佩特任山",zmin:13.6,zmax:20,s:"park"},
+ {p:[14.4200,50.0972],t:"列特納公園",zmin:13.6,zmax:20,s:"park"},
+ {p:[14.4085,50.0790],t:"伏爾他瓦河",zmin:13.2,zmax:20,s:"river",rot:-1.35},
+ {p:[14.3172,48.8066],t:"伏爾他瓦河",zmin:13.2,zmax:20,s:"river",rot:0.05}
+];
+
+/* hand-drawn city features [lon,lat] */
+const PRAGUE_RIVER=[[14.4100,50.0400],[14.4150,50.0560],[14.4170,50.0640],[14.4152,50.0685],[14.4122,50.0727],[14.4116,50.0765],[14.4100,50.0812],[14.4110,50.0865],[14.4128,50.0893],[14.4150,50.0915],[14.4180,50.0935],[14.4230,50.0948],[14.4300,50.0956],[14.4380,50.0966],[14.4460,50.0985],[14.4530,50.1010],[14.4590,50.1045],[14.4560,50.1085],[14.4450,50.1125],[14.4300,50.1160],[14.4150,50.1200],[14.4050,50.1280],[14.4000,50.1400]];
+const CK_RIVER=[[14.3060,48.8110],[14.3095,48.8118],[14.3130,48.8121],[14.3165,48.8116],[14.3186,48.8100],[14.3176,48.8086],[14.3150,48.8081],[14.3125,48.8076],[14.3112,48.8066],[14.3125,48.8056],[14.3160,48.8054],[14.3195,48.8062],[14.3230,48.8075]];
+const PARKS=[
+ [[14.389,50.0835],[14.393,50.0875],[14.399,50.0872],[14.4035,50.0835],[14.4025,50.0785],[14.3955,50.0770],[14.3900,50.0795]],
+ [[14.4085,50.0942],[14.4165,50.0952],[14.4280,50.0968],[14.4305,50.0990],[14.4150,50.0995],[14.4070,50.0975]],
+ [[14.3115,48.8128],[14.3145,48.8140],[14.3200,48.8135],[14.3180,48.8124],[14.3130,48.8124]],
+ [[15.2580,49.9455],[15.2665,49.9460],[15.2660,49.9435],[15.2590,49.9430]]
+];
+const CASTLE_BLOCK=[[14.3965,50.0912],[14.4048,50.0930],[14.4055,50.0918],[14.3975,50.0898]];
+const STREETS=[
+ [[14.4262,50.0838],[14.4305,50.0795]],
+ [[14.4130,50.0815],[14.4200,50.0825],[14.4245,50.0850],[14.4282,50.0872]],
+ [[14.4220,50.0874],[14.4278,50.0870]],
+ [[14.4140,50.0864],[14.4185,50.0862],[14.4205,50.0868]],
+ [[14.3990,50.0890],[14.4036,50.0878],[14.4085,50.0863]],
+ [[14.4213,50.0876],[14.4180,50.0912]],
+ [[14.4278,50.0870],[14.4320,50.0884],[14.4370,50.0890]],
+ [[14.4210,50.0848],[14.4245,50.0850]],
+ [[14.4120,50.0790],[14.4190,50.0800],[14.4262,50.0838]]
+];
+const BRIDGES=[
+ [[14.4086,50.0863],[14.4136,50.0865]],
+ [[14.4106,50.0890],[14.4152,50.0897]],
+ [[14.4075,50.0811],[14.4128,50.0814]],
+ [[14.4092,50.0763],[14.4142,50.0767]],
+ [[14.4096,50.0725],[14.4148,50.0729]],
+ [[14.4168,50.0950],[14.4192,50.0920]]
+];
+
+/* ---------- math ---------- */
+const PI=Math.PI, clamp=(v,a,b)=>v<a?a:v>b?b:v, lerp=(a,b,u)=>a+(b-a)*u;
+const ease=u=>u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;
+const easeOut=u=>1-Math.pow(1-u,3);
+const smooth=(a,b,x)=>{const u=clamp((x-a)/(b-a),0,1);return u*u*(3-2*u)};
+function merc(lon,lat){const s=Math.sin(clamp(lat,-85,85)*PI/180);return [(lon+180)/360,.5-Math.log((1+s)/(1-s))/(4*PI)]}
+function vis(t,t0,t1,f){f=f||.6;return Math.min(smooth(t0,t0+f,t),1-smooth(t1-f,t1,t))}
+
+function greatCircle(a,b,n){
+  const r=PI/180,[l1,p1]=[a[0]*r,a[1]*r],[l2,p2]=[b[0]*r,b[1]*r];
+  const d=2*Math.asin(Math.sqrt(Math.sin((p2-p1)/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin((l2-l1)/2)**2));
+  const out=[];
+  for(let i=0;i<=n;i++){const f=i/n,A=Math.sin((1-f)*d)/Math.sin(d),B=Math.sin(f*d)/Math.sin(d);
+    const x=A*Math.cos(p1)*Math.cos(l1)+B*Math.cos(p2)*Math.cos(l2),y=A*Math.cos(p1)*Math.sin(l1)+B*Math.cos(p2)*Math.sin(l2),z=A*Math.sin(p1)+B*Math.sin(p2);
+    out.push([Math.atan2(y,x)/r,Math.atan2(z,Math.sqrt(x*x+y*y))/r]);}
+  return out;
+}
+
+/* prepare routes in world units */
+R.forEach(r=>{
+  if(typeof r.pts==="string"){const [,a,b]=r.pts.split(":");r.pts=greatCircle(P[a],P[b],120)}
+  r.w=r.pts.map(p=>merc(p[0],p[1]));
+  r.cum=[0];for(let i=1;i<r.w.length;i++){r.cum.push(r.cum[i-1]+Math.hypot(r.w[i][0]-r.w[i-1][0],r.w[i][1]-r.w[i-1][1]))}
+  r.len=r.cum[r.cum.length-1];
+});
+PINS.forEach(p=>p.w=merc(p.p[0],p.p[1]));
+LABELS.forEach(l=>l.w=merc(l.p[0],l.p[1]));
+const toW=a=>a.map(p=>merc(p[0],p[1]));
+const HAND={river:toW(PRAGUE_RIVER),ck:toW(CK_RIVER),parks:PARKS.map(toW),castle:toW(CASTLE_BLOCK),streets:STREETS.map(toW),bridges:BRIDGES.map(toW)};
+K.forEach(k=>k.w=merc(k.c[0],k.c[1]));
+
+/* ---------- geo data ---------- */
+let GEO=null;
+function prepRings(arr){return arr.map(flat=>{const n=flat.length/2,xs=new Float64Array(n),ys=new Float64Array(n);let x0=1,x1=0,y0=1,y1=0;
+  for(let i=0;i<n;i++){const m=merc(flat[2*i],flat[2*i+1]);xs[i]=m[0];ys[i]=m[1];if(m[0]<x0)x0=m[0];if(m[0]>x1)x1=m[0];if(m[1]<y0)y0=m[1];if(m[1]>y1)y1=m[1]}
+  return {xs,ys,n,b:[x0,y0,x1,y1]}})}
+fetch("geo.json").then(r=>r.json()).then(g=>{
+  GEO={world:prepRings(g.world),eu:prepRings(g.eu),cz:prepRings([g.cz])[0],reg:prepRings(g.reg),
+       riv:g.riv.map(r=>Object.assign(prepRings([r.p])[0],{name:r.n,major:/Vltava|Elbe|Donau|Danube|Morava|Oder/.test(r.n)}))};
+  draw(state.t);
+}).catch(()=>{GEO={world:[],eu:[],cz:null,reg:[],riv:[]};draw(state.t)});
+
+/* ---------- camera ---------- */
+function camera(t){
+  if(t<=K[0].t) return {x:K[0].w[0],y:K[0].w[1],z:K[0].z,fx:K[0].fx};
+  for(let i=0;i<K.length-1;i++){const a=K[i],b=K[i+1];
+    if(t<=b.t){const u=ease((t-a.t)/(b.t-a.t));
+      const zmin=Math.min(a.z,b.z),d=Math.hypot(b.w[0]-a.w[0],b.w[1]-a.w[1])*256*Math.pow(2,zmin);
+      const hop=d>1400?Math.log2(d/1400)*.9:0;
+      // weight center motion toward the zoomed-out phase for smoother flights
+      return {x:lerp(a.w[0],b.w[0],u),y:lerp(a.w[1],b.w[1],u),z:lerp(a.z,b.z,u)-hop*Math.sin(PI*u),fx:lerp(a.fx,b.fx,u)}}}
+  const l=K[K.length-1];return {x:l.w[0],y:l.w[1],z:l.z,fx:l.fx};
+}
+
+/* ---------- canvas ---------- */
+const cv=document.getElementById("map"),ctx=cv.getContext("2d");
+let scaleK=.5,dpr=1;
+function resize(){
+  const st=document.getElementById("stage");
+  scaleK=st.clientWidth/W;document.getElementById("frame").style.setProperty("--k",scaleK);
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=Math.round(W*scaleK*dpr);cv.height=Math.round(H*scaleK*dpr);
+  draw(state.t);
+}
+let CAM,WS,OX,OY;
+function sx(x){return (x-CAM.x)*WS+OX} function sy(y){return (y-CAM.y)*WS+OY}
+function inView(b,pad){pad=pad||0;return !(sx(b[2])<-pad||sx(b[0])>W+pad||sy(b[3])<-pad||sy(b[1])>H+pad)}
+function ringPath(r,close){ctx.moveTo(sx(r.xs[0]),sy(r.ys[0]));for(let i=1;i<r.n;i++)ctx.lineTo(sx(r.xs[i]),sy(r.ys[i]));if(close)ctx.closePath()}
+function polyPath(w,close){ctx.moveTo(sx(w[0][0]),sy(w[0][1]));for(let i=1;i<w.length;i++)ctx.lineTo(sx(w[i][0]),sy(w[i][1]));if(close)ctx.closePath()}
+
+const C={sea:"#bcd9df",land:"#e9ece3",cz:"#fbf6ea",ink:"#1c2840",ink2:"#56607a",roof:"#cf3a28",river:"#5fa6bb",water:"#a7d0da",gold:"#d99a1c",park:"#d3e3c4",paper:"#fffdf8",grid:"rgba(28,40,64,.07)",street:"#e4ddcd",bridge:"#c9bda4"};
+const FS='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif', FSERIF='"Noto Serif TC","Songti TC",serif', FMONO='"IBM Plex Mono",ui-monospace,monospace';
+
+function metersPerPx(){const lat=Math.atan(Math.sinh(PI*(1-2*CAM.y)))*180/PI;return 40075016.7*Math.cos(lat*PI/180)/WS}
+
+function drawGraticule(){
+  const steps=[20,10,5,2,1,.5,.2,.1,.05,.02,.01,.005,.002];
+  const degPx=WS/360;let step=steps[0];for(const s of steps){if(s*degPx>=230)step=s}
+  const lon0=CAM.x*360-180-(OX/degPx)-step, lon1=lon0+W/degPx+2*step;
+  ctx.strokeStyle=C.grid;ctx.lineWidth=1;ctx.beginPath();
+  for(let l=Math.floor(lon0/step)*step;l<=lon1;l+=step){const x=sx((l+180)/360);ctx.moveTo(x,0);ctx.lineTo(x,H)}
+  const latTop=Math.atan(Math.sinh(PI*(1-2*(CAM.y-OY/WS))))*180/PI, latBot=Math.atan(Math.sinh(PI*(1-2*(CAM.y+(H-OY)/WS))))*180/PI;
+  for(let l=Math.floor(latBot/step)*step;l<=latTop+step;l+=step){const y=sy(merc(0,l)[1]);ctx.moveTo(0,y);ctx.lineTo(W,y)}
+  ctx.stroke();
+}
+
+function drawBase(){
+  ctx.fillStyle=C.sea;ctx.fillRect(0,0,W,H);
+  drawGraticule();
+  if(!GEO)return;
+  const z=CAM.z;
+  ctx.fillStyle=C.land;ctx.strokeStyle="rgba(28,40,64,.22)";ctx.lineWidth=1;
+  if(z<6.6){ctx.beginPath();GEO.world.forEach(r=>{if(inView(r.b,20))ringPath(r,true)});ctx.fill();ctx.stroke()}
+  if(z>5){ctx.beginPath();GEO.eu.forEach(r=>{if(inView(r.b,20))ringPath(r,true)});ctx.fill('evenodd');ctx.stroke()}
+  if(GEO.cz){ctx.beginPath();ringPath(GEO.cz,true);ctx.fillStyle=C.cz;ctx.fill();}
+  // regions
+  if(z>6&&z<12){ctx.save();ctx.globalAlpha=.55*(1-smooth(10,12,z));ctx.setLineDash([5,6]);ctx.strokeStyle="rgba(28,40,64,.35)";ctx.lineWidth=1;ctx.beginPath();GEO.reg.forEach(r=>{if(inView(r.b))ringPath(r,false)});ctx.stroke();ctx.restore()}
+  if(GEO.cz&&z>4.5){ctx.save();ctx.globalAlpha=1-smooth(11,13,z);ctx.strokeStyle=C.ink;ctx.lineWidth=2.2;ctx.beginPath();ringPath(GEO.cz,true);ctx.stroke();ctx.restore()}
+  // natural earth rivers
+  const ra=1-smooth(11.2,12.4,z);
+  if(ra>0&&z>5.5){ctx.save();ctx.globalAlpha=ra;ctx.strokeStyle=C.river;ctx.lineJoin="round";ctx.lineCap="round";
+    GEO.riv.forEach(r=>{if(!inView(r.b))return;ctx.lineWidth=(r.major?2.4:1.2)*(1+smooth(8,11,z)*.8);ctx.beginPath();ringPath(r,false);ctx.stroke()});ctx.restore()}
+}
+
+function drawCity(){
+  const a=smooth(11.2,12.4,CAM.z);if(a<=0)return;
+  const mpp=metersPerPx();ctx.save();ctx.globalAlpha=a;ctx.lineJoin="round";ctx.lineCap="round";
+  ctx.fillStyle=C.park;HAND.parks.forEach(p=>{ctx.beginPath();polyPath(p,true);ctx.fill()});
+  ctx.fillStyle="#efe3c8";ctx.strokeStyle="rgba(28,40,64,.18)";ctx.lineWidth=1.2;ctx.beginPath();polyPath(HAND.castle,true);ctx.fill();ctx.stroke();
+  ctx.strokeStyle=C.street;HAND.streets.forEach(s=>{ctx.lineWidth=Math.max(3,26/mpp);ctx.beginPath();polyPath(s,false);ctx.stroke()});
+  [[HAND.river,230],[HAND.ck,40]].forEach(([w,m])=>{ctx.strokeStyle=C.river;ctx.lineWidth=m/mpp+3;ctx.beginPath();polyPath(w,false);ctx.stroke();ctx.strokeStyle=C.water;ctx.lineWidth=m/mpp;ctx.beginPath();polyPath(w,false);ctx.stroke()});
+  ctx.strokeStyle=C.bridge;HAND.bridges.forEach((b,i)=>{ctx.lineWidth=Math.max(3,(i===0?14:20)/mpp);ctx.beginPath();polyPath(b,false);ctx.stroke()});
+  ctx.restore();
+}
+
+function partial(r,p){const target=r.len*p,out=[r.w[0]];let i=1;
+  for(;i<r.w.length&&r.cum[i]<=target;i++)out.push(r.w[i]);
+  if(i<r.w.length){const seg=r.cum[i]-r.cum[i-1]||1,u=(target-r.cum[i-1])/seg;out.push([lerp(r.w[i-1][0],r.w[i][0],u),lerp(r.w[i-1][1],r.w[i][1],u)])}
+  return out}
+
+function drawPlane(x,y,ang){ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.fillStyle=C.ink;ctx.strokeStyle=C.paper;ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(22,0);ctx.lineTo(4,-4);ctx.lineTo(-4,-20);ctx.lineTo(-10,-20);ctx.lineTo(-4,-4);ctx.lineTo(-16,-3);ctx.lineTo(-21,-10);ctx.lineTo(-25,-10);ctx.lineTo(-22,0);ctx.lineTo(-25,10);ctx.lineTo(-21,10);ctx.lineTo(-16,3);ctx.lineTo(-4,4);ctx.lineTo(-10,20);ctx.lineTo(-4,20);ctx.lineTo(4,4);ctx.closePath();ctx.stroke();ctx.fill();ctx.restore()}
+
+function pill(text,x,y,font,bg,fg,anchor){
+  ctx.font=font;const w=ctx.measureText(text).width+28,h=40;let px=x,py=y;
+  if(anchor==="r"){px=x+24;py=y-h/2}else if(anchor==="l"){px=x-24-w;py=y-h/2}else if(anchor==="t"){px=x-w/2;py=y-28-h}else{px=x-w/2;py=y+24}
+  ctx.fillStyle=bg;ctx.beginPath();ctx.roundRect(px,py,w,h,h/2);ctx.fill();
+  ctx.strokeStyle="rgba(28,40,64,.14)";ctx.lineWidth=1.5;ctx.stroke();
+  ctx.fillStyle=fg;ctx.textBaseline="middle";ctx.textAlign="left";ctx.fillText(text,px+14,py+h/2+1);
+}
+
+function drawRoutes(t){
+  R.forEach(r=>{
+    if(t<r.t0)return;const fade=1-smooth(r.until-.8,r.until,t);if(fade<=0)return;
+    const p=easeOut(clamp((t-r.t0)/(r.t1-r.t0),0,1));const pts=partial(r,p);if(pts.length<2)return;
+    ctx.save();ctx.globalAlpha=fade;ctx.lineJoin="round";ctx.lineCap="round";
+    const path=()=>{ctx.beginPath();polyPath(pts,false)};
+    if(r.k==="drive"){path();ctx.strokeStyle=C.paper;ctx.lineWidth=11;ctx.stroke();path();ctx.strokeStyle=C.roof;ctx.lineWidth=6;ctx.stroke()}
+    else if(r.k==="walk"){path();ctx.strokeStyle=C.paper;ctx.lineWidth=10;ctx.stroke();path();ctx.setLineDash([2,12]);ctx.strokeStyle=C.roof;ctx.lineWidth=7;ctx.stroke()}
+    else if(r.k==="opt"){path();ctx.setLineDash([2,10]);ctx.strokeStyle=C.ink2;ctx.lineWidth=5;ctx.stroke()}
+    else if(r.k==="boat"){path();ctx.setLineDash([14,10]);ctx.strokeStyle="#1f6f8b";ctx.lineWidth=6;ctx.stroke()}
+    else if(r.k==="flight"){path();ctx.setLineDash([14,12]);ctx.strokeStyle=C.ink;ctx.lineWidth=4;ctx.stroke()}
+    ctx.setLineDash([]);
+    const h=pts[pts.length-1],hp=pts[pts.length-2];
+    if(p<1){if(r.k==="flight"){drawPlane(sx(h[0]),sy(h[1]),Math.atan2(sy(h[1])-sy(hp[1]),sx(h[0])-sx(hp[0])))}
+      else{ctx.fillStyle=r.k==="boat"?"#1f6f8b":C.roof;ctx.strokeStyle=C.paper;ctx.lineWidth=4;ctx.beginPath();ctx.arc(sx(h[0]),sy(h[1]),10,0,2*PI);ctx.fill();ctx.stroke()}}
+    if(r.label&&p>.55){const mid=partial(r,.5).pop();ctx.globalAlpha=fade*smooth(.55,.8,p);
+      pill(r.label,sx(mid[0]),sy(mid[1]),`600 21px ${FMONO}`,C.ink,"#fff",r.k==="flight"?"t":"r")}
+    ctx.restore();
+  });
+}
+
+function drawPins(t){
+  PINS.forEach(pn=>{
+    if(t<pn.t0)return;const f=1-smooth(pn.t1-.8,pn.t1,t);if(f<=0)return;
+    const x=sx(pn.w[0]),y=sy(pn.w[1]);if(x<-200||x>W+200||y<-100||y>H+100)return;
+    const u=clamp((t-pn.t0)/.45,0,1),s=u<1?(1-Math.pow(1-u,3))*(1+.25*Math.sin(u*PI)):1;
+    ctx.save();ctx.globalAlpha=f;
+    // label
+    ctx.globalAlpha=f*smooth(.25,.7,(t-pn.t0));
+    const isOpt=pn.k==="opt";
+    pill(pn.name,x,y,`700 23px ${FS}`,isOpt?"rgba(255,253,248,.92)":C.paper,isOpt?C.ink2:C.ink,pn.a);
+    ctx.globalAlpha=f;ctx.translate(x,y);ctx.scale(s,s);
+    const r=18;ctx.lineWidth=4;ctx.strokeStyle=C.paper;
+    let bg=C.roof,txt=pn.n!=null?String(pn.n):"";
+    if(pn.k==="hotel"){bg=C.ink;txt="宿"}else if(pn.k==="meal"){bg=C.gold;txt="餐"}else if(pn.k==="air"){bg=C.ink;txt="✈"}else if(pn.k==="opt"){bg=C.paper;txt="選"}
+    ctx.shadowColor="rgba(28,40,64,.3)";ctx.shadowBlur=10;ctx.shadowOffsetY=3;
+    ctx.fillStyle=bg;ctx.beginPath();
+    if(pn.k==="hotel")ctx.roundRect(-r,-r,2*r,2*r,7);else ctx.arc(0,0,r,0,2*PI);
+    ctx.fill();ctx.shadowColor="transparent";ctx.stroke();
+    if(isOpt){ctx.strokeStyle=C.ink2;ctx.lineWidth=2.5;ctx.setLineDash([4,4]);ctx.beginPath();ctx.arc(0,0,r-3,0,2*PI);ctx.stroke();ctx.setLineDash([])}
+    ctx.fillStyle=isOpt?C.ink2:"#fff";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.font=`700 ${txt.length>1?16:19}px ${pn.k==="no"?FMONO:FS}`;ctx.fillText(txt,0,1.5);
+    ctx.restore();
+  });
+}
+
+function drawLabels(){
+  const z=CAM.z;
+  LABELS.forEach(l=>{const a=Math.min(smooth(l.zmin,l.zmin+.6,z),1-smooth(l.zmax-.6,l.zmax,z));if(a<=0)return;
+    const x=sx(l.w[0])+(l.dx||0),y=sy(l.w[1]);if(x<-300||x>W+300||y<-100||y>H+100)return;
+    ctx.save();ctx.globalAlpha=a;ctx.translate(x,y);if(l.rot)ctx.rotate(l.rot);ctx.textAlign="center";ctx.textBaseline="middle";
+    let font,fill,stroke=C.paper,sw=6;
+    switch(l.s){
+      case "country":font=`900 54px ${FSERIF}`;fill="rgba(28,40,64,.55)";break;
+      case "country2":font=`600 30px ${FSERIF}`;fill="rgba(28,40,64,.38)";stroke=null;break;
+      case "city":font=`900 34px ${FSERIF}`;fill=C.ink;break;
+      case "town":font=`500 22px ${FS}`;fill=C.ink2;break;
+      case "district":font=`600 30px ${FSERIF}`;fill="rgba(28,40,64,.42)";stroke="rgba(255,253,248,.7)";break;
+      case "park":font=`500 20px ${FS}`;fill="#5d7a4c";break;
+      case "river":font=`italic 500 22px ${FS}`;fill="#2f7890";stroke=null;break;
+    }
+    ctx.font=font;
+    if(l.s==="city"||l.s==="town"){ctx.fillStyle=C.ink;ctx.beginPath();ctx.arc(0,0,l.s==="city"?7:5,0,2*PI);ctx.fill();ctx.translate(0,l.s==="city"?-30:-22)}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw;ctx.lineJoin="round";ctx.strokeText(l.t,0,0)}
+    ctx.fillStyle=fill;ctx.fillText(l.t,0,0);ctx.restore()});
+}
+
+/* ---------- DOM overlays ---------- */
+const $=id=>document.getElementById(id);
+document.querySelectorAll(".heroimg").forEach(i=>i.src=IMG+"hero.webp");
+const cardsEl=$("cards");
+CARDS.forEach(c=>{const d=document.createElement("div");d.className="layer card"+(c.text?" textonly":"");d.style.opacity=0;
+  d.innerHTML=(c.img?`<img src="${IMG}${c.img}.webp" alt="">`:"")+`<div class="txt"><div class="n">${c.n}</div><h3>${c.h}</h3><p>${c.p}</p></div>`;
+  cardsEl.appendChild(d);c.el=d});
+$("food").innerHTML=FOOD.items.map(f=>`<div class="pola"><img src="${IMG}${f.img}.webp" alt=""><div><span>${f.h}</span><small>${f.p}</small></div></div>`).join("");
+$("ribbon").innerHTML=["1","2","3","4","5","6","7","8"].map(n=>`<span>${n}</span>`).join("");
+const ribbonSpans=[...$("ribbon").children];
+
+let curDay=-2;
+function dayAt(t){for(let i=0;i<DAYS.length;i++)if(t>=DAYS[i].t0&&t<DAYS[i].t1)return i;return -1}
+function setBadge(i){
+  const b=$("badge");if(i<0){b.innerHTML="";return}
+  const d=DAYS[i];
+  b.innerHTML=`<div class="kicker">DAY ${d.n}</div><h2>${d.title}</h2><div class="route">${d.route}</div>
+   <div class="chips"><span class="chip meal"><b>餐</b>${d.meal}</span><span class="chip"><b>宿</b>${d.hotel}</span></div>`;
+}
+
+function overlays(t){
+  const di=dayAt(t);if(di!==curDay){curDay=di;setBadge(di)}
+  const b=$("badge");
+  if(di>=0){const d=DAYS[di],a=vis(t,d.t0,d.t1,.7),e=easeOut(clamp((t-d.t0)/.9,0,1));b.style.opacity=a;b.style.transform=`translateY(${(1-e)*24}px)`}else b.style.opacity=0;
+  // ribbon
+  const dayNum=di<0?-1:(di===6?6:di);
+  ribbonSpans.forEach((s,j)=>{const on=di===6?(j>=6):(j===di);s.classList.toggle("on",on&&di>=0);s.classList.toggle("done",di>=0&&!on&&j<(di===6?6:di))});
+  $("ribbon").style.opacity=vis(t,9,192,.8);
+  // cards
+  CARDS.forEach(c=>{const a=vis(t,c.t0,c.t1,.55);c.el.style.opacity=a;
+    if(a>0){const e=easeOut(clamp((t-c.t0)/.7,0,1)),k=1+.03*(1-clamp((t-c.t0)/(c.t1-c.t0),0,1));c.el.style.transform=`translateX(${(1-e)*60}px) rotate(${(1-e)*1.5}deg)`;
+      const im=c.el.querySelector("img");if(im)im.style.transform=`scale(${k})`}
+    c.el.style.visibility=a>0?"visible":"hidden"});
+  // food
+  const fa=vis(t,FOOD.t0,FOOD.t1,.5),fe=$("food");fe.style.opacity=fa;fe.style.visibility=fa>0?"visible":"hidden";
+  [...fe.children].forEach((p,j)=>{const e=easeOut(clamp((t-FOOD.t0-j*.18)/.6,0,1));p.style.transform=`translateY(${(1-e)*40}px) rotate(${(j%2?1.6:-1.4)*(e)}deg)`;p.style.opacity=e});
+  // caption
+  const ce=$("caption"),ct=$("captext");
+  if(curCap&&curCap.a>0){const h=`<b class="who ${curCap.who==="小晴"?"f":"m"}">${curCap.who}</b>${curCap.text}`;if(ct.dataset.k!==curCap.key){ct.innerHTML=h;ct.dataset.k=curCap.key}ce.style.opacity=curCap.a}else ce.style.opacity=0;
+  // intro / outro
+  const ia=1-smooth(7.8,9.4,t),io=$("intro");io.style.opacity=ia;io.style.visibility=ia>0?"visible":"hidden";
+  io.querySelector("img").style.transform=`scale(${1.12-.1*clamp(t/9,0,1)})`;
+  [...io.querySelector(".t").children].forEach((c,j)=>{const e=t<.02?1:easeOut(clamp((t-.3-j*.35)/.9,0,1));c.style.opacity=e;c.style.transform=`translateY(${(1-e)*26}px)`});
+  const oa=smooth(192,193.4,t),oo=$("outro");oo.style.opacity=oa;oo.style.visibility=oa>0?"visible":"hidden";
+  oo.querySelector("img").style.transform=`scale(${1+.08*clamp((t-192)/8,0,1)})`;
+  [...oo.querySelector(".t").children].forEach((c,j)=>{const e=easeOut(clamp((t-192.8-j*.35)/.9,0,1));c.style.opacity=e;c.style.transform=`translateY(${(1-e)*26}px)`});
+  // meta
+  const mpp=metersPerPx(),target=mpp*220,nice=[10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000];
+  let m=nice[0];for(const n of nice)if(n<=target)m=n;
+  const lat=Math.atan(Math.sinh(PI*(1-2*CAM.y)))*180/PI,lon=CAM.x*360-180;
+  const dm=v=>{const a=Math.abs(v),d=Math.floor(a),mm=Math.round((a-d)*60);return `${d}°${String(mm).padStart(2,"0")}′`};
+  $("scale").innerHTML=`<svg width="${Math.round(m/mpp)}" height="12" style="display:block;overflow:visible"><path d="M1 0V10H${Math.round(m/mpp)-1}V0" fill="none" stroke="#1c2840" stroke-width="2.5"/></svg>${m>=1000?(m/1000)+" km":m+" m"}`;
+  $("coord").textContent=`${dm(lat)}N ${dm(lon)}E`;
+  $("meta").style.opacity=Math.min(smooth(9,10,t),1-smooth(191.5,192.5,t));
+}
+
+let curCap=null;
+function draw(t){
+  CAM=camera(t);WS=256*Math.pow(2,CAM.z);OX=W*CAM.fx;OY=H/2;
+  ctx.setTransform(scaleK*dpr,0,0,scaleK*dpr,0,0);
+  if(t<9.4&&t>=0&&smooth(7.8,9.4,t)===0){/* intro fully covers */}
+  drawBase();drawCity();drawLabels();drawRoutes(t);drawPins(t);
+  overlays(t);
+}
+
+/* ---------- playback ---------- */
+/* Master clock is real time T. Each chapter lasts as long as its narration (or its film length, whichever is longer);
+   the film time inside the chapter is stretched to fit. */
+let REAL=[],RS=[],RTOTAL=0;
+function layout(){REAL=CHV.map((c,i)=>Math.max(c[1]-c[0],(AUD_DUR[i]||0)+1.4));RS=[];let acc=0;REAL.forEach(r=>{RS.push(acc);acc+=r});RTOTAL=acc;
+  const sk=document.getElementById("seek");if(sk)sk.max=RTOTAL;const tk=document.getElementById("ticks");
+  if(tk)tk.innerHTML=RS.slice(1,8).map(r=>`<i style="left:${r/RTOTAL*100}%"></i>`).join("")}
+layout();
+function chAt(T){for(let i=CHV.length-1;i>=0;i--)if(T>=RS[i])return i;return 0}
+function filmTime(T){const i=chAt(T),u=clamp((T-RS[i])/REAL[i],0,1);return CHV[i][0]+u*(CHV[i][1]-CHV[i][0])}
+const state={T:0,t:0,playing:false,last:0,ch:-1};
+try{const h=window.claude&&window.claude.hot&&window.claude.hot.data;if(h&&typeof h.T==="number"){state.T=h.T;state.t=filmTime(h.T)}}catch(e){}
+try{window.claude&&window.claude.hot&&window.claude.hot.snapshot&&window.claude.hot.snapshot(()=>({T:state.T}))}catch(e){}
+const seek=$("seek"),timeEl=$("time"),bigplay=$("bigplay"),bgm=$("bgm");
+const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+const PLAY='<path d="M6 4l15 8-15 8z"/>',PAUSE='<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+const vo={on:true},music={on:true,vol:0};
+
+/* one audio element per chapter */
+const AUD=CHV.map((c,i)=>{const a=new Audio();a.preload="auto";a.src=VOICE_DIR+"ch"+i+".mp3";
+  a.addEventListener("loadedmetadata",()=>{if(!AUD_DUR[i]&&isFinite(a.duration)){AUD_DUR[i]=a.duration;const f=state.T/RTOTAL;layout();state.T=f*RTOTAL;ui()}});
+  a.addEventListener("error",()=>{a.dataset.bad="1"});return a});
+function stopVoice(){AUD.forEach(a=>{try{a.pause()}catch(e){}})}
+function startVoice(i,off){stopVoice();const a=AUD[i];if(!vo.on||!state.playing||a.dataset.bad)return;
+  const d=AUD_DUR[i]||a.duration||0;if(off>=d-.05)return;
+  try{a.currentTime=Math.max(0,off)}catch(e){}try{const p=a.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
+function voicePlaying(){return AUD.some(a=>!a.paused&&!a.ended)}
+/* captions: lines share the chapter's narration time by length */
+function captionAt(T){const i=chAt(T),lines=DLG[i];if(!lines)return null;
+  const d=AUD_DUR[i]||REAL[i]-1.4,lt=T-RS[i];if(lt>d+.6)return null;
+  const w=lines.map(l=>l[1].replace(/[，。！？、…～\s]/g,"").length+3),sum=w.reduce((x,y)=>x+y,0);
+  const st=CAPT[i]&&CAPT[i].length===lines.length?CAPT[i]:null;
+  let acc=0;for(let k=0;k<lines.length;k++){let s0=acc/sum*d,s1=(acc+w[k])/sum*d;acc+=w[k];if(st){s0=st[k];s1=k+1<lines.length?st[k+1]:d}
+    if(lt<s1||k===lines.length-1){const a=Math.min(smooth(s0-.1,s0+.2,lt),1-smooth(d+.2,d+.6,lt));return {who:lines[k][0],text:lines[k][1],a:Math.max(a,lt>=s0?.001:0),key:i+"-"+k}}}
+  return null}
+
+function ui(){seek.value=state.T;timeEl.textContent=`${fmt(state.T)} / ${fmt(RTOTAL)}`;
+  $("playicon").innerHTML=state.playing?PAUSE:PLAY;$("play").setAttribute("aria-label",state.playing?"暫停":"播放");
+  bigplay.classList.toggle("off",state.playing);
+  const di=dayAt(state.t);chapBtns.forEach((b,j)=>b.classList.toggle("on",j===di));
+  document.querySelectorAll(".chap .m").forEach(m=>{const t=fmt(RS[+m.dataset.i]);if(m.textContent!==t)m.textContent=t})}
+function audioTick(dt){
+  let target=music.on&&state.playing?(voicePlaying()&&vo.on?.035:.10):0;
+  target*=1-smooth(RTOTAL-3.5,RTOTAL,state.T);
+  music.vol+=(target-music.vol)*Math.min(1,dt*4);
+  try{bgm.volume=clamp(music.vol,0,1)}catch(e){}}
+function render(){state.t=filmTime(state.T);curCap=captionAt(state.T);draw(state.t)}
+function loop(ts){if(!state.playing)return;const dt=Math.min((ts-state.last)/1000,.1);state.last=ts;
+  state.T+=dt;
+  const i=chAt(state.T);if(i!==state.ch){state.ch=i;startVoice(i,state.T-RS[i])}
+  if(state.T>=RTOTAL){state.T=RTOTAL;state.playing=false;stopVoice();try{bgm.pause()}catch(e){}}
+  audioTick(dt);render();ui();if(state.playing)requestAnimationFrame(loop)}
+function play(){
+  if(state.T>=RTOTAL-.05){state.T=0;try{bgm.currentTime=0}catch(e){}}
+  state.playing=true;state.last=performance.now();state.ch=chAt(state.T);startVoice(state.ch,state.T-RS[state.ch]);
+  if(music.on){try{const p=bgm.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
+  ui();requestAnimationFrame(loop)}
+function pause(){state.playing=false;stopVoice();try{bgm.pause()}catch(e){}music.vol=0;ui()}
+function toggle(){state.playing?pause():play()}
+function go(T){state.T=clamp(T,0,RTOTAL);state.ch=chAt(state.T);if(state.playing)startVoice(state.ch,state.T-RS[state.ch]);render();ui()}
+function setTog(el,on){el.classList.toggle("on",on);el.setAttribute("aria-pressed",String(on))}
+$("vo").addEventListener("click",()=>{vo.on=!vo.on;setTog($("vo"),vo.on);if(!vo.on)stopVoice();else if(state.playing)startVoice(state.ch,state.T-RS[state.ch])});
+$("mu").addEventListener("click",()=>{music.on=!music.on;setTog($("mu"),music.on);
+  if(music.on&&state.playing){try{const p=bgm.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}});
+$("play").addEventListener("click",toggle);
+$("bigbtn").addEventListener("click",e=>{e.stopPropagation();play()});
+$("stage").addEventListener("click",toggle);
+$("stage").addEventListener("dblclick",e=>{e.preventDefault();toggleFS()});
+seek.addEventListener("input",()=>go(parseFloat(seek.value)));
+document.addEventListener("keydown",e=>{if((e.target.tagName==="INPUT"||e.target.tagName==="SELECT")&&e.code!=="Space")return;
+  if(e.code==="Space"){e.preventDefault();toggle()}else if(e.code==="ArrowRight")go(state.T+5);else if(e.code==="ArrowLeft")go(state.T-5);else if(e.key==="f"||e.key==="F")toggleFS()});
+function toggleFS(){const p=$("player");try{if(document.fullscreenElement)document.exitFullscreen();else p.requestFullscreen().catch(()=>{})}catch(e){}}
+$("fs").addEventListener("click",toggleFS);
+document.addEventListener("fullscreenchange",()=>setTimeout(resize,60));
+window.addEventListener("pagehide",stopVoice);
+
+/* chapters */
+const chapData=[{d:"OPEN",h:"片頭",i:0}].concat(DAYS.map((d,k)=>({d:"DAY "+d.n,h:d.title,i:k+1})));
+const chapEl=$("chapters");
+chapData.forEach(c=>{const b=document.createElement("button");b.type="button";b.className="chap";b.innerHTML=`<span class="d">${c.d}</span><span class="h">${c.h}</span><span class="m" data-i="${c.i}">${fmt(RS[c.i])}</span>`;
+  b.addEventListener("click",()=>{go(RS[c.i]+.01);play()});chapEl.appendChild(b)});
+const chapBtns=[...chapEl.children].slice(1);
+layout();
+
+new ResizeObserver(resize).observe($("stage"));
+resize();render();ui();
+// make sure CJK glyphs used on canvas are loaded before drawing
+const allText=PINS.map(p=>p.name).concat(LABELS.map(l=>l.t),"宿餐選✈").join("");
+if(document.fonts&&document.fonts.load){Promise.all([
+  document.fonts.load(`700 23px "Noto Sans TC"`,allText),document.fonts.load(`500 22px "Noto Sans TC"`,allText),
+  document.fonts.load(`900 34px "Noto Serif TC"`,allText),document.fonts.load(`600 30px "Noto Serif TC"`,allText),
+  document.fonts.load(`600 21px "IBM Plex Mono"`,"0123456789 km")]).then(()=>draw(state.t)).catch(()=>{})}
+})();
+</script>
+
+</body>
+</html>
