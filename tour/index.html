@@ -741,14 +741,21 @@ function render(){state.t=filmTime(state.T);curCap=captionAt(state.T);draw(state
 function loop(ts){if(!state.playing)return;const dt=Math.min((ts-state.last)/1000,.1);state.last=ts;
   state.T+=dt;
   const i=chAt(state.T);if(i!==state.ch){state.ch=i;startVoice(i,state.T-RS[i])}
-  if(state.T>=RTOTAL){state.T=RTOTAL;state.playing=false;stopVoice();try{bgm.pause()}catch(e){}}
+  if(state.T>=RTOTAL){state.T=RTOTAL;state.playing=false;stopVoice();try{bgm.pause()}catch(e){}keepAwake(false)}
   audioTick(dt);render();ui();if(state.playing)requestAnimationFrame(loop)}
 function play(){
   if(state.T>=RTOTAL-.05){state.T=0;try{bgm.currentTime=0}catch(e){}}
   state.playing=true;state.last=performance.now();state.ch=chAt(state.T);startVoice(state.ch,state.T-RS[state.ch]);
   if(music.on){try{const p=bgm.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
-  ui();requestAnimationFrame(loop)}
-function pause(){state.playing=false;stopVoice();try{bgm.pause()}catch(e){}music.vol=0;ui()}
+  keepAwake(true);ui();requestAnimationFrame(loop)}
+function pause(){state.playing=false;stopVoice();try{bgm.pause()}catch(e){}music.vol=0;keepAwake(false);ui()}
+/* keep the phone screen on while the film plays (Screen Wake Lock API) */
+let wakeLock=null;
+async function keepAwake(on){
+  try{
+    if(on){if(!wakeLock&&navigator.wakeLock&&!document.hidden){wakeLock=await navigator.wakeLock.request("screen");wakeLock.addEventListener("release",()=>{wakeLock=null})}}
+    else if(wakeLock){const w=wakeLock;wakeLock=null;await w.release()}
+  }catch(e){wakeLock=null}}
 function toggle(){state.playing?pause():play()}
 function go(T){state.T=clamp(T,0,RTOTAL);state.ch=chAt(state.T);if(state.playing)startVoice(state.ch,state.T-RS[state.ch]);render();ui()}
 function setTog(el,on){el.classList.toggle("on",on);el.setAttribute("aria-pressed",String(on))}
