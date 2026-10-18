@@ -42,7 +42,7 @@ header.top p{margin:0;color:var(--room-dim);font-size:13px}
 @supports (height:100dvh){.player.fs-fallback .stage{width:min(100vw,calc((100dvh - 64px) * 16 / 9))}}
 .frame{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;transform:scale(var(--k,.5));font-family:var(--f-body);color:var(--ink)}
 .frame canvas{position:absolute;inset:0;width:1920px;height:1080px}
-.layer{position:absolute;will-change:opacity,transform}
+.layer{position:absolute}
 
 /* day badge */
 .badge{left:72px;top:64px;width:760px;isolation:isolate}
@@ -659,7 +659,7 @@ function overlays(t){
   // cards
   CARDS.forEach(c=>{const a=vis(t,c.t0,c.t1,.55);c.el.style.opacity=a;
     if(a>0){const e=easeOut(clamp((t-c.t0)/.7,0,1)),k=1+.03*(1-clamp((t-c.t0)/(c.t1-c.t0),0,1));c.el.style.transform=`translateX(${(1-e)*60}px) rotate(${(1-e)*1.5}deg)`;
-      const im=c.el.querySelector("img");if(im)im.style.transform=`scale(${k})`}
+      }
     c.el.style.visibility=a>0?"visible":"hidden"});
   // food
   const fa=vis(t,FOOD.t0,FOOD.t1,.5),fe=$("food");fe.style.opacity=fa;fe.style.visibility=fa>0?"visible":"hidden";
@@ -669,10 +669,8 @@ function overlays(t){
   if(curCap&&curCap.a>0){const h=`<b class="who ${curCap.who==="小晴"?"f":"m"}">${curCap.who}</b>${curCap.text}`;if(ct.dataset.k!==curCap.key){ct.innerHTML=h;ct.dataset.k=curCap.key}ce.style.opacity=curCap.a}else ce.style.opacity=0;
   // intro / outro
   const ia=1-smooth(7.8,9.4,t),io=$("intro");io.style.opacity=ia;io.style.visibility=ia>0?"visible":"hidden";
-  io.querySelector("img").style.transform=`scale(${1.12-.1*clamp(t/9,0,1)})`;
   [...io.querySelector(".t").children].forEach((c,j)=>{const e=t<.02?1:easeOut(clamp((t-.3-j*.35)/.9,0,1));c.style.opacity=e;c.style.transform=`translateY(${(1-e)*26}px)`});
   const oa=smooth(192,193.4,t),oo=$("outro");oo.style.opacity=oa;oo.style.visibility=oa>0?"visible":"hidden";
-  oo.querySelector("img").style.transform=`scale(${1+.08*clamp((t-192)/8,0,1)})`;
   [...oo.querySelector(".t").children].forEach((c,j)=>{const e=easeOut(clamp((t-192.8-j*.35)/.9,0,1));c.style.opacity=e;c.style.transform=`translateY(${(1-e)*26}px)`});
   // meta
   const mpp=metersPerPx(),target=mpp*220,nice=[10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000];
@@ -788,7 +786,10 @@ document.addEventListener("fullscreenchange",onFsChange);document.addEventListen
 window.addEventListener("resize",()=>{updateRot()});
 window.addEventListener("orientationchange",()=>setTimeout(()=>{updateRot();resize()},300));
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("player").classList.contains("fs-fallback"))exitFS()});
-window.addEventListener("pagehide",stopVoice);
+/* screen off, screen saver, app switch or tab hidden: pause everything (animation stops anyway) */
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&state.playing)pause()});
+window.addEventListener("pagehide",()=>{if(state.playing)pause();else stopVoice()});
+window.addEventListener("blur",()=>{if(document.hidden&&state.playing)pause()});
 
 /* chapters */
 const chapData=[{d:"OPEN",h:"片頭",i:0}].concat(DAYS.map((d,k)=>({d:"DAY "+d.n,h:d.title,i:k+1})));
