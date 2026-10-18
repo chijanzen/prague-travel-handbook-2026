@@ -1,2961 +1,787 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>115年港洲營建事業員工旅遊 - 捷克布拉格8日互動手冊</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- PWA / 離線 -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1e3a8a">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="布拉格手冊">
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <style>
-    :root {
-      --primary: #1e3a8a;
-      --primary-hover: #172554;
-      --secondary: #b45309;
-      --accent: #d97706;
-      --map-green: #059669;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --radius-lg: 16px;
-      --radius-md: 10px;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="115年港洲營建事業員工旅遊 捷克布拉格 8 日遊 每日行程地圖動畫導覽（含配音與配樂）">
+<style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>布拉格 8 日行程導覽</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap">
+<style>
+/* Layout: dark screening room around a 16:9 "atlas film" stage; controls + chapter list below. */
+:root{
+  color-scheme:dark;
+  --room:#12161d; --room-2:#1b212b; --room-line:#2a3240; --room-fg:#e9e6df; --room-dim:#9aa3b2;
+  /* film palette (fixed look inside the frame) */
+  --sea:#bcd9df; --land:#eceee6; --cz:#fbf6ea; --ink:#1c2840; --ink-2:#56607a;
+  --roof:#cf3a28; --river:#5fa6bb; --water:#a7d0da; --gold:#d99a1c; --park:#cfe0c0; --paper:#fffdf8;
+  --f-display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+body{background:var(--room);color:var(--room-fg);font-family:var(--f-body);min-height:100%}
+.wrap{max-width:none;margin:0 auto;padding-block:10px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+header.top{width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)));margin-inline:auto;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px}
+header.top h1{margin:0;font-family:var(--f-display);font-weight:900;font-size:clamp(17px,2.2vw,22px);letter-spacing:.02em;text-wrap:balance}
+header.top p{margin:0;color:var(--room-dim);font-size:13px}
 
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      -webkit-tap-highlight-color: transparent;
-    }
-    body {
-      font-family: 'Plus Jakarta Sans', 'Noto Serif TC', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
-      color: var(--text-main);
-      font-size: 16px;
-      line-height: 1.65;
-      padding-bottom: calc(75px + var(--safe-bottom));
-      overflow-x: hidden;
-    }
+/* stage */
+.player{background:#000;border-radius:10px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45);width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)));margin-inline:auto}
+@supports (height:100dvh){.player{width:min(100%,max(320px,calc((100dvh - 118px) * 16 / 9)))}}
+.player:fullscreen{width:100%}
+.player:fullscreen{display:flex;flex-direction:column;justify-content:center;border-radius:0}
+.stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;cursor:pointer;background:var(--sea);max-width:100%}
+.player:fullscreen .stage{max-height:calc(100vh - 64px);width:auto;margin:0 auto}
+.frame{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;transform:scale(var(--k,.5));font-family:var(--f-body);color:var(--ink)}
+.frame canvas{position:absolute;inset:0;width:1920px;height:1080px}
+.layer{position:absolute;will-change:opacity,transform}
 
-    header {
-      background: linear-gradient(135deg, rgba(15, 23, 0.9), rgba(30, 58, 138, 0.85)), 
-                  url('hero.webp') center/cover no-repeat #1e3a8a;
-      color: white;
-      padding: 3rem 1.25rem 2.25rem;
-      text-align: center;
-    }
-    .badge {
-      display: inline-block;
-      background: rgba(217, 119, 6, 0.3);
-      border: 1px solid #fde68a;
-      color: #fef08a;
-      padding: 0.35rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.6rem;
-    }
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1.35;
-      margin-bottom: 0.45rem;
-    }
-    .subtitle {
-      font-size: 1.05rem;
-      color: #cbd5e1;
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.55;
-    }
+/* day badge */
+.badge{left:72px;top:64px;width:760px;isolation:isolate}
+.badge::before{content:"";position:absolute;inset:-90px -160px -70px -110px;z-index:-1;background:radial-gradient(ellipse at 32% 42%,rgba(251,246,234,.95) 0%,rgba(251,246,234,.8) 42%,rgba(251,246,234,0) 72%)}
+.badge:empty::before{display:none}
+.badge .kicker{font-family:var(--f-mono);font-weight:600;font-size:22px;letter-spacing:.24em;color:var(--roof)}
+.badge h2{margin:6px 0 0;font-family:var(--f-display);font-weight:900;font-size:64px;line-height:1.12;letter-spacing:.01em;text-shadow:0 2px 0 var(--paper),0 0 18px rgba(255,253,248,.9)}
+.badge .route{margin-top:10px;font-size:22px;color:var(--ink-2);font-weight:500;text-shadow:0 0 10px var(--paper),0 0 4px var(--paper)}
+.badge .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:10px;background:rgba(255,253,248,.94);border:1.5px solid rgba(28,40,64,.14);border-radius:999px;padding:8px 18px 8px 8px;font-size:20px;font-weight:500;box-shadow:0 4px 14px rgba(28,40,64,.08)}
+.chip b{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;font-size:17px;color:#fff;background:var(--ink)}
+.chip.meal b{background:var(--gold)}
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 1.25rem 1rem;
-    }
+/* day ribbon */
+.ribbon{right:72px;top:64px;display:flex;gap:8px;font-family:var(--f-mono);font-weight:600}
+.ribbon span{width:46px;height:46px;display:grid;place-items:center;border-radius:50%;font-size:19px;background:rgba(255,253,248,.85);color:var(--ink-2);border:1.5px solid rgba(28,40,64,.12);transition:background .4s,color .4s,transform .4s}
+.ribbon span.on{background:var(--roof);color:#fff;border-color:var(--roof);transform:scale(1.12)}
+.ribbon span.done{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-    /* 主分頁切換按鈕 */
-    .main-tabs-nav {
-      display: flex;
-      background: var(--card-bg);
-      padding: 0.4rem;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow);
-      margin-top: -1.75rem;
-      position: relative;
-      z-index: 10;
-      border: 1px solid var(--border);
-      gap: 0.35rem;
-    }
-    .main-tab-btn {
-      flex: 1;
-      min-height: 48px;
-      border: none;
-      background: transparent;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-      transition: all 0.2s;
-    }
-    .main-tab-btn.active {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
-    }
+/* photo cards */
+.card{right:72px;top:140px;width:780px;background:var(--paper);border-radius:6px;box-shadow:0 26px 60px rgba(28,40,64,.28),0 2px 0 rgba(28,40,64,.06);padding:14px 14px 26px}
+.card img{display:block;width:100%;aspect-ratio:1200/655;object-fit:cover;border-radius:3px}
+.card .txt{padding:20px 14px 0;display:flex;flex-direction:column;gap:6px}
+.card .n{font-family:var(--f-mono);font-size:18px;font-weight:600;color:var(--roof);letter-spacing:.14em;text-transform:uppercase}
+.card h3{margin:0;font-family:var(--f-display);font-weight:900;font-size:44px;line-height:1.2;text-wrap:balance}
+.card p{margin:4px 0 0;font-size:24px;line-height:1.6;color:var(--ink-2)}
+.card.textonly{top:300px;padding:30px 34px 34px;border-top:8px solid var(--roof)}
+.card.textonly .txt{padding:0}
 
-    .main-section {
-      display: none;
-      margin-top: 1.25rem;
-      animation: fadeIn 0.25s ease;
-    }
-    .main-section.active { display: block; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+/* caption */
+.caption{left:0;right:0;bottom:56px;display:flex;justify-content:center;pointer-events:none}
+.caption span{max-width:1400px;background:rgba(28,40,64,.88);color:#fff;font-size:32px;font-weight:500;line-height:1.45;padding:12px 30px;border-radius:8px;text-align:center;letter-spacing:.02em}
 
-    /* 梯次卡片 */
-    .batch-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      box-shadow: var(--shadow);
-      border-top: 4px solid var(--accent);
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-bottom: 1.25rem;
-    }
-    .batch-select-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .batch-select-wrap label {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--primary);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .batch-card select {
-      width: 100%;
-      height: 52px;
-      padding: 0.6rem 2.4rem 0.6rem 0.95rem;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text-main);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      outline: none;
-      background: #fff;
-      -webkit-appearance: none;
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 0.85rem center;
-      background-size: 1.15rem;
-      cursor: pointer;
-    }
-    .batch-info {
-      font-size: 0.88rem;
-      color: var(--secondary);
-      font-weight: 700;
-      background: #fef3c7;
-      padding: 0.4rem 0.75rem;
-      border-radius: 8px;
-      text-align: center;
-      line-height: 1.4;
-      border: 1px solid #fde68a;
-    }
+/* map meta */
+.meta{left:72px;bottom:44px;font-family:var(--f-mono);font-size:17px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px;text-shadow:0 0 6px var(--paper)}
 
-    /* 天氣模組 */
-    .weather-widget {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-      border-left: 5px solid #0284c7;
-      box-shadow: var(--shadow);
-    }
-    .weather-widget-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.85rem;
-    }
-    .weather-widget-header h4 {
-      font-size: 1.1rem;
-      color: var(--primary);
-    }
-    .live-weather-link {
-      font-size: 0.9rem;
-      color: #0284c7;
-      text-decoration: none;
-      font-weight: 700;
-    }
-    .weather-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.65rem;
-      margin-bottom: 0.85rem;
-    }
-    .weather-box {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
-      border-radius: 8px;
-      padding: 0.65rem 0.4rem;
-      text-align: center;
-    }
-    .weather-box .w-title {
-      font-size: 0.8rem;
-      color: #0369a1;
-      font-weight: 600;
-    }
-    .weather-box .w-val {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #0c4a6e;
-      margin-top: 0.25rem;
-    }
-    .weather-tips {
-      font-size: 0.95rem;
-      color: #334155;
-      line-height: 1.6;
-      background: #f8fafc;
-      padding: 0.75rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
+/* full-frame title cards */
+.full{inset:0;overflow:hidden;background:var(--ink)}
+.full img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.full .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,24,38,.86) 0%,rgba(18,24,38,.55) 46%,rgba(18,24,38,0) 75%)}
+.full .t{position:absolute;left:120px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;gap:18px;color:#fff;width:980px}
+.full .k{font-family:var(--f-mono);font-size:24px;letter-spacing:.3em;color:#ffcfb8}
+.full h1{margin:0;font-family:var(--f-display);font-weight:900;font-size:124px;line-height:1.08;letter-spacing:.02em}
+.full .s{font-size:34px;font-weight:500;opacity:.92}
+.full .facts{display:flex;flex-wrap:wrap;gap:14px;margin-top:22px}
+.full .facts span{font-size:24px;border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 22px}
 
-    /* 航班提醒 */
-    .flight-strip {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.15rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .flight-item h4 {
-      font-size: 1rem;
-      color: var(--primary);
-      margin-bottom: 0.2rem;
-    }
-    .flight-item p {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
+/* food strip */
+.food{right:72px;top:150px;width:800px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.pola{background:var(--paper);padding:12px 12px 16px;border-radius:4px;box-shadow:0 16px 36px rgba(28,40,64,.25)}
+.pola img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:2px}
+.pola div{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:10px;font-size:24px;font-weight:700}
+.pola small{font-family:var(--f-mono);font-size:18px;color:var(--roof);font-weight:600;white-space:nowrap}
 
-    /* 團費資訊 */
-    .fee-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      margin-top: 1.25rem;
-      box-shadow: var(--shadow);
-    }
-    .fee-card > h4 {
-      font-size: 1.15rem;
-      color: var(--primary);
-      margin-bottom: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .fee-table-wrap {
-      overflow-x: auto;
-      margin-bottom: 0.85rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-    }
-    .fee-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      min-width: 320px;
-    }
-    .fee-table th, .fee-table td {
-      padding: 0.7rem 0.6rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-    .fee-table thead th {
-      background: #eff6ff;
-      color: var(--primary);
-      font-weight: 700;
-      border-bottom: 1px solid #dbeafe;
-    }
-    .fee-table tbody th {
-      text-align: center;
-      font-weight: 600;
-      color: var(--text-main);
-      white-space: nowrap;
-    }
-    .fee-table .fee-cash {
-      color: #059669;
-      font-weight: 700;
-    }
-    .fee-table .fee-card-price {
-      color: #334155;
-      font-weight: 700;
-    }
-    .fee-table tbody tr:last-child td,
-    .fee-table tbody tr:last-child th {
-      border-bottom: none;
-    }
-    .fee-note {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      background: #f8fafc;
-      padding: 0.65rem 0.85rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      margin-bottom: 0.85rem;
-    }
-    .fee-incexc {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-    .fee-box {
-      border-radius: 8px;
-      padding: 0.75rem 0.9rem;
-      font-size: 0.88rem;
-      line-height: 1.6;
-    }
-    .fee-box.inc {
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      color: #065f46;
-    }
-    .fee-box.exc {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #991b1b;
-    }
-    .fee-box .fee-box-title {
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-      font-size: 0.92rem;
-    }
-    .fee-box.inc .fee-box-title {
-      color: #047857;
-    }
-    .fee-box.exc .fee-box-title {
-      color: #dc2626;
-    }
-    .fee-upgrade {
-      margin-top: 0.75rem;
-      margin-bottom: 0.5rem;
-    }
-    .fee-upgrade h5 {
-      font-size: 1rem;
-      color: var(--primary);
-      margin-bottom: 0.6rem;
-      font-weight: 700;
-    }
-    .fee-upgrade-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-    .fee-upgrade-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 8px;
-      padding: 0.75rem 0.6rem;
-      text-align: center;
-    }
-    .fee-upgrade-box .u-title {
-      font-size: 0.88rem;
-      color: #1e40af;
-      font-weight: 600;
-    }
-    .fee-upgrade-box .u-val {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: #dc2626;
-      margin-top: 0.3rem;
-    }
-    .fee-warning {
-      font-size: 0.85rem;
-      color: #854d0e;
-      line-height: 1.6;
-      background: #fefce8;
-      padding: 0.65rem 0.85rem;
-      border-radius: 8px;
-      border: 1px solid #fef08a;
-    }
-    @media (max-width: 480px) {
-      .fee-incexc { grid-template-columns: 1fr; }
-      .fee-upgrade-grid { grid-template-columns: 1fr; }
-    }
+/* big play */
+.bigplay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(10,14,22,.06);transition:opacity .25s}
+.bigplay button{width:clamp(56px,9vw,104px);height:clamp(56px,9vw,104px);border-radius:50%;border:none;background:var(--roof);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.bigplay svg{width:42%;height:42%;margin-left:8%}
+.bigplay.off{opacity:0;pointer-events:none}
 
-    /* 行程子標籤 */
-    .days-tabs-wrapper {
-      position: relative;
-      margin: 0 -1rem 1rem;
-      padding: 0 1rem;
-    }
-    .days-tabs {
-      display: flex;
-      gap: 0.5rem;
-      overflow-x: auto;
-      padding-bottom: 0.4rem;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .days-tabs::-webkit-scrollbar { display: none; }
-    
-    .day-btn {
-      flex: 0 0 auto;
-      min-height: 46px;
-      padding: 0.5rem 1.1rem;
-      background: var(--card-bg);
-      border: 1.5px solid var(--border);
-      border-radius: 9999px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-    }
-    .day-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
+/* controls */
+.controls{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--room-2)}
+.controls button{background:none;border:none;color:var(--room-fg);cursor:pointer;width:38px;height:38px;border-radius:8px;display:grid;place-items:center;flex:none}
+.controls button:hover{background:var(--room-line)}
+.controls button:focus-visible,.chap:focus-visible,.bigplay button:focus-visible{outline:2px solid #ffb199;outline-offset:2px}
+.controls svg{width:20px;height:20px}
+.time{font-family:var(--f-mono);font-size:13px;color:var(--room-dim);font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
+.track{position:relative;flex:1;min-width:0;height:38px;display:flex;align-items:center}
+.track input{width:100%;margin:0;accent-color:var(--roof);cursor:pointer;position:relative;z-index:1;background:transparent}
+.ticks{position:absolute;left:0;right:0;top:4px;height:6px;pointer-events:none}
+.ticks i{position:absolute;top:0;width:2px;height:6px;background:var(--room-dim);opacity:.6}
 
-    /* 行程內容卡片 */
-    .day-panel {
-      display: none;
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      box-shadow: var(--shadow);
-    }
-    .day-panel.active { display: block; }
-
-    .panel-header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.75rem;
-      margin-bottom: 1rem;
-    }
-    .panel-header .tag {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-    }
-    .panel-header h3 {
-      font-size: 1.35rem;
-      color: var(--primary);
-      margin-top: 0.2rem;
-      line-height: 1.4;
-    }
-
-    /* 精簡餐食住宿 */
-    .meta-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      padding: 0.95rem 1.1rem;
-      border-radius: var(--radius-md);
-      margin-bottom: 1.25rem;
-    }
-    .meta-item h5 {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 0.15rem;
-    }
-    .meta-item p {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-    .hotel-link {
-      color: var(--primary);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      font-weight: 700;
-      transition: color 0.15s;
-    }
-    .hotel-link:hover {
-      color: var(--accent);
-    }
-    .hotel-tel {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.92rem;
-      margin-left: 0.25rem;
-    }
-    .hotel-tel:hover {
-      color: var(--primary);
-      text-decoration: underline;
-    }
-    .hotel-map-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.2rem;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1d4ed8;
-      font-size: 0.8rem;
-      font-weight: 700;
-      padding: 0.15rem 0.55rem;
-      border-radius: 999px;
-      text-decoration: none;
-      margin-left: 0.35rem;
-      vertical-align: middle;
-    }
-    .hotel-map-pill:hover {
-      background: #dbeafe;
-    }
-
-    /* 景點圖文卡片 */
-    .spot-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      margin-bottom: 1.35rem;
-      background: #fff;
-    }
-    .spot-img-container {
-      width: 100%;
-      height: 240px;
-      background-color: #eef2f7;
-      overflow: hidden;
-      position: relative;
-    }
-    .spot-img-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-    .spot-card:hover .spot-img-container img {
-      transform: scale(1.02);
-    }
-    .spot-content {
-      padding: 1.15rem;
-    }
-    .spot-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 0.6rem;
-    }
-    .spot-desc {
-      font-size: 0.98rem;
-      color: #334155;
-      line-height: 1.7;
-      margin-bottom: 0.85rem;
-      text-align: justify;
-    }
-
-    /* 定點按鈕 */
-    .map-action-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.75rem;
-      margin-bottom: 0.5rem;
-    }
-    .map-nav-btn {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      background: #ecfdf5;
-      border: 1.5px solid #a7f3d0;
-      color: #065f46;
-      padding: 0.45rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.92rem;
-      font-weight: 700;
-      text-decoration: none;
-    }
-    .map-nav-btn:active { background: #d1fae5; }
-
-    .rec-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-top: 0.85rem;
-    }
-    .rec-box {
-      border-radius: 8px;
-      padding: 0.85rem 1rem;
-      font-size: 0.92rem;
-    }
-    .rec-box.food {
-      background: #fffbeb;
-      border: 1px solid #fef3c7;
-    }
-    .rec-box.souvenir {
-      background: #f0fdf4;
-      border: 1px solid #dcfce7;
-    }
-    .rec-box h6 {
-      font-size: 0.98rem;
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-    }
-    .rec-box.food h6 { color: #b45309; }
-    .rec-box.souvenir h6 { color: #15803d; }
-    .rec-box ul {
-      padding-left: 1.2rem;
-      color: #475569;
-    }
-    .rec-box ul li {
-      margin-bottom: 0.3rem;
-      line-height: 1.55;
-    }
-
-    /* Outlet 模組 */
-    .outlet-guide-section {
-      margin-top: 1.5rem;
-      border-top: 2px dashed var(--border);
-      padding-top: 1.25rem;
-    }
-    .section-subtitle {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--secondary);
-      margin-bottom: 0.85rem;
-    }
-    .brand-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-      border-left: 5px solid var(--accent);
-      margin-bottom: 0.75rem;
-    }
-    .brand-card h5 {
-      font-size: 1.05rem;
-      color: var(--primary);
-      margin-bottom: 0.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .brand-card .brand-tag {
-      font-size: 0.8rem;
-      background: #fef3c7;
-      color: #b45309;
-      padding: 0.15rem 0.5rem;
-      border-radius: 4px;
-      font-weight: 700;
-    }
-    .brand-card p {
-      font-size: 0.92rem;
-      color: #4b5563;
-      line-height: 1.6;
-    }
-
-    .route-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      background: #fff;
-      margin-bottom: 1rem;
-    }
-    .route-card img {
-      width: 100%;
-      height: 170px;
-      object-fit: contain;
-      background-color: #eef2f7;
-      display: block;
-    }
-    .route-info {
-      padding: 1rem;
-    }
-    .route-tag {
-      font-size: 0.8rem;
-      font-weight: 700;
-      background: #e0e7ff;
-      color: #3730a3;
-      display: inline-block;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      margin-bottom: 0.35rem;
-    }
-    .route-info h4 {
-      font-size: 1.1rem;
-      color: var(--primary);
-      margin-bottom: 0.25rem;
-    }
-    .route-path {
-      font-size: 0.9rem;
-      color: var(--secondary);
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-    .route-desc {
-      font-size: 0.92rem;
-      color: #4b5563;
-      line-height: 1.6;
-      margin-bottom: 0.75rem;
-    }
-
-    .food-gallery {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-    .food-card {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-    }
-    .food-card img {
-      width: 100%;
-      height: 110px;
-      object-fit: cover;
-      display: block;
-    }
-    .food-card-body {
-      padding: 0.65rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .food-card-title {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 0.15rem;
-    }
-    .food-price {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #dc2626;
-      margin-bottom: 0.25rem;
-    }
-    .food-card-desc {
-      font-size: 0.85rem;
-      color: #6b7280;
-      line-height: 1.45;
-      margin-bottom: 0.5rem;
-    }
-    .food-map-link {
-      margin-top: auto;
-      font-size: 0.82rem;
-      color: #047857;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .tips-box {
-      background: #f8fafc;
-      border-left: 4px solid var(--primary);
-      padding: 0.85rem 1rem;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.9rem;
-      color: #475569;
-      line-height: 1.6;
-    }
-
-    /* 實用資訊卡片 */
-    .gtk-banner {
-      background: #fffbeb;
-      border: 1.5px solid #fef3c7;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.15rem;
-      margin-bottom: 1rem;
-      color: #78350f;
-    }
-    .gtk-banner h4 {
-      font-size: 1.05rem;
-      margin-bottom: 0.25rem;
-      font-weight: 700;
-    }
-    .gtk-banner p {
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-    .gtk-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-    .gtk-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.15rem;
-      border-top: 4px solid var(--primary);
-    }
-    .gtk-card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 0.4rem;
-    }
-    .gtk-icon { font-size: 1.3rem; }
-    .gtk-card-header h4 {
-      font-size: 1.05rem;
-      color: var(--primary);
-      font-weight: 700;
-    }
-    .gtk-card p {
-      font-size: 0.95rem;
-      color: #475569;
-      line-height: 1.65;
-    }
-    .gtk-card .highlight-text {
-      color: var(--secondary);
-      font-weight: 700;
-    }
-    .lang-pill-box {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-top: 0.6rem;
-    }
-    .lang-pill {
-      background: #f1f5f9;
-      padding: 0.35rem 0.65rem;
-      border-radius: 6px;
-      font-size: 0.88rem;
-      color: var(--primary);
-      font-weight: 700;
-      border: 1px solid #e2e8f0;
-    }
-
-    /* 手機底部懸浮快捷列 */
-    .mobile-bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: calc(60px + var(--safe-bottom));
-      padding-bottom: var(--safe-bottom);
-      background: #ffffff;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 1000;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
-    }
-    .nav-tab-action {
-      background: none;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      font-weight: 700;
-      min-width: 65px;
-      height: 60px;
-      cursor: pointer;
-    }
-    .nav-tab-action span.icon {
-      font-size: 1.35rem;
-      line-height: 1;
-      margin-bottom: 2px;
-    }
-    .nav-tab-action.active {
-      color: var(--primary);
-      font-weight: 700;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
-    }
-
-    @media (min-width: 640px) {
-      body { font-size: 17px; }
-      .main-tabs-nav { max-width: 700px; margin-left: auto; margin-right: auto; }
-      .batch-card {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.85rem;
-        flex-wrap: wrap;
-      }
-      .batch-select-wrap {
-        flex-direction: row;
-        align-items: center;
-        gap: 0.85rem;
-        flex: 1 1 auto;
-        min-width: 0;
-      }
-      .batch-select-wrap label {
-        white-space: nowrap;
-        font-size: 1.05rem;
-        flex-shrink: 0;
-      }
-      .batch-card select {
-        width: auto;
-        flex: 1 1 350px;
-        min-width: 330px;
-        font-size: 1.18rem;
-      }
-      .batch-info {
-        font-size: 0.88rem;
-        padding: 0.4rem 0.75rem;
-        flex-shrink: 0;
-        white-space: nowrap;
-      }
-      .meta-bar { flex-direction: row; }
-      .meta-item { flex: 1; }
-      .map-action-bar { flex-direction: row; }
-      .rec-grid { flex-direction: row; }
-      .rec-box { flex: 1; }
-      .outlet-brand-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
-      .route-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-      .food-gallery { grid-template-columns: repeat(4, 1fr); }
-      .gtk-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
-      .mobile-bottom-nav { display: none; }
-      body { padding-bottom: 0; }
-      .spot-img-container { height: 280px; }
-    }
-  
-    /* ===== 梯次人員名單 (點名／分房名冊) ===== */
-    .roster-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      padding: 1.15rem 1.25rem;
-      box-shadow: var(--shadow);
-      margin-bottom: 1.25rem;
-      border: 1px solid var(--border);
-      border-left: 4px solid #c65911;
-    }
-    .roster-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      margin-bottom: 0.85rem;
-    }
-    .roster-title-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-    .roster-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin: 0;
-    }
-    .roster-badges {
-      display: inline-flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.82rem;
-    }
-    .badge-total {
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-weight: 700;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid #bfdbfe;
-    }
-    .badge-emp {
-      background: #fff7ed;
-      color: #c65911;
-      font-weight: 700;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid #fed7aa;
-    }
-    .badge-fam {
-      background: #f1f5f9;
-      color: #475569;
-      font-weight: 600;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid #e2e8f0;
-    }
-    .roster-legend {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.85rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      background: #fafaf9;
-      padding: 0.45rem 0.75rem;
-      border-radius: 6px;
-      border: 1px dashed #e7e5e4;
-    }
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .legend-dot-emp {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #c65911;
-      display: inline-block;
-    }
-    .legend-dot-fam {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #334155;
-      display: inline-block;
-    }
-    .roster-search-box {
-      width: 100%;
-    }
-    .roster-search-box input {
-      width: 100%;
-      padding: 0.6rem 0.85rem;
-      font-size: 0.95rem;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      outline: none;
-      background: #f8fafc;
-      transition: all 0.2s ease;
-      box-sizing: border-box;
-    }
-    .roster-search-box input:focus {
-      background: #fff;
-      border-color: #c65911;
-      box-shadow: 0 0 0 3px rgba(198, 89, 17, 0.15);
-    }
-    .roster-table-wrap {
-      overflow-x: auto;
-      max-height: 420px;
-      overflow-y: auto;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #fff;
-      transition: max-height 0.3s ease;
-      -webkit-overflow-scrolling: touch;
-    }
-    .roster-table-wrap.expanded {
-      max-height: none;
-    }
-    .roster-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.92rem;
-      min-width: 380px;
-    }
-    .roster-table thead th {
-      position: sticky;
-      top: 0;
-      background: #f1f5f9;
-      color: #334155;
-      font-weight: 700;
-      padding: 0.65rem 0.5rem;
-      text-align: center;
-      border-bottom: 2px solid #cbd5e1;
-      z-index: 2;
-    }
-    .roster-table tbody td {
-      padding: 0.6rem 0.5rem;
-      border-bottom: 1px solid var(--border);
-      vertical-align: middle;
-      text-align: center;
-    }
-    .roster-table tbody tr:nth-child(even) {
-      background: #fafafa;
-    }
-    .roster-table tbody tr:hover {
-      background: #fffbeb;
-    }
-    .roster-name-cell {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem;
-    }
-    .roster-name-emp {
-      font-weight: 800;
-      color: #c65911;
-      font-size: 1rem;
-    }
-    .roster-name-fam {
-      font-weight: 700;
-      color: #334155;
-      font-size: 0.95rem;
-    }
-    .role-badge {
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 0.1rem 0.35rem;
-      border-radius: 4px;
-      line-height: 1.2;
-    }
-    .role-emp {
-      background: #fff7ed;
-      color: #c65911;
-      border: 1px solid #fed7aa;
-    }
-    .role-fam {
-      background: #f8fafc;
-      color: #64748b;
-      border: 1px solid #e2e8f0;
-    }
-    .room-tag {
-      display: inline-block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 0.18rem 0.5rem;
-      border-radius: 6px;
-      background: #f1f5f9;
-      color: #334155;
-      border: 1px solid #e2e8f0;
-      white-space: nowrap;
-    }
-    .room-triple {
-      background: #fef3c7;
-      color: #92400e;
-      border-color: #fde68a;
-    }
-    .room-single {
-      background: #fce7f3;
-      color: #9d174d;
-      border-color: #fbcfe8;
-    }
-    .tag-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.2rem;
-      font-size: 0.76rem;
-      font-weight: 700;
-      padding: 0.15rem 0.45rem;
-      border-radius: 999px;
-      margin: 0.1rem;
-      white-space: nowrap;
-    }
-    .tag-biz { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-    .tag-prem { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
-    .tag-veg { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-    .tag-child { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
-    .tag-note { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
-    .roster-footer {
-      display: flex;
-      justify-content: center;
-      padding-top: 0.65rem;
-    }
-    .roster-expand-btn {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      color: #c65911;
-      font-weight: 700;
-      font-size: 0.86rem;
-      padding: 0.45rem 1.3rem;
-      border-radius: 999px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      transition: all 0.2s ease;
-    }
-    .roster-expand-btn:hover {
-      background: #fff7ed;
-      border-color: #fed7aa;
-    }
-  </style>
+.chapters{width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)));margin-inline:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.chap{all:unset;box-sizing:border-box;cursor:pointer;padding:10px 12px;border-radius:8px;background:var(--room-2);border:1px solid var(--room-line);display:flex;flex-direction:column;gap:3px;min-width:0}
+.chap:hover{border-color:#4a5568}
+.chap.on{border-color:var(--roof);background:#2a1d1c}
+.chap .d{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:#ff9a80}
+.chap .h{font-size:14px;font-weight:700;line-height:1.35}
+.chap .m{font-family:var(--f-mono);font-size:11px;color:var(--room-dim)}
+.note{color:var(--room-dim);font-size:12px;margin:0 auto;width:min(100%,max(320px,calc((100vh - 118px) * 16 / 9)))}
+.caption .who{display:inline-block;font-weight:700;margin-right:14px;padding:0 12px;border-radius:6px;font-size:26px;vertical-align:2px}
+.caption .who.f{background:#cf3a28}.caption .who.m{background:#2f7890}
+.controls .tog{opacity:.45}.controls .tog.on{opacity:1;color:#ffb199}
+.settings{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:13px;color:var(--room-dim)}
+.settings label{color:var(--room-fg);font-weight:500}
+.settings select{background:var(--room-2);color:var(--room-fg);border:1px solid var(--room-line);border-radius:6px;padding:6px 8px;font:inherit;max-width:100%;min-width:0}
+@media (max-width:560px){.controls{gap:6px;padding:8px}.time{font-size:11px}}
+@media (prefers-reduced-motion:reduce){.ribbon span{transition:none}}
+</style>
 </head>
 <body>
 
-  <header>
-    <span class="badge">115年港洲營建事業員工旅遊</span>
-    <h1>捷克・布拉格 8 日遊</h1>
-    <p class="subtitle">梯次天氣速查・原行程景點完整手冊</p>
+
+<div class="wrap">
+  <header class="top">
+    <h1><a href="../" style="color:inherit;text-decoration:none;opacity:.7;font-size:.7em;margin-right:.6em">← 回手冊</a>捷克・布拉格 8 日遊｜每日行程地圖導覽</h1>
+    <p>115年港洲營建事業員工旅遊・雙人對談解說・按 F 或雙擊畫面全螢幕</p>
   </header>
 
-  <div class="container">
-    
-    <!-- 頂部三大主導航分頁 -->
-    <div class="main-tabs-nav">
-      <button type="button" class="main-tab-btn active" onclick="switchMainTab('tab-batch')">
-        <span>📅</span> 梯次與航班
-      </button>
-      <button type="button" class="main-tab-btn" onclick="switchMainTab('tab-itinerary')">
-        <span>🗺️</span> 每日行程
-      </button>
-      <button type="button" class="main-tab-btn" onclick="switchMainTab('tab-info')">
-        <span>💡</span> 實用須知
-      </button>
-      <button type="button" class="main-tab-btn" onclick="switchMainTab('tab-shopping')">
-        <span>🛍️</span> 熱門代購
-      </button>
+  <div class="player" id="player">
+    <div class="stage" id="stage" aria-label="行程導覽影片" role="region">
+      <div class="frame" id="frame">
+        <canvas id="map"></canvas>
+        <div class="layer meta" id="meta"><span id="scale"></span><span id="coord"></span></div>
+        <div class="layer badge" id="badge"></div>
+        <div class="layer ribbon" id="ribbon"></div>
+        <div id="cards"></div>
+        <div class="layer food" id="food"></div>
+        <div class="layer caption" id="caption"><span id="captext"></span></div>
+        <div class="layer full" id="intro">
+          <img class="heroimg" alt="">
+          <div class="shade"></div>
+          <div class="t">
+            <div class="k">PRAHA · ČESKO · 2026</div>
+            <h1>捷克・布拉格<br>8 日遊</h1>
+            <div class="s">115年港洲營建事業員工旅遊　每日行程地圖導覽</div>
+            <div class="facts"><span>星宇航空直飛</span><span>契斯科庫倫洛夫</span><span>布拉格城堡</span><span>庫特納霍拉</span></div>
+          </div>
+        </div>
+        <div class="layer full" id="outro">
+          <img class="heroimg" alt="">
+          <div class="shade"></div>
+          <div class="t">
+            <div class="k">SEE YOU IN PRAGUE</div>
+            <h1>圓滿賦歸</h1>
+            <div class="s">出發前記得帶上這幾件事</div>
+            <div class="facts"><span>230V・E 型插座（贈轉接頭）</span><span>1 克朗 ≈ NT$1.5</span><span>比台灣慢 7 小時</span><span>洋蔥式穿搭・2–8°C</span><span>護照財物隨身・防扒手</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bigplay" id="bigplay"><button type="button" id="bigbtn" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l15 8-15 8z"/></svg></button></div>
     </div>
-
-    <!-- ==================== 主分頁 1：梯次、天氣與航班 ==================== -->
-    <section id="tab-batch" class="main-section active">
-      <div class="batch-card">
-        <div class="batch-select-wrap">
-          <label for="batchSelect">🗓 選擇您的出發梯次：</label>
-          <select id="batchSelect" onchange="switchBatch()">
-            <option value="0">第1梯次 (2026/11/11(三) ~ 2026/11/18(三))</option>
-            <option value="1">第2梯次 (2026/11/18(三) ~ 2026/11/25(三))</option>
-            <option value="2">第3梯次 (2026/11/20(五) ~ 2026/11/27(五))</option>
-            <option value="3">第4梯次 (2026/11/25(三) ~ 2026/12/02(三))</option>
-            <option value="4">第5梯次 (2026/12/02(三) ~ 2026/12/09(三))</option>
-            <option value="5">第6梯次 (2026/12/09(三) ~ 2026/12/16(三))</option>
-          </select>
-        </div>
-        <div id="batchText" class="batch-info">
-          【出發日期】2026/11/11(三) ➔ 【抵台日期】2026/11/18(三)
-        </div>
-        <div class="flight-strip">
-          <div class="flight-item">
-            <h4 id="flightOutTitle">🛫 去程：Day1(三) 星宇航空 JX101</h4>
-            <p id="flightOutTime">TPE 台北 23:45 ➔ PRG 布拉格 08:00</p>
-          </div>
-          <div class="flight-item">
-            <h4 id="flightInTitle">🛬 回程：Day7(二) 星宇航空 JX102</h4>
-            <p id="flightInTime">PRG 布拉格 10:30 ➔ TPE 台北 07:20(+1日)</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="weather-widget">
-        <div class="weather-widget-header">
-          <h4>🌤️ 梯次氣候與穿搭指南</h4>
-          <a id="weatherLiveLink" class="live-weather-link" href="https://www.google.com/search?q=Prague+weather" target="_blank" rel="noopener noreferrer">
-            即時天氣預報 ↗
-          </a>
-        </div>
-        <div class="weather-grid">
-          <div class="weather-box">
-            <div class="w-title">布拉格均溫</div>
-            <div class="w-val" id="wTemp">2°C ~ 8°C</div>
-          </div>
-          <div class="weather-box">
-            <div class="w-title">體感型態</div>
-            <div class="w-val" id="wFeel">初冬濕冷</div>
-          </div>
-          <div class="weather-box">
-            <div class="w-title">日落天黑</div>
-            <div class="w-val" id="wSunset">約 16:25</div>
-          </div>
-        </div>
-        <div class="weather-tips" id="wAdvice">
-          🧣 <strong>穿搭叮嚀：</strong>初冬微冷偶有短暫陣雨，早晚溫差顯著。建議以洋蔥式穿法，內著輕便發熱衣，外搭防風厚外套，並備妥圍巾與好走的止滑平底鞋。
-        </div>
-      </div>
-
-      <!-- 梯次同仁名單（點名／分房冊） -->
-      <div class="roster-card" id="rosterCard">
-        <div class="roster-header">
-          <div class="roster-title-row">
-            <h4 class="roster-title">
-              <span>👥</span> <span id="rosterBatchTitle">第1梯次 團員名冊</span>
-            </h4>
-            <div class="roster-badges" id="rosterBadges">
-              <span class="badge-total">總計 35 人</span>
-              <span class="badge-emp">員工 17</span>
-              <span class="badge-fam">眷屬 18</span>
-            </div>
-          </div>
-          <div class="roster-legend">
-            <span style="font-weight:700;">名冊標示：</span>
-            <span class="legend-item"><span class="legend-dot-emp"></span> <strong style="color:#c65911;">橘字</strong>：港洲同仁（員工）</span>
-            <span class="legend-item"><span class="legend-dot-fam"></span> <strong style="color:#334155;">黑字</strong>：隨行眷屬</span>
-          </div>
-          <div class="roster-search-box">
-            <input type="text" id="rosterSearchInput" placeholder="🔍 快速搜尋同仁姓名、員工／眷屬、房型或特殊需求..." oninput="handleRosterSearch()">
-          </div>
-        </div>
-        <div class="roster-table-wrap" id="rosterTableWrap">
-          <table class="roster-table">
-            <thead>
-              <tr>
-                <th style="width: 46px;">編號</th>
-                <th style="width: 110px;">姓名（身份）</th>
-                <th style="width: 96px;">分房配置</th>
-                <th>備註 / 特殊需求</th>
-              </tr>
-            </thead>
-            <tbody id="rosterTableBody">
-              <!-- 動態載入名冊 -->
-            </tbody>
-          </table>
-        </div>
-        <div class="roster-footer">
-          <button type="button" class="roster-expand-btn" id="rosterExpandBtn" onclick="toggleRosterExpand()">
-            展開全部名單 ▾
-          </button>
-        </div>
-      </div>
-
-      <div class="fee-card">
-        <h4>💰 團費資訊</h4>
-        <div class="fee-table-wrap">
-          <table class="fee-table">
-            <thead>
-              <tr>
-                <th>房型</th>
-                <th>現金價 / 人</th>
-                <th>刷卡價 / 人</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>雙人一室</th>
-                <td class="fee-cash">$88,500</td>
-                <td class="fee-card-price">$90,000</td>
-              </tr>
-              <tr>
-                <th>兒童佔床<br><small>(2～12歲)</small></th>
-                <td class="fee-cash">$86,500</td>
-                <td class="fee-card-price">$88,000</td>
-              </tr>
-              <tr>
-                <th>三人一室</th>
-                <td class="fee-cash">$86,500</td>
-                <td class="fee-card-price">$88,000</td>
-              </tr>
-              <tr>
-                <th>單人一室</th>
-                <td class="fee-cash">$109,500</td>
-                <td class="fee-card-price">$111,000</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="fee-note">
-          ↪ 歐洲地區大多以<strong>雙人房(2張單人床)</strong>為基準房型，許多飯店不提供三人房。如須三人房，將酌情安排加床(行軍床或沙發床)服務。
-        </div>
-
-        <div class="fee-incexc">
-          <div class="fee-box inc">
-            <div class="fee-box-title">✅ 費用包含</div>
-            觀光地門票、機場稅、台中—機場接送、領隊&導遊&司機服務費(每日€12×8天，共€96歐元)、500 萬履約責任險含 20 萬醫療險。
-          </div>
-          <div class="fee-box exc">
-            <div class="fee-box-title">❌ 費用不含</div>
-            護照辦理 $1,500、行李小費(每人每件€2~5歐元)、房間小費(每房€1~2歐元)。
-          </div>
-        </div>
-
-        <div class="fee-upgrade">
-          <h5>✈️ 自費機位升等(浮動價,依出發日與機位數量)</h5>
-          <div class="fee-upgrade-grid">
-            <div class="fee-upgrade-box">
-              <div class="u-title">豪華經濟艙</div>
-              <div class="u-val">+$36,000～45,000</div>
-            </div>
-            <div class="fee-upgrade-box">
-              <div class="u-title">商務艙</div>
-              <div class="u-val">+$140,000～170,000</div>
-            </div>
-          </div>
-          <div class="fee-warning">
-            ⚠️ 全程使用<strong>團體經濟艙</strong>機票,無法出發前預先選位或指定座位需求(靠窗/靠走道等);座位依英文姓名順序排列,同行者可能無法安排在一起。升等機位有限,請提出需求後靜候回覆;無升等需求者請搭乘經濟艙參團。
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 主分頁 2：每日行程導覽 ==================== -->
-    <section id="tab-itinerary" class="main-section">
-      <div class="days-tabs-wrapper">
-        <div class="days-tabs" id="tabsScroll">
-          <button class="day-btn active" onclick="showDay(1)">Day 1</button>
-          <button class="day-btn" onclick="showDay(2)">Day 2 CK古鎮</button>
-          <button class="day-btn" onclick="showDay(3)">Day 3 城堡&遊船</button>
-          <button class="day-btn" onclick="showDay(4)">Day 4 市區觀光</button>
-          <button class="day-btn" onclick="showDay(5)">Day 5 人骨&Outlet</button>
-          <button class="day-btn" onclick="showDay(6)">Day 6 新城&自由行</button>
-          <button class="day-btn" onclick="showDay(7)">Day 7</button>
-          <button class="day-btn" onclick="showDay(8)">Day 8</button>
-        </div>
-      </div>
-
-      <!-- DAY 1 -->
-      <div id="day-pane-1" class="day-panel active">
-        <div class="panel-header">
-          <span class="tag">Day 1</span>
-          <h3>桃園 / 布拉格機場</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：× ｜ 中餐：× ｜ 晚餐：機上餐食</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>機上</p>
-          </div>
-        </div>
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="01.webp" alt="搭乘星宇航空啟程" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">啟程飛行：搭乘星宇航空飛往《百塔之城》布拉格</h4>
-            <p class="spot-desc">今日團體集合於公司，搭車前往桃園國際機場，搭乘豪華客機飛往《百塔之城》布拉格。班機將於翌日早晨抵達，謹祝您夜晚愉快！</p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Taiwan+Taoyuan+International+Airport" target="_blank" rel="noopener noreferrer">🧭 桃園國際機場 地標位址</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DAY 2 (CK 小鎮) -->
-      <div id="day-pane-2" class="day-panel">
-        <div class="panel-header">
-          <span class="tag">Day 2</span>
-          <h3>布拉格 Prague ➔ 173公里 ➔ 契斯科庫倫洛夫 Český Krumlov</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：捷克烤鴨風味料理 ｜ 晚餐：肉類拼盤(雞/豬/牛)</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>
-              <a class="hotel-link" href="https://www.hoteloldinn.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Hotel OLDINN ↗</a>
-              <a class="hotel-tel" href="tel:+420388288888">(+420-388-288 888)</a>
-              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Hotel+OLDINN+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="02.webp" 
-                 alt="契斯科庫倫洛夫古鎮全景與彩繪塔" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">契斯科庫倫洛夫 (Český Krumlov)</h4>
-            <p class="spot-desc">
-              契斯科庫倫洛夫被公認為捷克最美麗的中世紀古鎮，維第格王朝在此興建的美麗城堡，讓您如同墜入歷史歲月的時光洪流之中，其建築、街道、教堂、要塞等散發出濃郁的古典氣息，令人發思古之幽情。曾有人說，想要當中古世紀的古人，就要到至今連麥當勞都沒有的「契斯科庫倫洛夫」。這個如珠玉般風情的中古世紀小鎮，風情如詩如畫，伏爾他瓦河蜿蜒而過，悠緩而寧靜，從城堡區俯瞰小鎮，紅瓦白牆的屋子在陽光下展露出迷人的風情，時光彷彿停留在十八世紀般，照亮了彩繪塔、走過玫瑰家族等三朝領主的輝煌歲月。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=State+Castle+and+Chateau+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">🧭 庫倫洛夫城堡 地標位址</a>
-            </div>
-
-            <div class="rec-grid">
-              <div class="rec-box food">
-                <h6>🍴 推薦周邊小吃</h6>
-                <ul>
-                  <li><strong>Trdelník (肉桂煙囪捲)：</strong>現烤螺旋空心麵包，外脆內軟裹滿砂糖肉桂粉。</li>
-                  <li><strong>地窖碳烤肉排：</strong>舊城地窖餐館的經典炭火烤肉與酸菜。</li>
-                </ul>
-              </div>
-              <div class="rec-box souvenir">
-                <h6>🎁 推薦特色紀念品</h6>
-                <ul>
-                  <li><strong>Koh-i-Noor 刺蝟彩色鉛筆：</strong>捷克老字號工藝木雕文具。</li>
-                  <li><strong>木造玩具與水晶製品：</strong>舊城巷弄特色小店紀念品。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="03.webp" 
-                 alt="庫倫洛夫舊城區巷弄" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">舊城區</h4>
-            <p class="spot-desc">
-              被伏爾他瓦河以 S 型蜿蜒環繞，巧妙地將古城分為兩部分，東北是河左岸以古堡為主的城堡區；西南則是河右岸以市政廣場為中心的舊城區。庫倫洛夫城堡，以哥德式的形式建在山頂，不論在市區任何地方抬頭都能望見，城堡由四十棟建築物組成，規模之大，在捷克境內僅次於布拉格城堡。千萬別錯過舊城區的巷弄中，有數不清各式各樣的特色商店，像是琳瑯滿目的木造玩具、晶瑩剔透的波希米亞水晶製品等，都是選購特色紀念品的好地方。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Namesti+Svornosti+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">🧭 舊城市政廣場 地標位址</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DAY 3 -->
-      <div id="day-pane-3" class="day-panel">
-        <div class="panel-header">
-          <span class="tag">Day 3</span>
-          <h3>契斯科庫倫洛夫 Český Krumlov ➔ 25公里 ➔ 捷克布傑約維采 ➔ 12公里 ➔ 赫魯博卡城堡 (Hluboka Castle) ➔ 145公里 ➔ 布拉格 Prague ➔ 跳舞的房子 ➔ 伏爾他瓦河遊船 Vltava Cruise</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：Hotel Štekl-Erb捷克三道式套 ｜ 晚餐：啤酒醬豬肘</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>
-              <a class="hotel-link" href="https://www.palacehotel.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Art Nouveau Palace ↗</a>
-              <a class="hotel-tel" href="tel:+420224093181">(+420-224-093 181)</a>
-              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Art+Nouveau+Palace+Hotel+Prague" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="04.webp" 
-                 alt="捷克布傑約維采主廣場" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">捷克布傑約維采</h4>
-            <p class="spot-desc">
-              舊稱波希米亞布德維斯是捷克城市，南捷克州的首府和最大城市，天主教捷克布傑約維采教區和南捷克的中心。在途中，我們會在布傑約維采短暫停留。這是一座迷人的歷史小鎮，被稱為原創百威啤酒的故鄉。在這裡，您可以在主廣場上稍作漫步，參孫噴泉所在的廣場－普熱米斯爾·奧托卡二世廣場以及黑塔。百威啤酒源於該地，13世紀起該地就以釀造啤酒而知名。當地最著名的啤酒公司是布德瓦啤酒。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Premysl+Otakar+II+Square+Ceske+Budejovice" target="_blank" rel="noopener noreferrer">🧭 奧托卡二世廣場 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Black+Tower+Ceske+Budejovice" target="_blank" rel="noopener noreferrer">🧭 黑塔 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 赫魯博卡城堡外觀 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="05.webp" 
-                 alt="赫魯博卡白色城堡全景" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">赫魯博卡城堡 (Hluboka Castle)</h4>
-            <p class="spot-desc">
-              這座優雅的白色宮殿以溫莎城堡為靈感，是捷克共和國最美麗的城堡之一。這座城堡四周環繞著花園和自然風光，為您的一天畫下寧靜而難忘的句點。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=State+Chateau+Hluboka" target="_blank" rel="noopener noreferrer">🧭 赫魯博卡城堡 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 跳舞的房子雙塔建築 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="06.webp" alt="布拉格跳舞的房子" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">跳舞的房子 (Tančící dům)</h4>
-            <p class="spot-desc">
-              「跳舞的房子」（Tančící dům）位於捷克布拉格伏爾塔瓦河畔，是當代解構主義建築的傑作。這棟建築由加拿大建築師法蘭克·蓋瑞（Frank Gehry）與克羅埃西亞籍建築師弗拉多·米盧尼克（Vlado Milunić）合作設計，於1996年完工。其造型靈感源自好萊塢傳奇舞伴弗雷德與琴吉，因此又名「弗雷德與琴吉之屋」。建築由兩座相互依偎、扭轉的塔樓組成：一座是以混凝土為主的實體，代表男舞者；另一座則是呈現婀娜曲線的玻璃塔，象徵穿著裙擺的女舞者。這種大膽的動態美感，打破了傳統建築的對稱與剛性，現已成為布拉格除古城外的另一座標誌性地標。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Dancing+House+Prague" target="_blank" rel="noopener noreferrer">🧭 跳舞的房子 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 伏爾他瓦河遊船 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="07.webp" alt="伏爾他瓦河遊船遠眺布拉格" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">伏爾他瓦河遊船 (Vltava Cruise)</h4>
-            <p class="spot-desc">
-              伏爾他瓦河遊船：捷克著名文學家卡夫卡曾寫給女友一封信中說：我最喜歡划著我的小船沿伏爾他瓦河逆流而上，然後仰臥在船中順流而下，欣賞不同形式的橋。一個城市，能有條美麗的河流蜿蜒其中，如同為這個城市畫上了一條柔美的線條，城裡也就有了個能讓戀人依偎漫步的浪漫場景。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Steamboats+Vltava+Cruise" target="_blank" rel="noopener noreferrer">🧭 伏爾他瓦河遊船碼頭 地標位址</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DAY 4 (布拉格市區觀光 & 慕夏美術館) -->
-      <div id="day-pane-4" class="day-panel">
-        <div class="panel-header">
-          <span class="tag">Day 4</span>
-          <h3>第 4 天 布拉格 Prague(市區觀光) ➔ 慕夏美術館 ➔ 在布拉格城堡裡穿越不同世紀 Prague Castle ➔ 聖維特大教堂 St. Vitus Cathedral ➔ 布拉格城堡 Prague Castle ➔ 布拉格黃金巷 Golden Lane ➔ 華倫斯坦宮 ➔ 小區廣場 Malostranske ➔ 布拉格列儂牆到查理大橋上尋見浪漫的真諦 Charles Bridge ➔ 舊城廣場 ➔ 布拉格老城天文鐘 Old Town ➔ 火藥塔 Powder Tower, Prague ➔ 布拉格</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：查理士橋畔餐廳(三道式餐點) ｜ 晚餐：伏爾他瓦河遊船自助餐</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>
-              <a class="hotel-link" href="https://www.palacehotel.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Art Nouveau Palace ↗</a>
-              <a class="hotel-tel" href="tel:+420224093181">(+420-224-093 181)</a>
-              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Art+Nouveau+Palace+Hotel+Prague" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
-            </p>
-          </div>
-        </div>
-
-        <!-- 聖維特大教堂、布拉格城堡、慕夏美術館 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="11.webp" 
-                 alt="聖維特大教堂哥德式雙塔與布拉格城堡" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">布拉格市區觀光、慕夏美術館、聖維特大教堂、布拉格城堡</h4>
-            <p class="spot-desc">
-              <strong>布拉格市區觀光：</strong>晨曦中迎接第一道陽光落映眼簾，體驗伏爾他瓦河上布拉格的夢幻氣息，猶如置身於時光幻影絕美的中古世紀！走在中古世紀靜靜的街道上，曾經風起雲湧的歷史歲月，幻想著極盛時期萬人擾嚷洶湧的繁華景象，心靈更添平靜！邂逅布拉格就讓我們從古堡皇宮開始。<br><br>
-              <strong>慕夏美術館：</strong>布拉格慕夏美術館位於18世紀的薩瓦林宮（Savarin Palace）內，是一座充滿歷史風華的宮殿建築。美術館收藏捷克著名藝術家阿爾豐斯·慕夏(Alfons Mucha)的經典作品，包括海報、繪畫與手稿，展現他獨特的新藝術風格。結合宮殿優雅空間與藝術之美，透過細膩的觀賞體驗，旅客都能輕鬆感受慕夏作品中的精緻與魅力。<br><br>
-              <strong>聖維特大教堂 (St. Vitus Cathedral)：</strong>最巨大雄偉的教堂是整個城堡境內最顯眼的建築物，同時也是歐洲最美的教堂。1344年布拉格升為總教區後，查理四世希望有座可以容納多人、加冕和安息等作用的教堂，便下令擴建，於1929年完全竣工，因此，除了哥德式的尖塔鐘樓外，也融入了文藝復興、巴洛克的風格，如網狀拱頂、玫瑰窗和金色大門等，是世界三大哥德式教堂之一。<br>
-              <span style="color:#dc2626; font-weight:700;">※ 聖維特教堂例行性於周日上午舉辦彌撒，遇教堂彌撒或其他節慶因素沒有辦法入內參觀，行程順序將前後調整，或改由城堡區聖喬治教堂替代。</span><br><br>
-              <strong>布拉格城堡 (Prague Castle)：</strong>矗立在布拉格《城堡區》Hradčany山崗上的巨無霸《布拉格城堡》Prague Castle是布拉格最顯著的地標。這座城堡佔地高達7萬平方公尺，是金氏世界紀錄上全世界最大的古堡，不僅是捷克共和國的象徵，也讓布拉格躋身全球最美城市之一，到豐富的藝術收藏和精美的建築設計。世界上最大的城堡非布拉格城堡莫屬！在城堡裡悠閒漫步，欣賞在一千多年來作為歷任捷克國王、皇帝及總統官邸的布拉格城堡之美。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mucha+Museum+Prague" target="_blank" rel="noopener noreferrer">🧭 慕夏美術館 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Castle" target="_blank" rel="noopener noreferrer">🧭 布拉格城堡 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St.+Vitus+Cathedral+Prague" target="_blank" rel="noopener noreferrer">🧭 聖維特大教堂 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 黃金巷彩色小屋照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="12.webp" 
-                 alt="布拉格黃金巷彩色小屋" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">布拉格黃金巷、華倫斯坦宮、小區廣場、布拉格列儂牆</h4>
-            <p class="spot-desc">
-              <strong>布拉格黃金巷 (Golden Lane)：</strong>位於布拉格城堡內，一條保留了中世紀風格的巷子。數間又矮又窄接連著的房子，外牆漆著繽紛的顏色，原是侍衛的住所，一度淪為窮人集散地，最後是16世紀一群鍊金士於此煉製黃金而得名。目前作為觀光開放，有畫廊、商店、展覽館。另外，別忘了參觀22號小屋，這裡是世界知名的布拉格作家法蘭茲．卡夫卡（Franz Kafka）的故居。參觀過黃金巷，布拉格城堡之旅才算完整，這條小巷與古城牆接鄰，呈現出令人驚豔的別緻街景。魯道夫二世皇帝以渴望找到傳說中長生不老藥與點金石而聞名，據說為魯道夫二世皇帝效力的煉金術士就是居住在這些色彩繽紛的小屋裡。<br><br>
-              <strong>華倫斯坦宮：</strong>華倫斯坦宮（Wallenstein Palace）是位於捷克布拉格的一座巴洛克式宮殿，始建於1623年，由阿爾布雷希特·馮·華倫斯坦（Albrecht von Wallenstein）下令興建，用來展示他的財富和權力。宮殿內設有一座大型的庭院，以及許多裝飾豐富的房間和大廳，包括一個富麗堂皇的宴會廳，現在用作音樂會場所。此外，華倫斯坦宮也是布拉格的國家畫廊所在地，收藏了大量捷克藝術家的作品，以及一些歐洲藝術家的作品。遊客可以在這裡欣賞精美的建築設計。<br><br>
-              <strong>小區廣場 (Malostranske)：</strong>周圍有著一系列歷史宮殿及保護建築，曾作為市場、政府活動和執行司法等場所，現今則因附近有多家餐廳及旅遊景點，吸引遊客前來。<br><br>
-              <strong>布拉格列儂牆：</strong>布拉格的列儂牆（Lennon Wall）是一個著名的塗鴉牆，位於城市的查理大橋對岸的馬爾斯區。這個牆壁在1980年代成為了紀念約翰·列儂的地方，後來逐漸成為了反共主義的符號，許多人都會在這裡留下自己的塗鴉和訊息。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Golden+Lane+Prague" target="_blank" rel="noopener noreferrer">🧭 黃金巷 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wallenstein+Palace+Prague" target="_blank" rel="noopener noreferrer">🧭 華倫斯坦宮 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Malostranske+namesti+Prague" target="_blank" rel="noopener noreferrer">🧭 小區廣場 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Lennon+Wall+Prague" target="_blank" rel="noopener noreferrer">🧭 列儂牆 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 查理大橋橋面雕像照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="13.webp" alt="查理大橋橋面與聖者雕像" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">查理士橋畔餐廳 與 到查理大橋上尋見浪漫的真諦 (Charles Bridge)</h4>
-            <p class="spot-desc">
-              <strong>查理士橋畔餐廳：</strong>安排於布拉格市區最美麗的觀光景點查理橋下的 MLYNEC RESTAURANT 查理士橋畔餐廳享用西餐、享用美食，MLYNEC 曾多度入選米其林推薦的指南，安排前湯、主餐(鮭魚)、甜點，在優雅的環境內享受法式浪漫融合捷克料理供法的美食饗宴。<br><br>
-              <strong>到查理大橋上尋見浪漫的真諦 (Charles Bridge)：</strong>查理大橋總是為藝術家、攝影師與詩人們提供源源不絕的靈感。遠景中布拉格城堡的剪影浮現，巴洛克時期的雕像佇立橋的兩側，無庸置疑這裡就是全歐洲最漂亮的地方。東歐現存最古老的石橋。建於十四世紀，全長520公尺，兩旁聳立了30座雕像，108聖者的古橋，已然成為布拉格觀光生活的代表。橋兩端有哥德式橋，兩側欄杆上有以宗教故事為題的15座聖像，偶有街頭藝人或民俗藝品賣者吆喝其間，輕鬆有趣；它也同時是連結舊城區和布拉格城堡區的唯一橋樑。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Charles+Bridge+Prague" target="_blank" rel="noopener noreferrer">🧭 查理大橋 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mlynec+Restaurant+Prague" target="_blank" rel="noopener noreferrer">🧭 MLYNEC 橋畔餐廳 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 老城天文鐘金色鐘面照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="14.webp" alt="布拉格老城天文鐘特寫" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">舊城廣場、布拉格老城天文鐘 (Old Town)、火藥塔 (Powder Tower, Prague)</h4>
-            <p class="spot-desc">
-              <strong>舊城廣場：</strong>布拉格舊城的中央地帶，鋪滿石板道路，聚集許多觀光客廣場一角有文藝復興時期的拱型建築，已改成咖啡廳、禮品店，還有不少小吃攤和街頭藝人在此演出、舊城廣場座落著美麗的提恩教堂與胡斯紀念碑鐫刻著：愛真實、說真實、守衛真實三名言。<br><br>
-              <strong>布拉格老城天文鐘 (Old Town)：</strong>壯麗的市民會館是全球最大、保存狀態最好的建築物之一，在這裡，時間彷彿回到了神奇的蒸氣時代。市民會館是珍貴的新藝術風格建築，在寬廣的共和國廣場上一個鮮明的地標建築，過去通往銀礦庫特納霍拉的重要貿易路線就是從這裡經過。由於這個地點具備戰略重要性，因此捷克的統治者最初就是在這裡建造宮殿，傳統上加冕遊行也是以這裡作為起點，如今卻只剩下緊鄰市民會館的哥德式火藥塔依舊屹立在原地見證過往的輝煌。舊市政廳這座地標佇立在舊城廣場上已然好幾個世紀。因為吸睛的天文鐘和足以俯瞰布拉格歷史城區的高塔，舊市政廳始終都是最熱門的景點。其哥德式建築始建於1338年。天文鐘是中世紀的科學奇蹟。每一天，從早上九點一直到晚上九點，布拉格的遊人都能站在舊市政廳前欣賞天文鐘，看十二使徒輪流出來打招呼。這件驚人的科技結晶如今已運作了六百年，天文鐘在每個整點都會活過來，演出引人入勝的表演。<br><br>
-              <strong>火藥塔 (Powder Tower, Prague)：</strong>建於1475年，是布拉格舊城門，17世紀時曾用來貯藏火藥後改稱火藥塔，如果登上65公尺的高塔，可遠眺市區，欣賞外觀華麗的新市政廳以及新城區的瓦茲拉夫廣場等，體會布拉格「百塔之城」的風情。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 舊城廣場 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Astronomical+Clock" target="_blank" rel="noopener noreferrer">🧭 老城天文鐘 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Powder+Tower+Prague" target="_blank" rel="noopener noreferrer">🧭 火藥塔 地標位址</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DAY 5 (庫特納霍拉 & OUTLET) -->
-      <div id="day-pane-5" class="day-panel">
-        <div class="panel-header">
-          <span class="tag">Day 5</span>
-          <h3>布拉格 Prague ➔ 70 公里 ➔ 庫特納霍拉 Kutná Hora ➔ 聖母升天和施洗者聖約翰教堂 ➔ 人骨教堂 ➔ 聖芭芭拉教堂 ➔ 65 公里 ➔ OUTLET (Fashion Arena Prague Outlet) ➔ 布拉格</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：傳統捷克午餐(橄欖什錦沙拉，高麗菜肉捲) ｜ 晚餐：上海多味中式晚餐</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>
-              <a class="hotel-link" href="https://www.marriott.com/en-us/hotels/prgdt-prague-marriott-hotel/overview/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Marriott Hotel Prague ↗</a>
-              <a class="hotel-tel" href="tel:+420222888888">(+420-222-888 888)</a>
-              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Prague+Marriott+Hotel" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
-            </p>
-          </div>
-        </div>
-
-        <!-- 人骨教堂內部大吊燈照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="08.webp" 
-                 alt="庫特納霍拉人骨教堂內部骨骸大吊燈" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">庫特納霍拉 Kutná Hora、聖母升天和施洗者聖約翰教堂、人骨教堂</h4>
-            <p class="spot-desc">
-              <strong>庫特納霍拉 Kutná Hora：</strong>是捷克共和國中波希米亞州的一個城市。這座城市在十二世紀由日爾曼人作為定居點而創建。13世紀末時已發展為波希米亞地區最具活力和最富裕的城市之一。<br><br>
-              <strong>聖母升天和施洗者聖約翰教堂：</strong>一座巴洛克哥德式教堂屬於庫特納霍拉的世界文化遺產區域，內部融合哥德樣式與巴洛克樣式。<br><br>
-              <strong>人骨教堂：</strong>聯合國教科文組織列為世界遺產的塞德萊茨骸骨教堂，位於庫特納霍拉，聽起來很恐怖，但其實這些骸骨來自於中世紀的黑死病與戰爭後的死者，19 世紀時由木雕藝術家弗朗提謝克·林特（František Rint）將這些骸骨重新整理並藝術化擺放。繼續前往庫特納霍拉的歷史中心，在中世紀餐廳品嚐傳統的捷克午餐。在舊城區的鵝卵石街道上輕鬆漫步後，經過一所前耶穌會學院，欣賞美麗的風景。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Sedlec+Ossuary+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 人骨教堂 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Church+of+the+Assumption+of+Our+Lady+and+Saint+John+the+Baptist+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 聖約翰教堂 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 聖芭芭拉教堂三峰尖塔哥德式建築照片 -->
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="09.webp" 
-                 alt="聖芭芭拉教堂哥德式建築立面" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">聖芭芭拉教堂</h4>
-            <p class="spot-desc">
-              這是庫特納霍拉皇家城鎮的哥德式地標，也是聯合國教科文組織世界遺產。這座宏偉的晚期哥德式大教堂，始建於14世紀後半，是捷克最傑出的哥德式建築之一。其建造歷時數百年，期間因戰爭等因素多次中斷，展現了不同時期的建築風格演變。教堂內部精美的彩繪玻璃與宏偉的管風琴，皆是藝術與信仰的結晶，令人讚嘆。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St+Barbara's+Cathedral+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 聖芭芭拉教堂 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="10.webp" alt="Fashion Arena Prague Outlet 購物中心" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">捷克 OUTLET (Fashion Arena Prague Outlet)</h4>
-            <p class="spot-desc">
-              喜歡名牌？別錯過布拉格近郊這座大型 Outlet，匯集 HH、Ecco、Adidas、Nike、Calvin Klein、Guess 等中高階品牌，部份精品包款也會上架。搭配退稅，價格比亞洲更優惠，是高 CP 值買手的天堂。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Fashion+Arena+Prague+Outlet" target="_blank" rel="noopener noreferrer">🧭 Fashion Arena Outlet 地標位址</a>
-            </div>
-
-            <div class="outlet-guide-section">
-              <h3 class="section-subtitle">🛍️ 捷克當地特色品牌推薦</h3>
-              <div class="outlet-brand-grid">
-                <div class="brand-card">
-                  <h5>👞 Baťa (拔佳皮鞋) <span class="brand-tag">捷克百年國寶</span></h5>
-                  <p>創立於 1894 年的捷克國民皮鞋。氣墊皮鞋、休閒鞋與真皮皮帶極具性價比，折合台幣常在千元上下，耐磨好穿。</p>
-                </div>
-                <div class="brand-card">
-                  <h5>⛷️ Alpine Pro <span class="brand-tag">捷克冬奧指定</span></h5>
-                  <p>捷克頂級戶外機能品牌。防風防水衝鋒外套、保暖羽絨衣與雪地防寒褲，品質扎實，價格約為一線國際大牌三分之一。</p>
-                </div>
-              </div>
-              <div class="tips-box">
-                💡 <strong>血拼省錢叮嚀：</strong>入館可先至服務中心（Information Centre）出示外國護照領取 VIP Day Pass（指定店家再享 9 折）。同一店家當日單筆滿 <strong>2,001 捷克克朗</strong>主動索取退稅單。
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DAY 6 -->
-      <div id="day-pane-6" class="day-panel">
-        <div class="panel-header">
-          <span class="tag">Day 6</span>
-          <h3>布拉格 ➔ 新城區 Nové Město ➔ 下午自由活動 ➔ 布拉格</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：捷克風味烤肋排料理 ｜ 晚餐：發500捷克克郎自理（貼心安排：Municipal house café 下午茶 咖啡+蛋糕）</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>
-              <a class="hotel-link" href="https://www.marriott.com/en-us/hotels/prgdt-prague-marriott-hotel/overview/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Marriott Hotel Prague ↗</a>
-              <a class="hotel-tel" href="tel:+420222888888">(+420-222-888 888)</a>
-              <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Prague+Marriott+Hotel" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="15.webp" 
-                 alt="布拉格新城區與帕拉迪姆購物中心" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">新城區 Nové Město、Municipal house café 下午茶、帕拉迪姆購物中心</h4>
-            <p class="spot-desc">
-              <strong>新城區 Nové Město：</strong>位於伏爾塔瓦河右岸、舊城區南方，是查理四世在14世紀時建立的城市，雖名為「新城」，實際上卻是歷史悠遠，面積更是老城區的三倍，以壯麗的哥德式與巴洛克式教堂聞名，當中最知名的地標為瓦茲拉夫廣場與國家博物館，前者為新城區的商業中心，隨處可見別出心裁的小店與特色咖啡廳；後者則是捷克尊榮的象徵，近代改革後的商業門市都在此生根發芽。<br><br>
-              <strong>Municipal house café 下午茶(咖啡+蛋糕)：</strong>貼心安排於布拉格新藝術風格地標「市民會館（Municipal House）」內的百年皇家咖啡廳享用精緻下午茶（咖啡+蛋糕），感受典雅華麗的波希米亞午茶時光。<br><br>
-              <strong>帕拉迪姆購物中心：</strong>位於捷克共和國布拉格市中心，於2007年開幕。該購物中心擁有170家商店和30家餐廳，零售面積達39,000平方公尺（420,000平方英尺）。此外，該建築內還設有總面積達19,500平方公尺（210,000平方英尺）的辦公空間。它是捷克共和國最大的購物中心之一，正對面是另一家購物中心－科特瓦百貨公司。
-            </p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wenceslas+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 瓦茲拉夫廣場 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Kavarna+Obecni+dum+Municipal+House+Cafe+Prague" target="_blank" rel="noopener noreferrer">🧭 Municipal House Café 地標位址</a>
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Palladium+Shopping+Center+Prague" target="_blank" rel="noopener noreferrer">🧭 帕拉迪姆購物中心 地標位址</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="free-plan-section">
-          <h3 class="section-subtitle">🚶‍♂️ 帕拉迪姆解散後：午後 3 處散策地標</h3>
-          <div class="route-grid">
-            <div class="route-card">
-              <!-- 真正帝國咖啡館內部實景 -->
-              <img src="16.webp" 
-                   alt="世界最美帝國咖啡館挑高大廳實景" loading="lazy">
-              <div class="route-info">
-                <span class="route-tag">古典文藝</span>
-                <h4>帝國咖啡館 (Café Imperial)</h4>
-                <p class="route-path">📍 帕拉迪姆斜對面步行 3 分鐘</p>
-                <p class="route-desc">世界十大最美咖啡館之一，滿室百年馬賽克陶瓷浮雕，品嚐經典泡芙與香醇熱咖啡。</p>
-                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Cafe+Imperial+Prague" target="_blank" rel="noopener noreferrer">🧭 帝國咖啡館 地標位址</a>
-              </div>
-            </div>
-
-            <div class="route-card">
-              <!-- 真正伏爾他瓦河天鵝與查理大橋實景 -->
-              <img src="17.webp" 
-                   alt="伏爾他瓦河天鵝岸實景" loading="lazy">
-              <div class="route-info">
-                <span class="route-tag">夕陽打卡</span>
-                <h4>伏爾他瓦河天鵝岸 (Cihelná)</h4>
-                <p class="route-path">📍 查理大橋北側河灘</p>
-                <p class="route-desc">群聚優雅天鵝的河畔秘境，傍晚時分能拍下夕陽金光灑在布拉格城堡與查理大橋的明信片大片。</p>
-                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Cihelna+Park+Prague" target="_blank" rel="noopener noreferrer">🧭 天鵝岸 (Cihelná) 地標位址</a>
-              </div>
-            </div>
-
-            <div class="route-card">
-              <!-- 真正哈維爾市集實景 -->
-              <img src="18.webp" 
-                   alt="哈維爾露天市集攤位實景" loading="lazy">
-              <div class="route-info">
-                <span class="route-tag">市集尋寶</span>
-                <h4>哈維爾露天市集 (Havelské tržiště)</h4>
-                <p class="route-path">📍 老城區核心步道</p>
-                <p class="route-desc">布拉格歷史最悠久的露天市集，販售新鮮莓果、手作木雕、天文鐘磁鐵與波希米亞小點。</p>
-                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Havelske+trziste+Prague" target="_blank" rel="noopener noreferrer">🧭 哈維爾市集 地標位址</a>
-              </div>
-            </div>
-          </div>
-
-          <h3 class="section-subtitle">🌭 500 克朗自由吃！必吃在地小吃</h3>
-          <div class="food-gallery">
-            <!-- 真正 Trdelnik 實景 -->
-            <div class="food-card">
-              <img src="19.webp" alt="肉桂煙囪捲" loading="lazy">
-              <div class="food-card-body">
-                <div class="food-card-title">肉桂煙囪捲 (Trdelník)</div>
-                <div class="food-price">約 80 ~ 160 CZK</div>
-                <p class="food-card-desc">炭火烤外酥內軟，撒糖霜肉桂粉。</p>
-              </div>
-            </div>
-
-            <!-- 真正捷克街頭 Klobasa 實景 -->
-            <div class="food-card">
-              <img src="20.webp" alt="街頭烤大香腸" loading="lazy">
-              <div class="food-card-body">
-                <div class="food-card-title">街頭烤大香腸 (Klobása)</div>
-                <div class="food-price">約 100 ~ 150 CZK</div>
-                <p class="food-card-desc">現烤多汁大肉腸佐黃芥末酸菜。</p>
-              </div>
-            </div>
-
-            <!-- 真正捷克開放式三明治實景 -->
-            <div class="food-card">
-              <img src="21.webp" alt="開放式三明治" loading="lazy">
-              <div class="food-card-body">
-                <div class="food-card-title">開放三明治 (Chlebíčky)</div>
-                <div class="food-price">約 45 ~ 75 CZK</div>
-                <p class="food-card-desc">法棍麵包抹薯泥，鋪火腿與水煮蛋。</p>
-              </div>
-            </div>
-
-            <!-- 真正皮爾森生啤酒實景 -->
-            <div class="food-card">
-              <img src="22.webp" alt="皮爾森生啤酒" loading="lazy">
-              <div class="food-card-body">
-                <div class="food-card-title">皮爾森生啤 (Pilsner)</div>
-                <div class="food-price">約 55 ~ 80 CZK</div>
-                <p class="food-card-desc">現拉滑順生啤，捷克國民之光。</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DAY 7 -->
-      <div id="day-pane-7" class="day-panel">
-        <div class="panel-header">
-          <span class="tag">Day 7</span>
-          <h3>布拉格 / 桃園</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：機上餐食 ｜ 晚餐：機上餐食</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>飛機上</p>
-          </div>
-        </div>
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="23.webp" alt="搭機返程" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">布拉格 ➔ 布拉格國際機場 ➔ 桃園</h4>
-            <p class="spot-desc">早餐後專車前往布拉格國際機場搭機返回桃園。</p>
-            <div class="map-action-bar">
-              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Vaclav+Havel+Airport+Prague" target="_blank" rel="noopener noreferrer">🧭 布拉格哈維爾機場 地標位址</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DAY 8 -->
-      <div id="day-pane-8" class="day-panel">
-        <div class="panel-header">
-          <span class="tag">Day 8</span>
-          <h3>桃園國際機場</h3>
-        </div>
-        <div class="meta-bar">
-          <div class="meta-item">
-            <h5>🍽 餐食安排</h5>
-            <p>早餐：機上餐食 ｜ 中餐：× ｜ 晚餐：×</p>
-          </div>
-          <div class="meta-item">
-            <h5>🏨 住宿</h5>
-            <p>溫暖的家</p>
-          </div>
-        </div>
-        <div class="spot-card">
-          <div class="spot-img-container">
-            <img src="24.webp" alt="抵達台灣" loading="lazy">
-          </div>
-          <div class="spot-content">
-            <h4 class="spot-title">圓滿賦歸：抵達桃園國際機場</h4>
-            <p class="spot-desc">班機抵達桃園國際機場，返回溫暖的家，圓滿結束 8 天精彩的捷克布拉格之旅。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 主分頁 3：實用資訊 GOOD TO KNOW ==================== -->
-    <section id="tab-info" class="main-section">
-      <div class="gtk-banner">
-        <h4>🎁 特別贈送 ＆ 行前重點提醒</h4>
-        <p><strong>特別贈送：</strong>① 歐規雙圓孔轉接頭／枚、② 捷克克朗 300 元。<br>初冬的布拉格<strong>濕冷、日照短</strong>，<strong>保暖</strong>與<strong>防扒手</strong>是兩大關鍵！為確保您有一趟美好的旅行，請詳閱以下注意事項。</p>
-      </div>
-
-      <div class="gtk-grid">
-        <div class="gtk-card">
-          <div class="gtk-card-header">
-            <span class="gtk-icon">🔌</span>
-            <h4>電壓差異與插座</h4>
-          </div>
-          <p>捷克電壓為 <span class="highlight-text">230V / 50Hz</span>（台灣為 110V / 60Hz）。<strong>台灣帶去的 110V 專用電器（如吹風機、電捲棒等）絕對不能直接插上！</strong>手機、筆電、相機等充電器大多標示 100V–240V 寬電壓，直接插上轉接頭即可使用，不需變壓器。插座主要為 <strong>E 型</strong>（相容 C 型兩腳圓插頭和 F 型 Schuko 插座）。</p>
-        </div>
-
-        <div class="gtk-card">
-          <div class="gtk-card-header">
-            <span class="gtk-icon">💶</span>
-            <h4>小費說明</h4>
-          </div>
-          <p>本行程<strong>已包含領隊、導遊、司機之服務費</strong>（每位貴賓每日 €12 歐元 × 8 天，共計 €96 歐元）。<br><strong>以下費用不包含：</strong><br>1. 行李小費：每人每件 <span class="highlight-text">€2～5 歐元</span>。<br>2. 房間小費：每房 <span class="highlight-text">€1～2 歐元</span>。<br>公廁多需付費 10–20 克朗，請備些許零錢。</p>
-        </div>
-
-        <div class="gtk-card">
-          <div class="gtk-card-header">
-            <span class="gtk-icon">🧳</span>
-            <h4>航班與行李規定</h4>
-          </div>
-          <p>直飛歐洲航班每位可<strong>免費托運兩件限重 23 公斤</strong>的行李，另可<strong>手提一件限重 7 公斤</strong>的行李（超重需自付加收費用，實際依航空公司公告為準）。團體座位由航空公司依英文姓名順序統一安排，無法於出發前預先選位或指定靠窗／走道，領隊將盡最大協助。</p>
-        </div>
-
-        <div class="gtk-card">
-          <div class="gtk-card-header">
-            <span class="gtk-icon">🏨</span>
-            <h4>住宿飯店注意事項</h4>
-          </div>
-          <p>• 房間內嚴禁吸菸，違者罰鍰須自行負擔；吧台零食與冰箱酒水皆需付費。<br>• 電熱水壺僅供煮水，不可放入咖啡粉、茶葉、火鍋料、泡麵等；請勿攜帶電湯匙或使用多插頭延長線以免跳電。<br>• <strong>浴室地板多無排水孔，請勿泡澡以免水溢出；於浴缸內盥洗時務必將浴簾放入浴缸內</strong>，避免弄濕地毯影響樓下房客而遭飯店求償。<br>• 歐洲古城與冬季日夜溫差大，飯店房間僅設置冬天必備之暖氣，無冷氣設備。</p>
-        </div>
-
-        <div class="gtk-card">
-          <div class="gtk-card-header">
-            <span class="gtk-icon">🛍</span>
-            <h4>退稅規定 Tax Free</h4>
-          </div>
-          <p>1. 購物前先確認商家是否貼有「Global Blue」、「Tax Refund」貼紙。<br>2. 結帳時出示護照領取退稅單並<strong>親筆簽上姓名</strong>，妥善保管收據與退稅單。<br>3. 離境時於機場將<strong>購買物品、收據、退稅單</strong>一併出示給退稅櫃檯人員蓋章。請務必留意領隊宣達之退稅流程並保留齊全單據。</p>
-        </div>
-
-        <div class="gtk-card">
-          <div class="gtk-card-header">
-            <span class="gtk-icon">🛡️</span>
-            <h4>行前必讀與安全守則</h4>
-          </div>
-          <p>• 建議啟程前自行投保旅遊防疫、海外醫療等保險，並攜帶常備藥品。<br>• <strong>未滿 14 歲兒童進入申根區規定：</strong>須提供能證明彼此關係之文件或父母（監護人）同意書並翻譯成英文，建議至戶政事務所辦理<strong>英文戶籍謄本</strong>（申請至少需 6 個工作天）。<br>• <strong>財物安全：</strong>貴重物品、錢財與護照請務必隨身攜帶或存放飯店保險箱，切勿留置於遊覽車上或行李箱內（依歐洲保險法規，置於車上或房內遺失無法尋求賠償）。</p>
-        </div>
-
-        <div class="gtk-card">
-          <div class="gtk-card-header">
-            <span class="gtk-icon">💰</span>
-            <h4>貨幣與時差</h4>
-          </div>
-          <p>捷克使用捷克克朗 <span class="highlight-text">CZK（Kč）</span>，約 <strong>1 克朗 ≈ 新台幣 1.4～1.5 元</strong>（以當日匯率為準）。冬令時間捷克比台灣<strong>慢 7 小時</strong>（當地中午 12 點為台灣晚上 7 點）。</p>
-        </div>
-
-        <div class="gtk-card">
-          <div class="gtk-card-header">
-            <span class="gtk-icon">📱</span>
-            <h4>語言與網路</h4>
-          </div>
-          <p>官方語言捷克語，觀光區通英文。建議備歐洲網卡或漫遊，飯店多有 Wi-Fi。<br>
-          <div class="lang-pill-box">
-            <span class="lang-pill">你好 ＝ Dobrý den</span>
-            <span class="lang-pill">謝謝 ＝ Děkuji</span>
-          </div>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 主分頁 4：熱門代購 ==================== -->
-    <section id="tab-shopping" class="main-section">
-      <div class="panel-header">
-        <span class="tag">SHOPPING</span>
-        <h3>🛍️ 捷克必買・熱門代購 Top 15</h3>
-      </div>
-      <p class="shop-intro">嚴選台灣代購圈高人氣、大價差、高回購的十五款捷克代表作。以下皆以「即時克朗匯率」試算台幣價與省錢幅度。</p>
-
-      <div class="shop-controls">
-        <div class="rate-head">
-          <span class="rate-title">💱 即時匯率查詢</span>
-          <button type="button" id="rateRefresh" class="rate-refresh" onclick="fetchShopRate(true)">↻ 更新匯率</button>
-        </div>
-        <div class="rate-main">1 CZK ≈ <b id="rateValue">1.50</b> TWD</div>
-        <div class="rate-meta" id="rateMeta">載入中…</div>
-        <div class="rate-conv">
-          <label>換算小工具</label>
-          <div class="rate-conv-row">
-            <input type="number" id="convCzk" placeholder="輸入 CZK 金額" inputmode="decimal">
-            <span class="rate-conv-eq">≈</span>
-            <span class="rate-conv-out">NT$ <b id="convTwd">—</b></span>
-          </div>
-        </div>
-      </div>
-
-      <p class="shop-count">共 <span id="shopCount">15</span> 款嚴選代購・價格依即時匯率換算</p>
-
-      <div id="shopGrid" class="shop-grid"></div>
-
-      <div class="shop-insights">
-        <h4>🔎 代購市場快速透析</h4>
-        <div class="shop-insight"><strong>🌿 植萃保養（代購量最大）</strong>菠丹妮 Botanicus 與蔓菲蘿 Manufaktura 回購率最高,當地價與台灣專櫃常有數倍價差,必掃。</div>
-        <div class="shop-insight"><strong>✏️ 百年特色文具</strong>KOH-I-NOOR 的重力製圖筆與刺蝟色鉛筆,台灣少見且售價高,文青最愛的手信。</div>
-        <div class="shop-insight"><strong>💎 水晶與傳統工藝</strong>波希米亞水晶、捷克隕石、手工木偶,最能傳遞東歐復古藝術感,適合送禮。</div>
-      </div>
-
-      <p class="shop-disclaimer">※ 價格為概略參考,實際以當地售價與當日匯率為準;商品圖片僅供示意。</p>
-    </section>
-
-  </div>
-
-  <!-- 手機專屬底部快速切換欄 -->
-  <div class="mobile-bottom-nav">
-    <button type="button" class="nav-tab-action active" onclick="quickNav('tab-batch', 0)">
-      <span class="icon">📅</span>
-      <span>梯次航班</span>
-    </button>
-    <button type="button" class="nav-tab-action" onclick="quickNav('tab-itinerary', 1)">
-      <span class="icon">🗺️</span>
-      <span>每日行程</span>
-    </button>
-    <button type="button" class="nav-tab-action" onclick="quickNavDay(5, 2)">
-      <span class="icon">🛍️</span>
-      <span>Outlet</span>
-    </button>
-    <button type="button" class="nav-tab-action" onclick="quickNavDay(6, 3)">
-      <span class="icon">🚶‍♂️</span>
-      <span>自由漫遊</span>
-    </button>
-    <button type="button" class="nav-tab-action" onclick="quickNav('tab-info', 4)">
-      <span class="icon">💡</span>
-      <span>實用須知</span>
-    </button>
-    <button type="button" class="nav-tab-action" onclick="quickNav('tab-shopping', 5)">
-      <span class="icon">🛍️</span>
-      <span>熱門代購</span>
-    </button>
-  </div>
-
-  <!-- 代購商品燈箱 -->
-  <div id="shopModal" class="shop-modal" style="display:none;" onclick="if(event.target.id==='shopModal')closeShopModal()">
-    <div class="shop-modal-box">
-      <button class="shop-modal-close" onclick="closeShopModal()">✕</button>
-      <img id="shopModalImg" src="" alt="">
-      <div class="shop-modal-body">
-        <h4 id="shopModalTitle"></h4>
-        <p id="shopModalDesc"></p>
-      </div>
+    <div class="controls">
+      <button type="button" id="play" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor" id="playicon"><path d="M6 4l15 8-15 8z"/></svg></button>
+      <span class="time" id="time">0:00 / 3:20</span>
+      <div class="track"><div class="ticks" id="ticks"></div><input type="range" id="seek" min="0" max="200" step="0.05" value="0" aria-label="播放進度"></div>
+      <button type="button" id="vo" class="tog on" aria-pressed="true" aria-label="配音" title="配音"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+      <button type="button" id="mu" class="tog on" aria-pressed="true" aria-label="配樂" title="配樂"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></button>
+      <button type="button" id="fs" aria-label="全螢幕"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
     </div>
   </div>
 
-  <!-- 每日行程圖片燈箱 -->
-  <div id="imgLightbox" class="shop-modal" style="display:none;" onclick="if(event.target.id==='imgLightbox')closeImgLightbox()">
-    <div class="shop-modal-box">
-      <button class="shop-modal-close" onclick="closeImgLightbox()">✕</button>
-      <img id="imgLightboxImg" src="" alt="">
-      <div class="shop-modal-body">
-        <p id="imgLightboxCaption"></p>
-      </div>
-    </div>
-  </div>
+  <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
 
-  <footer>
-    <p>© 115年港洲營建事業員工旅遊 捷克-布拉格8日遊 行程手冊</p>
-  </footer>
+  <nav class="chapters" id="chapters" aria-label="章節"></nav>
+  <p class="note">點畫面或按空白鍵播放／暫停，雙擊畫面或按 F 全螢幕，← → 前後跳 5 秒；麥克風與音符按鈕可分別開關解說與配樂。地圖為示意，地標位置依手冊 Google 地圖連結標示。</p>
+</div>
 
-  <script>
-    const batches = [
-      { 
-        start: "2026/11/11(三)", 
-        end: "2026/11/18(三)",
-        temp: "2°C ~ 8°C",
-        feel: "初冬濕冷",
-        sunset: "約 16:25",
-        advice: "初冬微冷偶有短暫陣雨，早晚溫差顯著。建議以洋蔥式穿法，內著輕便發熱衣，外搭防風厚外套，並備妥圍巾與好走的止滑平底鞋。",
-        flightOutTitle: "🛫 去程：Day1(三) 星宇航空 JX101",
-        flightOutTime: "TPE 台北 23:45 ➔ PRG 布拉格 08:00",
-        flightInTitle: "🛬 回程：Day7(二) 星宇航空 JX102",
-        flightInTime: "PRG 布拉格 10:30 ➔ TPE 台北 07:20(+1日)"
-      },
-      { 
-        start: "2026/11/18(三)", 
-        end: "2026/11/25(三)",
-        temp: "1°C ~ 6°C",
-        feel: "風大微寒",
-        sunset: "約 16:15",
-        advice: "11月中下旬氣溫接近冰點，日照縮短至下午四點多天黑。毛帽、保暖圍巾、手套必備，戶外走訪城堡區時注意防風。",
-        flightOutTitle: "🛫 去程：Day1(三) 星宇航空 JX101",
-        flightOutTime: "TPE 台北 23:45 ➔ PRG 布拉格 08:00",
-        flightInTitle: "🛬 回程：Day7(二) 星宇航空 JX102",
-        flightInTime: "PRG 布拉格 10:30 ➔ TPE 台北 07:20(+1日)"
-      },
-      { 
-        start: "2026/11/20(五)", 
-        end: "2026/11/27(五)",
-        temp: "1°C ~ 6°C",
-        feel: "風大微寒",
-        sunset: "約 16:10",
-        advice: "11月下旬氣溫漸近冰點，日落約在下午四點初。早晚溫差大，建議備妥保暖大衣、毛帽、圍巾及防滑鞋具，注意戶外防風。",
-        flightOutTitle: "🛫 去程：Day1(三) 星宇航空 JX101",
-        flightOutTime: "TPE 台北 23:45 ➔ PRG 布拉格 08:00",
-        flightInTitle: "🛬 回程：Day7(二) 星宇航空 JX102",
-        flightInTime: "PRG 布拉格 10:30 ➔ TPE 台北 07:20(+1日)"
-      },
-      { 
-        start: "2026/11/25(三)", 
-        end: "2026/12/02(三)",
-        temp: "0°C ~ 5°C",
-        feel: "寒冷偶雪",
-        sunset: "約 16:05",
-        advice: "邁入冬令極寒期，偶有飄雪或清晨路面結霜。請務必穿著防滑底鞋與厚羽絨大衣，室內皆有強暖氣，洋蔥式穿搭最俐落。",
-        flightOutTitle: "🛫 去程：Day1(三) 星宇航空 JX101",
-        flightOutTime: "TPE 台北 23:45 ➔ PRG 布拉格 08:00",
-        flightInTitle: "🛬 回程：Day7(二) 星宇航空 JX102",
-        flightInTime: "PRG 布拉格 10:30 ➔ TPE 台北 07:20(+1日)"
-      },
-      { 
-        start: "2026/12/02(三)", 
-        end: "2026/12/09(三)",
-        temp: "-1°C ~ 4°C",
-        feel: "冬季嚴寒",
-        sunset: "約 16:00",
-        advice: "已進入12月冬季，舊城廣場聖誕市集開跑！室外體感寒冷，建議備妥發熱褲、羊毛襪與保暖防風手套，走在戶外隨時來杯熱紅酒暖身。",
-        flightOutTitle: "🛫 去程：Day1(三) 星宇航空 JX101",
-        flightOutTime: "TPE 台北 21:15 ➔ PRG 布拉格 06:15",
-        flightInTitle: "🛬 回程：Day7(二) 星宇航空 JX102",
-        flightInTime: "PRG 布拉格 10:55 ➔ TPE 台北 07:10(+1日)"
-      },
-      { 
-        start: "2026/12/09(三)", 
-        end: "2026/12/16(三)",
-        temp: "-2°C ~ 3°C",
-        feel: "極寒降雪",
-        sunset: "約 16:00",
-        advice: "全年中日照最短的一週（約下午四點即天黑）。氣溫常處零度以下，防寒大衣、雪靴或抓地力強之防滑厚底鞋為必需品。",
-        flightOutTitle: "🛫 去程：Day1(三) 星宇航空 JX101",
-        flightOutTime: "TPE 台北 21:15 ➔ PRG 布拉格 06:15",
-        flightInTitle: "🛬 回程：Day7(二) 星宇航空 JX102",
-        flightInTime: "PRG 布拉格 10:55 ➔ TPE 台北 07:10(+1日)"
-      }
-    ];
+<script>
+(function(){
+"use strict";
+const IMG = "../";   /* 圖片資料夾 */
+const TOTAL = 200;
+const W = 1920, H = 1080;
 
-    function switchBatch() {
-      const select = document.getElementById("batchSelect");
-      const idx = select.value;
-      const b = batches[idx];
+/* ---------- places [lon, lat] ---------- */
+const P = {
+  TPE:[121.233,25.077], PRG:[14.262,50.101],
+  CKcastle:[14.3158,48.8127], CKsq:[14.3150,48.8106], OLDINN:[14.3156,48.8102],
+  CB:[14.4743,48.9745], HLU:[14.4417,49.0517],
+  dance:[14.4141,50.0755], dock:[14.4143,50.0727], anp:[14.4270,50.0848],
+  mucha:[14.4268,50.0839], castle:[14.3995,50.0905], vitus:[14.4005,50.0909], golden:[14.4038,50.0925],
+  wallen:[14.4073,50.0894], malo:[14.4036,50.0878], lennon:[14.4067,50.0862], bridge:[14.4112,50.0865],
+  mlynec:[14.4135,50.0855], clock:[14.4206,50.0870], ots:[14.4213,50.0876], powder:[14.4278,50.0870],
+  sedlec:[15.2882,49.9620], assum:[15.2905,49.9601], barbara:[15.2630,49.9446], outlet:[14.5537,50.0723], marriott:[14.4316,50.0884],
+  wenc:[14.4282,50.0812], obecni:[14.4282,50.0874], palladium:[14.4296,50.0893], imperial:[14.4321,50.0911], cihelna:[14.4096,50.0888], havel:[14.4210,50.0848]
+};
 
-      document.getElementById("batchText").innerText = `【出發日期】${b.start} ➔ 【抵台日期】${b.end}`;
-      document.getElementById("wTemp").innerText = b.temp;
-      document.getElementById("wFeel").innerText = b.feel;
-      document.getElementById("wSunset").innerText = b.sunset;
-      document.getElementById("wAdvice").innerHTML = `🧣 <strong>穿搭叮嚀：</strong>${b.advice}`;
+/* ---------- days ---------- */
+const DAYS = [
+ {n:"1",t0:9,t1:26,title:"啟程・飛往百塔之城",route:"公司 → 桃園國際機場 → 布拉格",meal:"機上餐食",hotel:"機上"},
+ {n:"2",t0:26,t1:50,title:"契斯科庫倫洛夫",route:"布拉格 → 173 km → 契斯科庫倫洛夫",meal:"烤鴨風味料理／肉類拼盤",hotel:"Hotel OLDINN"},
+ {n:"3",t0:50,t1:80,title:"城堡・遊船",route:"庫倫洛夫 → 布傑約維采 → 赫魯博卡城堡 → 布拉格",meal:"三道式套餐／啤酒醬豬肘",hotel:"Art Nouveau Palace"},
+ {n:"4",t0:80,t1:124,title:"布拉格市區觀光",route:"慕夏美術館 → 城堡區 → 查理大橋 → 舊城廣場",meal:"MLYNEC 三道式／遊船自助餐",hotel:"Art Nouveau Palace"},
+ {n:"5",t0:124,t1:150,title:"人骨教堂・Outlet",route:"布拉格 → 70 km → 庫特納霍拉 → 65 km → Outlet",meal:"傳統捷克午餐／中式晚餐",hotel:"Marriott Prague"},
+ {n:"6",t0:150,t1:180,title:"新城區・自由行",route:"瓦茲拉夫廣場 → 市民會館 → 帕拉迪姆 → 自由活動",meal:"烤肋排／500 克朗自理",hotel:"Marriott Prague"},
+ {n:"7–8",t0:180,t1:192,title:"圓滿賦歸",route:"布拉格哈維爾機場 → 桃園國際機場",meal:"機上餐食",hotel:"溫暖的家"}
+];
 
-      const outTitleEl = document.getElementById("flightOutTitle");
-      const outTimeEl = document.getElementById("flightOutTime");
-      const inTitleEl = document.getElementById("flightInTitle");
-      const inTimeEl = document.getElementById("flightInTime");
-      if (outTitleEl && b.flightOutTitle) outTitleEl.innerText = b.flightOutTitle;
-      if (outTimeEl && b.flightOutTime) outTimeEl.innerText = b.flightOutTime;
-      if (inTitleEl && b.flightInTitle) inTitleEl.innerText = b.flightInTitle;
-      if (inTimeEl && b.flightInTime) inTimeEl.innerText = b.flightInTime;
+/* ---------- camera keyframes ---------- */
+const K = [
+ {t:0, c:P.TPE, z:7.2, fx:.33},
+ {t:14, c:P.TPE, z:7.2, fx:.33},
+ {t:21, c:[68,43], z:4.25, fx:.5},
+ {t:24.5, c:[15.0,49.6], z:6.9, fx:.5},
+ {t:27, c:[14.9,49.45], z:7.5, fx:.5},
+ {t:33.5, c:[14.9,49.45], z:7.5, fx:.5},
+ {t:37, c:[14.3160,48.8105], z:15.3, fx:.31},
+ {t:50, c:[14.3160,48.8105], z:15.3, fx:.31},
+ {t:53, c:[14.40,48.94], z:10.2, fx:.31},
+ {t:59, c:[14.40,48.94], z:10.2, fx:.31},
+ {t:61, c:[14.44,49.02], z:10.6, fx:.31},
+ {t:65.5, c:[14.44,49.02], z:10.6, fx:.31},
+ {t:67.5, c:[14.55,49.55], z:8.1, fx:.5},
+ {t:70.5, c:[14.55,49.55], z:8.1, fx:.5},
+ {t:72.5, c:[14.4150,50.0790], z:15.0, fx:.30},
+ {t:80, c:[14.4150,50.0800], z:15.0, fx:.30},
+ {t:82.5, c:[14.4150,50.0875], z:14.6, fx:.5},
+ {t:85, c:[14.4150,50.0875], z:14.6, fx:.5},
+ {t:87, c:[14.4268,50.0845], z:16.0, fx:.31},
+ {t:89.5, c:[14.4268,50.0845], z:16.0, fx:.31},
+ {t:92, c:[14.4022,50.0910], z:16.3, fx:.31},
+ {t:99, c:[14.4030,50.0910], z:16.3, fx:.31},
+ {t:101, c:[14.4062,50.0882], z:16.3, fx:.31},
+ {t:105.5, c:[14.4062,50.0880], z:16.3, fx:.31},
+ {t:107.5, c:[14.4112,50.0863], z:16.4, fx:.31},
+ {t:112, c:[14.4120,50.0863], z:16.4, fx:.31},
+ {t:114, c:[14.4232,50.0872], z:16.4, fx:.31},
+ {t:119.5, c:[14.4240,50.0872], z:16.4, fx:.31},
+ {t:122, c:[14.4150,50.0878], z:14.7, fx:.5},
+ {t:124, c:[14.4150,50.0878], z:14.7, fx:.5},
+ {t:126, c:[14.85,50.01], z:9.9, fx:.31},
+ {t:130, c:[14.85,50.01], z:9.9, fx:.31},
+ {t:132, c:[15.2780,49.9535], z:14.4, fx:.31},
+ {t:141, c:[15.2780,49.9535], z:14.4, fx:.31},
+ {t:143, c:[14.88,50.02], z:9.9, fx:.31},
+ {t:146, c:[14.88,50.02], z:9.9, fx:.31},
+ {t:147.5, c:[14.50,50.08], z:12.3, fx:.31},
+ {t:150, c:[14.50,50.08], z:12.3, fx:.31},
+ {t:152.5, c:[14.4285,50.0850], z:16.0, fx:.31},
+ {t:162.5, c:[14.4290,50.0860], z:16.0, fx:.31},
+ {t:164.5, c:[14.4205,50.0878], z:15.1, fx:.31},
+ {t:180, c:[14.4205,50.0878], z:15.1, fx:.31},
+ {t:182, c:[14.36,50.095], z:12.2, fx:.31},
+ {t:185, c:[14.36,50.095], z:12.2, fx:.31},
+ {t:188, c:[68,43], z:4.25, fx:.5},
+ {t:191.5, c:P.TPE, z:6.6, fx:.5},
+ {t:200, c:P.TPE, z:6.6, fx:.5}
+];
 
-      if (typeof renderRoster === "function") {
-        const searchInput = document.getElementById("rosterSearchInput");
-        if (searchInput) searchInput.value = "";
-        renderRoster(parseInt(idx, 10));
-      }
-    }
+/* ---------- routes ---------- */
+const R = [
+ {k:"flight",t0:15,t1:23.8,until:26,pts:"gc:TPE:PRG",label:"JX101・約 15 小時"},
+ {k:"drive",t0:27.5,t1:33.5,until:50,label:"173 km",pts:[P.PRG,[14.35,50.06],[14.52,50.0],[14.66,49.79],[14.66,49.41],[14.69,49.18],[14.47,48.98],[14.40,48.90],[14.35,48.84],P.CKcastle]},
+ {k:"drive",t0:52,t1:56,until:80,label:"25 km",pts:[P.OLDINN,[14.33,48.83],[14.37,48.86],[14.43,48.92],P.CB]},
+ {k:"drive",t0:59,t1:61,until:80,label:"12 km",pts:[P.CB,[14.455,49.01],P.HLU]},
+ {k:"drive",t0:65.5,t1:71.5,until:80,label:"145 km",pts:[P.HLU,[14.56,49.12],[14.62,49.20],[14.66,49.41],[14.70,49.60],[14.65,49.80],[14.52,49.98],[14.43,50.045],[14.417,50.066],P.dance]},
+ {k:"boat",t0:75.5,t1:79.5,until:80,pts:[P.dock,[14.4125,50.0765],[14.4103,50.0812],[14.4110,50.0865],[14.4130,50.0893],[14.4152,50.0915],[14.4182,50.0935]]},
+ {k:"drive",t0:89.5,t1:92,until:124,pts:[P.mucha,[14.4240,50.0853],[14.4195,50.0890],[14.4150,50.0897],[14.4100,50.0905],[14.4065,50.0935],[14.4010,50.0935],[14.3985,50.0920],P.castle]},
+ {k:"walk",t0:93,t1:96.5,until:124,pts:[P.castle,P.vitus,[14.4025,50.0915],P.golden]},
+ {k:"walk",t0:99.5,t1:104.5,until:124,pts:[P.golden,[14.4052,50.0918],[14.4060,50.0905],P.wallen,[14.4050,50.0885],P.malo,[14.4050,50.0868],P.lennon]},
+ {k:"walk",t0:106,t1:110,until:124,pts:[P.lennon,[14.4085,50.0864],[14.4140,50.0865],P.mlynec]},
+ {k:"walk",t0:112.5,t1:118,until:124,pts:[P.mlynec,[14.4142,50.0862],[14.4175,50.0862],[14.4195,50.0868],P.clock,P.ots,[14.4235,50.0874],[14.4255,50.0873],P.powder]},
+ {k:"drive",t0:124.8,t1:130,until:150,label:"70 km",pts:[P.marriott,[14.50,50.07],[14.60,50.075],[14.80,50.08],[15.00,50.05],[15.17,50.02],[15.25,49.985],P.sedlec]},
+ {k:"walk",t0:133,t1:136,until:150,pts:[P.sedlec,P.assum,[15.280,49.955],[15.270,49.949],P.barbara]},
+ {k:"drive",t0:141.5,t1:146,until:150,label:"65 km",pts:[P.barbara,[15.25,49.975],[15.17,50.02],[15.00,50.05],[14.80,50.078],[14.62,50.072],P.outlet]},
+ {k:"drive",t0:147.6,t1:149.6,until:150,pts:[P.outlet,[14.50,50.078],[14.46,50.085],P.marriott]},
+ {k:"walk",t0:153.5,t1:158,until:180,pts:[P.wenc,[14.4262,50.0840],[14.4270,50.0860],P.obecni,P.palladium]},
+ {k:"opt",t0:163,t1:164.6,until:180,pts:[P.palladium,P.imperial]},
+ {k:"opt",t0:167.5,t1:169.5,until:180,pts:[P.palladium,[14.4250,50.0873],[14.4175,50.0862],[14.4110,50.0880],P.cihelna]},
+ {k:"opt",t0:172,t1:173.6,until:180,pts:[P.palladium,[14.4255,50.0868],[14.4225,50.0855],P.havel]},
+ {k:"drive",t0:181,t1:184.5,until:192,pts:[P.marriott,[14.40,50.085],[14.33,50.09],[14.29,50.097],P.PRG]},
+ {k:"flight",t0:185,t1:190.8,until:192,pts:"gc:PRG:TPE",label:"JX102"}
+];
 
-    function switchMainTab(targetId) {
-      const tabs = document.querySelectorAll('.main-section');
-      tabs.forEach(tab => tab.classList.remove('active'));
+/* ---------- pins ---------- */
+const PINS = [
+ {p:P.TPE,t0:10,t1:26,k:"air",name:"桃園國際機場",a:"r"},
+ {p:P.PRG,t0:23.6,t1:34,k:"air",name:"布拉格哈維爾機場",a:"l"},
+ {p:P.CKcastle,t0:33.5,t1:50,k:"no",n:1,name:"庫倫洛夫城堡",a:"t"},
+ {p:P.CKsq,t0:38.5,t1:50,k:"no",n:2,name:"市政廣場",a:"l"},
+ {p:P.OLDINN,t0:44,t1:50,k:"hotel",name:"Hotel OLDINN",a:"b"},
+ {p:P.CB,t0:56,t1:80,k:"no",n:1,name:"布傑約維采",a:"r"},
+ {p:P.HLU,t0:61,t1:80,k:"no",n:2,name:"赫魯博卡城堡",a:"r"},
+ {p:P.dance,t0:72,t1:80,k:"no",n:3,name:"跳舞的房子",a:"r"},
+ {p:P.dock,t0:75.5,t1:80,k:"no",n:4,name:"遊船碼頭",a:"r"},
+ {p:P.anp,t0:77.5,t1:80,k:"hotel",name:"Art Nouveau Palace",a:"r"},
+ {p:P.mucha,t0:86.5,t1:124,k:"no",n:1,name:"慕夏美術館",a:"b"},
+ {p:P.vitus,t0:92.5,t1:124,k:"no",n:2,name:"聖維特大教堂",a:"t"},
+ {p:P.castle,t0:92,t1:124,k:"no",n:3,name:"布拉格城堡",a:"l"},
+ {p:P.golden,t0:96.4,t1:124,k:"no",n:4,name:"黃金巷",a:"r"},
+ {p:P.wallen,t0:101.3,t1:124,k:"no",n:5,name:"華倫斯坦宮",a:"r"},
+ {p:P.malo,t0:102.6,t1:124,k:"no",n:6,name:"小區廣場",a:"l"},
+ {p:P.lennon,t0:104.4,t1:124,k:"no",n:7,name:"列儂牆",a:"b"},
+ {p:P.bridge,t0:107.6,t1:124,k:"no",n:8,name:"查理大橋",a:"t"},
+ {p:P.mlynec,t0:109.8,t1:124,k:"meal",name:"MLYNEC 午餐",a:"b"},
+ {p:P.clock,t0:114.6,t1:124,k:"no",n:9,name:"天文鐘",a:"b"},
+ {p:P.ots,t0:115.2,t1:124,k:"no",n:10,name:"舊城廣場",a:"t"},
+ {p:P.powder,t0:117.9,t1:124,k:"no",n:11,name:"火藥塔",a:"r"},
+ {p:P.anp,t0:120,t1:124,k:"hotel",name:"Art Nouveau Palace",a:"b"},
+ {p:P.sedlec,t0:130,t1:150,k:"no",n:1,name:"人骨教堂",a:"r"},
+ {p:P.assum,t0:133.4,t1:150,k:"no",n:2,name:"聖母升天教堂",a:"r"},
+ {p:P.barbara,t0:135.9,t1:150,k:"no",n:3,name:"聖芭芭拉教堂",a:"l"},
+ {p:P.outlet,t0:146,t1:150,k:"no",n:4,name:"Fashion Arena Outlet",a:"b"},
+ {p:P.marriott,t0:149.4,t1:150,k:"hotel",name:"Marriott",a:"r"},
+ {p:P.wenc,t0:152.6,t1:180,k:"no",n:1,name:"瓦茲拉夫廣場",a:"r"},
+ {p:P.obecni,t0:156.6,t1:180,k:"meal",name:"市民會館下午茶",a:"l"},
+ {p:P.palladium,t0:157.9,t1:180,k:"no",n:3,name:"帕拉迪姆（解散）",a:"r"},
+ {p:P.imperial,t0:164.5,t1:180,k:"opt",name:"帝國咖啡館",a:"r"},
+ {p:P.cihelna,t0:169.4,t1:180,k:"opt",name:"天鵝岸",a:"l"},
+ {p:P.havel,t0:173.5,t1:180,k:"opt",name:"哈維爾市集",a:"b"},
+ {p:P.PRG,t0:184.4,t1:192,k:"air",name:"布拉格哈維爾機場",a:"l"},
+ {p:P.TPE,t0:190.6,t1:200,k:"air",name:"桃園國際機場",a:"r"}
+];
 
-      const btns = document.querySelectorAll('.main-tab-btn');
-      btns.forEach(btn => btn.classList.remove('active'));
+/* ---------- cards ---------- */
+const CARDS = [
+ {t0:10,t1:16,img:"01",n:"Day 1 · JX101",h:"星宇航空直飛布拉格",p:"團體於公司集合，搭車前往桃園國際機場。23:45 起飛，翌日早晨 08:00 抵達。"},
+ {t0:37.5,t1:43.6,img:"02",n:"Český Krumlov",h:"庫倫洛夫城堡",p:"四十棟建築組成，規模在捷克僅次於布拉格城堡。從城堡區俯瞰紅瓦白牆與 S 形河灣。"},
+ {t0:43.6,t1:49.6,img:"03",n:"Náměstí Svornosti",h:"舊城區・市政廣場",p:"巷弄裡滿是木造玩具與波希米亞水晶小店。推薦現烤肉桂煙囪捲 Trdelník、刺蝟色鉛筆。"},
+ {t0:56,t1:60.6,img:"04",n:"České Budějovice",h:"布傑約維采・奧托卡二世廣場",p:"南捷克首府、原創百威啤酒的故鄉。漫步參孫噴泉所在的廣場，遠望黑塔。"},
+ {t0:61,t1:65.8,img:"05",n:"Zámek Hluboká",h:"赫魯博卡城堡",p:"以溫莎城堡為靈感的白色宮殿，花園與自然風光環繞，捷克最美城堡之一。"},
+ {t0:71.8,t1:75.5,img:"06",n:"Tančící dům · 1996",h:"跳舞的房子",p:"法蘭克・蓋瑞與米盧尼克合作的解構主義名作，又名「弗雷德與琴吉之屋」。"},
+ {t0:75.5,t1:80,img:"07",n:"Vltava Cruise",h:"伏爾他瓦河遊船",p:"順流欣賞一座座橋，卡夫卡最愛的布拉格視角。"},
+ {t0:86.5,t1:92,text:1,n:"Mucha Museum",h:"慕夏美術館",p:"位於 18 世紀薩瓦林宮，收藏阿爾豐斯・慕夏的海報、繪畫與手稿，新藝術風格代表。"},
+ {t0:92,t1:99,img:"11",n:"Pražský hrad",h:"布拉格城堡・聖維特大教堂",p:"金氏世界紀錄最大古堡，佔地 7 萬平方公尺；聖維特為世界三大哥德式教堂之一。※ 週日彌撒時順序可能調整。"},
+ {t0:99,t1:105.8,img:"12",n:"Malá Strana",h:"黃金巷・華倫斯坦宮・列儂牆",p:"黃金巷 22 號是卡夫卡故居；華倫斯坦宮建於 1623 年；穿過小區廣場來到列儂牆。"},
+ {t0:105.8,t1:112.5,img:"13",n:"Karlův most",h:"查理大橋・MLYNEC 午餐",p:"東歐現存最古老石橋，全長 520 公尺、兩側 30 座雕像。午餐在橋畔米其林推薦餐廳。"},
+ {t0:112.5,t1:120,img:"14",n:"Staroměstské náměstí",h:"舊城廣場・天文鐘・火藥塔",p:"運轉 600 年的天文鐘每逢整點十二使徒現身；1475 年建成的火藥塔高 65 公尺。"},
+ {t0:130.5,t1:136,img:"08",n:"Kutná Hora · UNESCO",h:"人骨教堂・聖母升天教堂",p:"19 世紀木雕家林特以黑死病與戰亂遺骨排列成藝術；鄰近教堂融合哥德與巴洛克。"},
+ {t0:136,t1:141.5,img:"09",n:"Chrám sv. Barbory",h:"聖芭芭拉教堂",p:"始建於 14 世紀後半的晚期哥德式大教堂，彩繪玻璃與管風琴令人讚嘆。"},
+ {t0:145.6,t1:150,img:"10",n:"Fashion Arena",h:"Outlet 血拼",p:"服務中心出示護照領 VIP Day Pass 再享 9 折；同店單日滿 2,001 克朗可退稅。"},
+ {t0:152,t1:157.4,img:"15",n:"Nové Město",h:"新城區・瓦茲拉夫廣場",p:"14 世紀查理四世所建，面積是舊城區的三倍，國家博物館矗立廣場端點。"},
+ {t0:157.4,t1:162.6,text:1,n:"Obecní dům",h:"市民會館下午茶",p:"新藝術風格地標內的百年咖啡廳，咖啡＋蛋糕。之後在帕拉迪姆購物中心解散，自由活動。"},
+ {t0:163,t1:167.5,img:"16",n:"Café Imperial",h:"帝國咖啡館",p:"帕拉迪姆斜對面步行 3 分鐘，滿室百年馬賽克陶瓷浮雕。"},
+ {t0:167.5,t1:172,img:"17",n:"Cihelná",h:"伏爾他瓦河天鵝岸",p:"查理大橋北側河灘，傍晚拍下夕陽灑在城堡與大橋上的明信片畫面。"},
+ {t0:172,t1:176,img:"18",n:"Havelské tržiště",h:"哈維爾露天市集",p:"布拉格最悠久的露天市集：莓果、手作木雕、天文鐘磁鐵。"},
+ {t0:181,t1:186,img:"23",n:"Day 7 · JX102",h:"布拉格哈維爾機場",p:"10:30 起飛，翌日 07:20 抵達桃園。離境前記得辦理退稅蓋章。"}
+];
 
-      const target = document.getElementById(targetId);
-      if (target) target.classList.add('active');
+const FOOD = {t0:176,t1:180.4,items:[
+ {img:"19",h:"肉桂煙囪捲",p:"80–160 CZK"},{img:"20",h:"街頭烤香腸",p:"100–150 CZK"},
+ {img:"21",h:"開放三明治",p:"45–75 CZK"},{img:"22",h:"皮爾森生啤",p:"55–80 CZK"}]};
 
-      if (targetId === 'tab-batch') btns[0].classList.add('active');
-      else if (targetId === 'tab-itinerary') btns[1].classList.add('active');
-      else if (targetId === 'tab-info') btns[2].classList.add('active');
-      else if (targetId === 'tab-shopping') btns[3].classList.add('active');
+/* chapters in film time; narration is one dialogue file per chapter */
+const CHV=[[0,9],[9,26],[26,50],[50,80],[80,124],[124,150],[150,180],[180,192],[192,200]];
+const DLG=[[["小晴", "哈囉大家好，我是小晴！"], ["阿哲", "我是阿哲！今年港洲的員工旅遊，要去捷克布拉格八天！"], ["小晴", "沒錯，今天我們就跟著地圖，一天一天，帶大家先走一遍。"]], [["阿哲", "第一天其實很輕鬆，晚上在公司集合，坐車去桃園機場。"], ["小晴", "搭星宇航空直飛，晚上十一點四十五分起飛。"], ["阿哲", "飛大概十五個小時，睡一覺醒來……"], ["小晴", "當地早上八點，就到布拉格了！而且捷克比台灣慢七個小時，等於多賺一天。"]], [["阿哲", "一下飛機我們先不進市區，直接往南開一百七十三公里。"], ["小晴", "目的地是契斯科庫倫洛夫，公認捷克最美的中世紀小鎮。"], ["阿哲", "聽說這裡連麥當勞都沒有？"], ["小晴", "對啊！伏爾他瓦河在這裡繞了一個 S 形，從城堡往下看，整片都是紅屋頂。"], ["阿哲", "晚上就住在廣場旁邊，記得去買一個現烤的肉桂煙囪捲！"]], [["小晴", "第三天早上，先到南捷克的首府，布傑約維采。"], ["阿哲", "這裡是百威啤酒的老家，正港的原創百威喔。"], ["小晴", "接著是白色的赫魯博卡城堡，靈感來自英國溫莎城堡，根本是童話。"], ["阿哲", "下午一路北上一百四十五公里，回到布拉格。"], ["小晴", "先去看那棟歪歪扭扭的，跳舞的房子，"], ["阿哲", "再坐船遊伏爾他瓦河，一座橋接著一座橋，難怪卡夫卡最愛這個角度。"]], [["阿哲", "第四天就是重頭戲了，布拉格市區一日遊！"], ["小晴", "早上先看慕夏美術館，接著坐車上山，到全世界最大的古堡，布拉格城堡。"], ["阿哲", "裡面的聖維特大教堂，是世界三大哥德式教堂之一，記得抬頭看那片玫瑰窗。"], ["小晴", "然後一路往下走，黃金巷、華倫斯坦宮、小區廣場，再到列儂牆拍照。"], ["阿哲", "中午走過查理大橋，就在橋邊的米其林推薦餐廳吃午餐。"], ["小晴", "下午到舊城廣場，整點的時候，天文鐘的十二使徒會出來打招呼！"], ["阿哲", "晚上再搭遊船吃自助餐，看布拉格夜景，完美。"]], [["小晴", "第五天往東開七十公里，到銀礦古城庫特納霍拉。"], ["阿哲", "這裡有一間很特別的人骨教堂，用數萬人的骨骸做裝飾。"], ["小晴", "聽起來有點毛，但其實很震撼。旁邊的聖芭芭拉教堂也超美。"], ["阿哲", "回程就是大家最期待的……Outlet！"], ["小晴", "記得先拿護照去服務中心領 VIP 折扣卡，同一家店買滿兩千零一克朗，就可以退稅。"]], [["阿哲", "第六天，我們從新城區的瓦茲拉夫廣場出發。"], ["小晴", "下午在市民會館的百年咖啡廳喝下午茶，然後……"], ["阿哲", "自由活動！"], ["小晴", "可以去帝國咖啡館坐坐，傍晚到河邊的天鵝岸拍城堡夕陽，或是逛逛哈維爾市集。"], ["阿哲", "晚餐每人發五百克朗，煙囪捲、烤香腸，再配一杯皮爾森生啤，剛剛好。"], ["小晴", "不過冬天四點多就天黑了，記得結伴同行喔。"]], [["阿哲", "第七天早上就要去機場了，離境前記得辦退稅。"], ["小晴", "搭星宇航空回台灣，第八天早上七點二十分抵達桃園。"], ["阿哲", "八天七夜，圓滿結束！"]], [["小晴", "出發前記得帶轉接頭、穿洋蔥式保暖衣物，護照錢包隨身帶好。"], ["阿哲", "我們布拉格見！"], ["小晴", "拜拜～"]]];
+let AUD_DUR=[12.43, 19.39, 26.14, 28.13, 42.98, 27.82, 31.2, 11.09, 8.28];   /* seconds of each dialogue file */
+const CAPT=[[0.0, 2.32, 7.97], [0.0, 5.13, 9.2, 12.48], [0.0, 5.04, 11.21, 13.76, 21.19], [0.0, 4.15, 8.58, 14.87, 18.83, 22.26], [0.0, 3.87, 11.4, 18.77, 26.22, 31.41, 38.31], [0.0, 5.14, 10.93, 17.3, 19.73], [0.0, 4.25, 10.74, 11.64, 19.25, 26.69], [0.0, 3.78, 8.72], [0.0, 5.62, 7.13]];   /* line start times inside each file */
+const VOICE_DIR="voice/";
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+/* static map labels */
+const LABELS = [
+ {p:[15.45,49.80],t:"捷　克",zmin:5.6,zmax:9.2,s:"country"},
+ {p:[11.2,50.75],t:"德　國",zmin:6.2,zmax:9,s:"country2"},
+ {p:[15.2,48.12],t:"奧地利",zmin:6.2,zmax:9,s:"country2"},
+ {p:[17.6,50.85],t:"波　蘭",zmin:6.2,zmax:9,s:"country2"},
+ {p:[18.9,48.75],t:"斯洛伐克",zmin:6.2,zmax:9,s:"country2"},
+ {p:[120.95,23.7],t:"台　灣",zmin:3,zmax:8,s:"country2",dx:120},
+ {p:[103,35],t:"中　國",zmin:3.5,zmax:5.5,s:"country2"},
+ {p:[78,62],t:"俄羅斯",zmin:3.5,zmax:5.5,s:"country2"},
+ {p:[14.42,50.075],t:"布拉格",zmin:6.4,zmax:11.6,s:"city"},
+ {p:[13.38,49.75],t:"皮爾森",zmin:7,zmax:10.5,s:"town"},
+ {p:[16.61,49.20],t:"布爾諾",zmin:7,zmax:10.5,s:"town"},
+ {p:[14.66,49.41],t:"塔波爾",zmin:7.4,zmax:10.5,s:"town"},
+ {p:[14.315,48.80],t:"契斯科庫倫洛夫",zmin:7,zmax:9.6,s:"town"},
+ {p:[15.268,49.948],t:"庫特納霍拉",zmin:7.4,zmax:12.6,s:"town"},
+ {p:[14.398,50.0927],t:"城堡區",zmin:13.4,zmax:20,s:"district"},
+ {p:[14.4045,50.0868],t:"小城區",zmin:13.4,zmax:20,s:"district"},
+ {p:[14.4195,50.0893],t:"舊城區",zmin:13.4,zmax:20,s:"district"},
+ {p:[14.4235,50.0795],t:"新城區",zmin:13.4,zmax:20,s:"district"},
+ {p:[14.3955,50.0825],t:"佩特任山",zmin:13.6,zmax:20,s:"park"},
+ {p:[14.4200,50.0972],t:"列特納公園",zmin:13.6,zmax:20,s:"park"},
+ {p:[14.4085,50.0790],t:"伏爾他瓦河",zmin:13.2,zmax:20,s:"river",rot:-1.35},
+ {p:[14.3172,48.8066],t:"伏爾他瓦河",zmin:13.2,zmax:20,s:"river",rot:0.05}
+];
 
-    function showDay(dayKey) {
-      const buttons = document.querySelectorAll(".day-btn");
-      buttons.forEach(btn => btn.classList.remove("active"));
+/* hand-drawn city features [lon,lat] */
+const PRAGUE_RIVER=[[14.4100,50.0400],[14.4150,50.0560],[14.4170,50.0640],[14.4152,50.0685],[14.4122,50.0727],[14.4116,50.0765],[14.4100,50.0812],[14.4110,50.0865],[14.4128,50.0893],[14.4150,50.0915],[14.4180,50.0935],[14.4230,50.0948],[14.4300,50.0956],[14.4380,50.0966],[14.4460,50.0985],[14.4530,50.1010],[14.4590,50.1045],[14.4560,50.1085],[14.4450,50.1125],[14.4300,50.1160],[14.4150,50.1200],[14.4050,50.1280],[14.4000,50.1400]];
+const CK_RIVER=[[14.3060,48.8110],[14.3095,48.8118],[14.3130,48.8121],[14.3165,48.8116],[14.3186,48.8100],[14.3176,48.8086],[14.3150,48.8081],[14.3125,48.8076],[14.3112,48.8066],[14.3125,48.8056],[14.3160,48.8054],[14.3195,48.8062],[14.3230,48.8075]];
+const PARKS=[
+ [[14.389,50.0835],[14.393,50.0875],[14.399,50.0872],[14.4035,50.0835],[14.4025,50.0785],[14.3955,50.0770],[14.3900,50.0795]],
+ [[14.4085,50.0942],[14.4165,50.0952],[14.4280,50.0968],[14.4305,50.0990],[14.4150,50.0995],[14.4070,50.0975]],
+ [[14.3115,48.8128],[14.3145,48.8140],[14.3200,48.8135],[14.3180,48.8124],[14.3130,48.8124]],
+ [[15.2580,49.9455],[15.2665,49.9460],[15.2660,49.9435],[15.2590,49.9430]]
+];
+const CASTLE_BLOCK=[[14.3965,50.0912],[14.4048,50.0930],[14.4055,50.0918],[14.3975,50.0898]];
+const STREETS=[
+ [[14.4262,50.0838],[14.4305,50.0795]],
+ [[14.4130,50.0815],[14.4200,50.0825],[14.4245,50.0850],[14.4282,50.0872]],
+ [[14.4220,50.0874],[14.4278,50.0870]],
+ [[14.4140,50.0864],[14.4185,50.0862],[14.4205,50.0868]],
+ [[14.3990,50.0890],[14.4036,50.0878],[14.4085,50.0863]],
+ [[14.4213,50.0876],[14.4180,50.0912]],
+ [[14.4278,50.0870],[14.4320,50.0884],[14.4370,50.0890]],
+ [[14.4210,50.0848],[14.4245,50.0850]],
+ [[14.4120,50.0790],[14.4190,50.0800],[14.4262,50.0838]]
+];
+const BRIDGES=[
+ [[14.4086,50.0863],[14.4136,50.0865]],
+ [[14.4106,50.0890],[14.4152,50.0897]],
+ [[14.4075,50.0811],[14.4128,50.0814]],
+ [[14.4092,50.0763],[14.4142,50.0767]],
+ [[14.4096,50.0725],[14.4148,50.0729]],
+ [[14.4168,50.0950],[14.4192,50.0920]]
+];
 
-      const panels = document.querySelectorAll(".day-panel");
-      panels.forEach(panel => panel.classList.remove("active"));
+/* ---------- math ---------- */
+const PI=Math.PI, clamp=(v,a,b)=>v<a?a:v>b?b:v, lerp=(a,b,u)=>a+(b-a)*u;
+const ease=u=>u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;
+const easeOut=u=>1-Math.pow(1-u,3);
+const smooth=(a,b,x)=>{const u=clamp((x-a)/(b-a),0,1);return u*u*(3-2*u)};
+function merc(lon,lat){const s=Math.sin(clamp(lat,-85,85)*PI/180);return [(lon+180)/360,.5-Math.log((1+s)/(1-s))/(4*PI)]}
+function vis(t,t0,t1,f){f=f||.6;return Math.min(smooth(t0,t0+f,t),1-smooth(t1-f,t1,t))}
 
-      const currentBtn = buttons[dayKey - 1];
-      if (currentBtn) {
-        currentBtn.classList.add("active");
-        currentBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-      const currentPane = document.getElementById(`day-pane-${dayKey}`);
-      if (currentPane) currentPane.classList.add("active");
-    }
-
-    function quickNav(targetTab, actionIdx) {
-      const actions = document.querySelectorAll('.nav-tab-action');
-      actions.forEach(a => a.classList.remove('active'));
-      actions[actionIdx].classList.add('active');
-
-      switchMainTab(targetTab);
-    }
-
-    function quickNavDay(dayNum, actionIdx) {
-      const actions = document.querySelectorAll('.nav-tab-action');
-      actions.forEach(a => a.classList.remove('active'));
-      actions[actionIdx].classList.add('active');
-
-      switchMainTab('tab-itinerary');
-      showDay(dayNum);
-    }
-
-    /* ===== 熱門代購 ===== */
-    const shopProducts = [
-      { rank:"TOP 1", name:"玫瑰眼霜 (Rose Eyecare Cream)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:295, twdCounterPrice:1600, specs:"15g", efficacy:"深層滋養眼周、淡化撫平細紋、改善暗沉緊緻肌膚。", reason:"菠丹妮鎮店神霜,成分溫和純粹。台灣專櫃約 NT$1,600 以上,當地購入折合僅 2～3 折,常態性斷貨。", img:"shop01.webp", stars:5.0, hotTag:"價差王者 🔥" },
-      { rank:"TOP 2", name:"死海泥手工皂 (Dead Sea Mud Soap)", brand:"菠丹妮 Botanicus", category:"洗沐護理", priceCzk:125, twdCounterPrice:450, specs:"70g", efficacy:"深層毛孔清潔、油脂平衡調理、緩解背部粉刺問題。", reason:"天然礦泥吸附力強且洗後不乾澀,契合台灣濕熱氣候與痘痘肌。單價親民,湊退稅與送禮首選。", img:"shop02.webp", stars:4.9, hotTag:"回購冠軍 🏆" },
-      { rank:"TOP 3", name:"啤酒花豐盈洗髮精 (Beer Hair Shampoo)", brand:"蔓菲蘿 Manufaktura", category:"洗沐護理", priceCzk:259, twdCounterPrice:650, specs:"300ml", efficacy:"活絡強健髮根、控油蓬鬆、維持秀髮自然光澤。", reason:"富含捷克在地啤酒花精華與維他命 B 群,獨特清雅麥香,洗完髮根輕盈蓬鬆,長居回購榜首。", img:"shop03.webp", stars:4.8, hotTag:"口碑爆棚 💬" },
-      { rank:"TOP 4", name:"玫瑰臉部活膚油 (Rose Facial Oil)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:395, twdCounterPrice:1200, specs:"50ml", efficacy:"抗老撫紋、深層鎖水修護、提亮勻淨膚色。", reason:"含珍貴大馬士革玫瑰精油,吸收快不厚重。秋冬修護與冷氣房保濕神物,較專櫃具極大價格優勢。", img:"shop04.webp", stars:4.9, hotTag:"保養神物 ✨" },
-      { rank:"TOP 5", name:"刺蝟彩色鉛筆 / 魔術彩繪筆", brand:"酷喜樂 KOH-I-NOOR", category:"特色名品", priceCzk:45, twdCounterPrice:180, specs:"魔術筆約 45 CZK / 刺蝟組約 1,350 CZK", efficacy:"美術塗鴉、三色漸層繪畫、質感文創桌飾。", reason:"傳承逾兩百年的捷克國寶文具。魔術筆一筆即現夢幻混色,刺蝟木質底座兼具童趣與工藝質感。", img:"shop05.webp", stars:4.8, hotTag:"手作經典 🦔" },
-      { rank:"TOP 6", name:"捷克奇蹟霜 (Czech Miracle Cream)", brand:"哈維利克草本藥局 Havlíkova Apotéka", category:"護膚保養", priceCzk:289, twdCounterPrice:850, specs:"30ml", efficacy:"全效滋養修護、急救敏感乾癢、強化肌膚屏障。", reason:"傳承自 1928 年有機草本蜂蠟古方,被譽為中歐「平價急救滅火器」,在台代購圈迅速竄紅。", img:"shop06.webp", stars:4.7, hotTag:"文青首選 🌿" },
-      { rank:"TOP 7", name:"啤酒花清透沐浴乳 (Beer Shower Gel)", brand:"蔓菲蘿 Manufaktura", category:"洗沐護理", priceCzk:239, twdCounterPrice:600, specs:"300ml", efficacy:"溫和洗淨肌膚、舒緩緊繃身心、長效保水不乾癢。", reason:"泡沫細緻好沖洗,帶有蔓菲蘿招牌的淡雅甜甜麥香,男女皆適合的洗沐入門首選。", img:"shop07.webp", stars:4.6, hotTag:"CP 值之王 💰" },
-      { rank:"TOP 8", name:"純乳木果油滋養霜 (Pure Shea Butter)", brand:"菠丹妮 Botanicus", category:"護膚保養", priceCzk:260, twdCounterPrice:750, specs:"100g", efficacy:"深層潤澤乾裂(腳跟/手肘/唇周)、屏障修護。", reason:"100% 有機純粹無香料,容量大且用量極省,是秋冬及乾燥敏弱肌的萬用常備品。", img:"shop08.webp", stars:4.8, hotTag:"萬用修護 🛡️" },
-      { rank:"TOP 9", name:"貝赫洛夫卡草本甜酒 (Becherovka)", brand:"Jan Becher", category:"特色名品", priceCzk:210, twdCounterPrice:650, specs:"500ml", efficacy:"餐前開胃助消化、捷克傳統草本利口調酒基底。", reason:"被封為卡羅維瓦利「第 13 處溫泉泉眼」,融合 30 餘種天然草本釀製,極具歷史與中歐風味。", img:"shop09.webp", stars:4.7, hotTag:"國寶名酒 🍷" },
-      { rank:"TOP 10", name:"經典溫泉薄餅 (Kolonáda Wafers)", brand:"Kolonáda", category:"特色名品", priceCzk:65, twdCounterPrice:200, specs:"175g", efficacy:"休閒零食甜點、下午茶搭配咖啡/茶飲。", reason:"捷克溫泉鄉百年經典名菓,輕脆外皮夾入濃郁榛果可可與肉桂糖霜,回烤後香氣爆發,大人小孩皆愛。", img:"shop10.webp", stars:4.5, hotTag:"伴手首選 🍪" },
-      { rank:"TOP 11", name:"波希米亞水晶指甲銼刀 (Crystal Nail File)", brand:"Bohemia Crystal", category:"特色名品", priceCzk:95, twdCounterPrice:390, specs:"單支附保護絨套", efficacy:"微米細緻研磨、修甲平滑不裂甲、水洗清潔耐用。", reason:"波希米亞特殊硬化玻璃工藝,細緻不傷指甲。手柄點綴施華洛世奇水鑽,體積小巧,辦公室同事伴手禮首選。", img:"shop11.webp", stars:4.8, hotTag:"送禮神器 💎" },
-      { rank:"TOP 12", name:"金盞花深層潤手霜 (Calendula Hand Cream)", brand:"蔓菲蘿 Manufaktura", category:"護膚保養", priceCzk:189, twdCounterPrice:480, specs:"75ml", efficacy:"草本深層保濕滋潤、舒緩手部乾裂、吸收迅速不黏膩。", reason:"富含金盞花植萃、乳木果油與維他命 B5,香氣溫雅天然。秋冬乾燥氣候必備,常年名列蔓菲蘿熱銷前三名。", img:"shop12.webp", stars:4.8, hotTag:"護手冠軍 🌼" },
-      { rank:"TOP 13", name:"廣藿香死海海鹽泥皂 (Patchouli Sea Salt Soap)", brand:"菠丹妮 Botanicus", category:"洗沐護理", priceCzk:135, twdCounterPrice:490, specs:"80g", efficacy:"深層潔淨毛孔、平衡肌膚油脂、舒緩疲憊草本木質香。", reason:"經典死海泥配方升級,融入天然廣藿香精油,草本香氣沉穩療癒。洗淨力極佳且保濕不緊繃,深受男女性喜愛。", img:"shop13.webp", stars:4.7, hotTag:"草本控油 🌿" },
-      { rank:"TOP 14", name:"卡羅維瓦利傳統溫泉瓷杯 (Spa Cup)", brand:"卡羅維瓦利工坊 Karlovarský Porcelán", category:"特色名品", priceCzk:150, twdCounterPrice:550, specs:"150ml", efficacy:"飲用天然高溫礦泉、古典手把吸管防燙隔溫、居家擺飾。", reason:"捷克溫泉鄉正統飲泉專用杯,杯把巧妙設計為吸管可防止礦物沉澱染色牙齒。造型古典優雅,是極具紀念價值的工藝品。", img:"shop14.webp", stars:4.6, hotTag:"溫泉必備 🏺" },
-      { rank:"TOP 15", name:"皮爾森歐克經典厚底啤酒杯 (Beer Mug)", brand:"皮爾森歐克 Pilsner Urquell", category:"特色名品", priceCzk:180, twdCounterPrice:590, specs:"0.5L", efficacy:"生啤醇厚泡沫鎖香、加厚杯身保冷持溫、經典握把手感佳。", reason:"捷克國寶啤酒皮爾森歐克官方原廠出品,厚重立體浮雕玻璃,倒入金黃拉格啤酒瞬間儀式感拉滿,啤酒迷必收經典。", img:"shop15.webp", stars:4.7, hotTag:"酒迷狂熱 🍺" }
-    ];
-
-    let shopRate = 1.5;
-
-    function shopFallback(text) {
-      const t = (text || '').length > 16 ? text.slice(0, 16) + '…' : text;
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="400" height="300" fill="#fdf1d8"/><text x="50%" y="42%" text-anchor="middle" font-family="sans-serif" font-size="48">🛍️</text><text x="50%" y="63%" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#92400e" font-weight="bold">${t}</text><text x="50%" y="75%" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b45309">捷克代購精選 · 示意圖</text></svg>`;
-      return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
-    }
-
-    function shopStars(r) {
-      let s = '';
-      for (let i = 1; i <= 5; i++) s += (i <= Math.round(r)) ? '★' : '☆';
-      return s;
-    }
-
-    function renderShop() {
-      const grid = document.getElementById('shopGrid');
-      const count = document.getElementById('shopCount');
-      if (!grid) return;
-      const list = shopProducts;
-      count.textContent = list.length;
-      grid.innerHTML = '';
-      list.forEach(p => {
-        const twd = Math.round(p.priceCzk * shopRate);
-        const saved = p.twdCounterPrice - twd;
-        const pct = Math.round((saved / p.twdCounterPrice) * 100);
-        const fb = shopFallback(p.name);
-        const imgSrc = p.img || fb;
-        const card = document.createElement('div');
-        card.className = 'shop-card';
-        card.innerHTML = `
-          <div class="shop-card-img" onclick="openShopModal(this.querySelector('img').src, ${JSON.stringify(p.name).replace(/"/g,'&quot;')}, ${JSON.stringify(p.efficacy).replace(/"/g,'&quot;')})">
-            <img src="${imgSrc}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${fb}';">
-            <span class="shop-rank">${p.rank}</span>
-            <span class="shop-hot">${p.hotTag}</span>
-          </div>
-          <div class="shop-card-body">
-            <div class="shop-brand">${p.brand}　·　${p.specs}</div>
-            <div class="shop-name">${p.name}</div>
-            <div class="shop-stars">${shopStars(p.stars)}<small>${p.stars.toFixed(1)}</small></div>
-            <div class="shop-eff"><b>核心功效｜</b>${p.efficacy}</div>
-            <div class="shop-reason">🔍 ${p.reason}</div>
-            <div class="shop-price-row">
-              <div class="shop-price">
-                <span class="lbl">捷克當地價</span>
-                <div class="czk">${p.priceCzk} <small>CZK ≈ NT$${twd}</small></div>
-              </div>
-              <div class="shop-counter">
-                <span class="lbl">台灣專櫃參考</span>
-                <div class="val">NT$ ${p.twdCounterPrice.toLocaleString()}</div>
-              </div>
-            </div>
-            <div class="shop-save">
-              <span class="amt">現省約 NT$ ${saved.toLocaleString()}</span>
-              <span class="pct">省 ${pct}%</span>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function openShopModal(src, title, desc) {
-      document.getElementById('shopModalImg').src = src;
-      document.getElementById('shopModalTitle').textContent = title || '';
-      document.getElementById('shopModalDesc').textContent = desc || '';
-      document.getElementById('shopModal').style.display = 'flex';
-    }
-    function closeShopModal() {
-      document.getElementById('shopModal').style.display = 'none';
-    }
-
-    async function fetchShopRate(manual) {
-      const btn = document.getElementById('rateRefresh');
-      const metaEl = document.getElementById('rateMeta');
-      if (btn) { btn.disabled = true; }
-      if (manual) metaEl.textContent = '更新中…';
-      try {
-        const res = await fetch('https://open.er-api.com/v6/latest/CZK');
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        const twd = data && data.rates && data.rates.TWD;
-        if (typeof twd === 'number' && twd > 0) {
-          shopRate = twd;
-          document.getElementById('rateValue').textContent = twd.toFixed(2);
-          const d = data.time_last_update_utc ? new Date(data.time_last_update_utc) : new Date();
-          const dStr = `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getDate().toString().padStart(2,'0')}`;
-          metaEl.textContent = `牌告匯率基準（更新日期：${dStr}）`;
-          renderShop();
-          updateConverter();
-        } else {
-          throw new Error('匯率無效');
-        }
-      } catch (err) {
-        document.getElementById('rateValue').textContent = shopRate.toFixed(2);
-        metaEl.textContent = `使用預設參考匯率（離線或連線異常）`;
-      } finally {
-        if (btn) { btn.disabled = false; }
-      }
-    }
-
-    function updateConverter() {
-      const input = document.getElementById('convCzk');
-      const out = document.getElementById('convTwd');
-      if (!input || !out) return;
-      const v = parseFloat(input.value);
-      if (isNaN(v) || v < 0) {
-        out.textContent = '—';
-      } else {
-        out.textContent = Math.round(v * shopRate).toLocaleString();
-      }
-    }
-    document.getElementById('convCzk').addEventListener('input', updateConverter);
-
-    /* ===== 每日行程圖片點擊大圖 ===== */
-    function openImgLightbox(src, caption) {
-      document.getElementById('imgLightboxImg').src = src;
-      document.getElementById('imgLightboxCaption').textContent = caption || '';
-      document.getElementById('imgLightbox').style.display = 'flex';
-    }
-    function closeImgLightbox() {
-      document.getElementById('imgLightbox').style.display = 'none';
-    }
-    (function setupItineraryLightbox() {
-      const section = document.getElementById('tab-itinerary');
-      if (!section) return;
-      section.querySelectorAll('.spot-img-container img, .route-card img, .food-card img').forEach(img => {
-        img.classList.add('zoomable');
-        img.addEventListener('click', () => openImgLightbox(img.src, img.alt));
-      });
-    })();
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') { closeImgLightbox(); closeShopModal(); }
-    });
-
-    renderShop();
-    fetchShopRate(false);
-
-    /* ===== 梯次名單資料庫 ===== */
-    const rosterData = [{"batchIndex": 0, "sheetName": "第1梯", "summary": {"total": 35, "employee": 17, "family": 18, "adult": 34, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "鄭慶仁", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "陳美齡", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "李燕玲", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "來回飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "陳良融", "room": "雙人房2", "diet": "早齋", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭鴻茹", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "陳柏宏", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳浚瑋", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳芮珊", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "陳明煇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳子喬", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "張資寅", "room": "雙人房6", "diet": "素食", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴建樺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭凱仁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "丘雅菁", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "吳枝福", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "涂琪苓", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "陳嗣易", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳瀅如", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "楊尊權", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "楊守仁", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "鄭嘉和", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "曾冠傑", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 23, "name": "紀伊庭", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "陳暐臻", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "紀龍煌", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "紀宏澤", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "余奕臻", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "沈俞均", "room": "雙人房14", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "沈淑珍", "room": "雙人房15", "diet": "素食", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "紀柏豪", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "李彥寬", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "魏子澄", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "李懿庭", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王詩婷", "room": "單人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "鞏月熙", "room": "單人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 1, "sheetName": "第2梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 36, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "陳朝國", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊惠美", "room": "雙人房1", "diet": "素食", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "陳瑋鑫", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 4, "name": "詹燕珠", "room": "雙人房2", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "陳維鎧", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "胡淑芳", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "陳允中", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 8, "name": "陳炳旭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "方玉梅", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "陳任宏", "room": "單人1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 11, "name": "張銘華", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "程睿翔", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "張瑋凌", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林妤軒", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "林從仁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "張廖年厚", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "陳亮娪", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "陳蔚寧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "李育欣", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳雅媚", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳亞綸", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳書嫚", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "吳巧玉", "room": "三人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "廖淑芬", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 25, "name": "康閎翔", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "趙依萱", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "張詠絍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 28, "name": "張廷道", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 29, "name": "黃千惠", "room": "雙人房11", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "阮騰賦", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "戴玉玲", "room": "雙人房12", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "廖泓叡", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "李咨萱", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "陳惠忠", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "曾晏佳", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "林冠霖", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李雅軒", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 2, "sheetName": "第3梯", "summary": {"total": 37, "employee": 18, "family": 19, "adult": 34, "child": 3, "infant": 0}, "members": [{"no": 1, "name": "李華銘", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "吳淑惠", "room": "雙人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "孫銘忠", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "周靜絹", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "蔡明清", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "歐惠華", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "王馨瑩", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "邱瑞揚", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "韓美麗", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "劉燕山", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "徐碧枝", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "賴畇蓁", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "林宜欣", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "蔡樹勛", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "廖珮吟", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "沈裕家", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "沈元鈞", "room": "三人房1", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "王俊惠", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "黃韻如", "room": "三人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 20, "name": "王甯加", "room": "三人房2", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "余宛蒨", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "董偉傑", "room": "三人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "董宥禾", "room": "三人房3", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 24, "name": "余旭洲", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "于美倫", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 26, "name": "康惠菁", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鐘馨玫", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "鐘新佑", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "鐘張美慧", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 30, "name": "陳俊廷", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林純靖", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 32, "name": "羅有成", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊欣儀", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 34, "name": "王愛群", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "王妤馨", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 36, "name": "陳建樺", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李怡青", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}]}, {"batchIndex": 3, "sheetName": "第4梯", "summary": {"total": 38, "employee": 23, "family": 15, "adult": 37, "child": 1, "infant": 0}, "members": [{"no": 1, "name": "李進榮", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "廖涵云", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "薛惠如", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "郭啓明", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "郭繐菱", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "郭曜誠", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "潘曉菁", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "黃而彤", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 9, "name": "王豐傑", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 10, "name": "陳雅靜", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "王彥勛", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "王思喬", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "王炳偉", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "林佳慧", "room": "雙人房7", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "鍾詠竹", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "黃建豪", "room": "雙人房8", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "曾筠雅", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "李秉哲", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "張桂月", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "陳浚銘", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "張名蕙", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "陳俞安", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "郭信佑", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "郭楷辰", "room": "雙人房12", "diet": "", "seat": "", "note": "兒童餐", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "魏曉雙", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "蘇郁茹", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "謝子敬", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝碧玉", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂玟潔", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "曾雅慧", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "陳怡君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "江詩婷", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "章祐瑋", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "張友珩", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "林仲億", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "趙天騰", "room": "雙人房18", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "林哲民", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "江函諭", "room": "雙人房19", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 4, "sheetName": "第5梯", "summary": {"total": 34, "employee": 24, "family": 10, "adult": 34, "child": 0, "infant": 0}, "members": [{"no": 1, "name": "陳家豪", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "許家毓", "room": "雙人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 3, "name": "謝其萬", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "方素慧", "room": "雙人房2", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "鄭資樺", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 6, "name": "蔡毓庭", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 7, "name": "謝瑞籐", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "劉晏誠", "room": "雙人房4", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "石嘉薇", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "劉惠娟", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "童郁綺", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 12, "name": "梁妙君", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 13, "name": "鄭問堂", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "方麗娟", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 15, "name": "黃桀霆", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 16, "name": "周可瞳", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 17, "name": "洪義凱", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 18, "name": "魏可傑", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 19, "name": "陳怡穎", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "張詩涵", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 21, "name": "蔡宗敏", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 22, "name": "鍾玉珍", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "陳品樺", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林鍾桂", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "曹嘉庭", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "謝妤嫻", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 27, "name": "鄭憲鴻", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "回程飛機餐素食", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "謝莉娜", "room": "雙人房14", "diet": "早齋", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "王俊傑", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "錢羿廷", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 31, "name": "林鑫宏", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "陳竑安", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 33, "name": "楊榮豪", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴承威", "room": "雙人房17", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}, {"batchIndex": 5, "sheetName": "第6梯", "summary": {"total": 38, "employee": 21, "family": 17, "adult": 36, "child": 2, "infant": 0}, "members": [{"no": 1, "name": "洪西川", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 2, "name": "楊媚如", "room": "雙人房1", "diet": "", "seat": "商務", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 3, "name": "洪梓銘", "room": "單人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 4, "name": "洪瑄佑", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 5, "name": "洪梓毓", "room": "雙人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 6, "name": "張正明", "room": "雙人房3", "diet": "", "seat": "商務", "note": "", "isEmployee": true, "role": "員工"}, {"no": 7, "name": "楊景竣", "room": "雙人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 8, "name": "馬中興", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 9, "name": "王愛雲", "room": "雙人房4", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 10, "name": "鄭清源", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 11, "name": "江鳳秋", "room": "雙人房5", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 12, "name": "鄭光廷", "room": "單人房2", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 13, "name": "楊舒媛", "room": "單人房3", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 14, "name": "陳佳苑", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 15, "name": "侯建成", "room": "雙人房6", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 16, "name": "郭建興", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": true, "role": "員工"}, {"no": 17, "name": "郭昱昊", "room": "三人房1", "diet": "", "seat": "豪經", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 18, "name": "郭翰珽", "room": "三人房1", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 19, "name": "陳星暐", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 20, "name": "廖盈如", "room": "雙人房7", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 21, "name": "陳宥緁", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 22, "name": "陳宥綸", "room": "雙人房8", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 23, "name": "林永祥", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 24, "name": "林千越", "room": "雙人房9", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 25, "name": "羅曉萍", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 26, "name": "羅玉姬", "room": "雙人房10", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 27, "name": "蘇品潔", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 28, "name": "陳渤錞", "room": "雙人房11", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 29, "name": "呂美蓉", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 30, "name": "何思蔓", "room": "雙人房12", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 31, "name": "陳文修", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 32, "name": "高淑美", "room": "雙人房13", "diet": "", "seat": "", "note": "", "isEmployee": false, "role": "眷屬"}, {"no": 33, "name": "洪婷鈞", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 34, "name": "賴筱雯", "room": "雙人房14", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 35, "name": "黃俊哲", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 36, "name": "黃靖凱", "room": "雙人房15", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 37, "name": "李虹豌", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}, {"no": 38, "name": "林蕙君", "room": "雙人房16", "diet": "", "seat": "", "note": "", "isEmployee": true, "role": "員工"}]}];
-
-    let currentRosterBatch = 0;
-
-    function renderRoster(batchIdx, keyword) {
-      currentRosterBatch = batchIdx;
-      const b = rosterData[batchIdx];
-      if (!b) return;
-
-      const titleEl = document.getElementById("rosterBatchTitle");
-      if (titleEl) {
-        titleEl.innerText = `第${batchIdx + 1}梯次 團員名冊`;
-      }
-
-      const badgesEl = document.getElementById("rosterBadges");
-      if (badgesEl) {
-        let h = `<span class="badge-total">總計 ${b.summary.total} 人</span>`;
-        h += `<span class="badge-emp">員工 ${b.summary.employee}</span>`;
-        h += `<span class="badge-fam">眷屬 ${b.summary.family}</span>`;
-        if (b.summary.child) h += `<span class="badge-sub" style="background:#fef9c3; color:#854d0e;">兒童 ${b.summary.child}</span>`;
-        if (b.summary.infant) h += `<span class="badge-sub">嬰兒 ${b.summary.infant}</span>`;
-        badgesEl.innerHTML = h;
-      }
-
-      const tbody = document.getElementById("rosterTableBody");
-      if (!tbody) return;
-
-      const kw = (keyword || "").trim().toLowerCase();
-      const filtered = b.members.filter(m => {
-        if (!kw) return true;
-        return (m.name && m.name.toLowerCase().includes(kw)) ||
-               (m.role && m.role.toLowerCase().includes(kw)) ||
-               (m.room && m.room.toLowerCase().includes(kw)) ||
-               (m.diet && m.diet.toLowerCase().includes(kw)) ||
-               (m.seat && m.seat.toLowerCase().includes(kw)) ||
-               (m.note && m.note.toLowerCase().includes(kw));
-      });
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="padding:1.5rem; text-align:center; color:var(--text-muted);">無符合「${keyword}」的同仁名單</td></tr>`;
-        return;
-      }
-
-      let rowsHtml = "";
-      filtered.forEach(m => {
-        let roomClass = "room-tag";
-        if (m.room.includes("三人")) roomClass += " room-triple";
-        else if (m.room.includes("單人")) roomClass += " room-single";
-
-        const isEmp = m.isEmployee;
-        const nameClass = isEmp ? "roster-name-emp" : "roster-name-fam";
-        const roleBadge = isEmp ? '<span class="role-badge role-emp">員工</span>' : '<span class="role-badge role-fam">眷屬</span>';
-
-        let tagsHtml = "";
-        if (m.seat === "商務") tagsHtml += '<span class="tag-badge tag-biz">✈️ 商務艙</span>';
-        else if (m.seat === "豪經") tagsHtml += '<span class="tag-badge tag-prem">💺 豪經艙</span>';
-
-        if (m.diet) tagsHtml += `<span class="tag-badge tag-veg">🥗 ${m.diet}</span>`;
-        if (m.note === "兒童餐") tagsHtml += '<span class="tag-badge tag-child">🍼 兒童餐</span>';
-        else if (m.note) tagsHtml += `<span class="tag-badge tag-note">ℹ️ ${m.note}</span>`;
-
-        if (!tagsHtml) tagsHtml = '<span style="color:#94a3b8;">—</span>';
-
-        rowsHtml += `
-          <tr>
-            <td style="color:#64748b; font-weight:600;">${m.no}</td>
-            <td>
-              <div class="roster-name-cell">
-                <span class="${nameClass}">${m.name}</span>
-                ${roleBadge}
-              </div>
-            </td>
-            <td><span class="${roomClass}">${m.room || "—"}</span></td>
-            <td>${tagsHtml}</td>
-          </tr>
-        `;
-      });
-      tbody.innerHTML = rowsHtml;
-    }
-
-    function handleRosterSearch() {
-      const input = document.getElementById("rosterSearchInput");
-      renderRoster(currentRosterBatch, input ? input.value : "");
-    }
-
-    function toggleRosterExpand() {
-      const wrap = document.getElementById("rosterTableWrap");
-      const btn = document.getElementById("rosterExpandBtn");
-      if (!wrap || !btn) return;
-      if (wrap.classList.contains("expanded")) {
-        wrap.classList.remove("expanded");
-        btn.innerHTML = "展開全部名單 ▾";
-        wrap.scrollTop = 0;
-      } else {
-        wrap.classList.add("expanded");
-        btn.innerHTML = "收合名單 ▴";
-      }
-    }
-
-    // 初始化名冊
-    renderRoster(0);
-  </script>
-  <!-- Service Worker 註冊:首次連網開啟後即可完全離線瀏覽 -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js').catch(function (e) {
-          console.warn('SW 註冊失敗:', e);
-        });
-      });
-    }
-  </script>
-</body>
-</html>
-
-<style>
-/* 手機字級縮放 + 圖片響應式 (mobile) */
-html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-img { max-width: 100%; height: auto; }
-@media (max-width: 639px) {
-  html { font-size: 10px; }
-  body { font-size: 1rem; }
+function greatCircle(a,b,n){
+  const r=PI/180,[l1,p1]=[a[0]*r,a[1]*r],[l2,p2]=[b[0]*r,b[1]*r];
+  const d=2*Math.asin(Math.sqrt(Math.sin((p2-p1)/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin((l2-l1)/2)**2));
+  const out=[];
+  for(let i=0;i<=n;i++){const f=i/n,A=Math.sin((1-f)*d)/Math.sin(d),B=Math.sin(f*d)/Math.sin(d);
+    const x=A*Math.cos(p1)*Math.cos(l1)+B*Math.cos(p2)*Math.cos(l2),y=A*Math.cos(p1)*Math.sin(l1)+B*Math.cos(p2)*Math.sin(l2),z=A*Math.sin(p1)+B*Math.sin(p2);
+    out.push([Math.atan2(y,x)/r,Math.atan2(z,Math.sqrt(x*x+y*y))/r]);}
+  return out;
 }
 
-/* 景點大圖 + 行程卡:完整顯示不裁切(contain)+ 淡底色留白;美食縮圖維持 cover */
-.spot-img-container { background: #f1f5f9; }
-.spot-img-container img,
-.route-card img { object-fit: contain !important; background: #f1f5f9; }
+/* prepare routes in world units */
+R.forEach(r=>{
+  if(typeof r.pts==="string"){const [,a,b]=r.pts.split(":");r.pts=greatCircle(P[a],P[b],120)}
+  r.w=r.pts.map(p=>merc(p[0],p[1]));
+  r.cum=[0];for(let i=1;i<r.w.length;i++){r.cum.push(r.cum[i-1]+Math.hypot(r.w[i][0]-r.w[i-1][0],r.w[i][1]-r.w[i-1][1]))}
+  r.len=r.cum[r.cum.length-1];
+});
+PINS.forEach(p=>p.w=merc(p.p[0],p.p[1]));
+LABELS.forEach(l=>l.w=merc(l.p[0],l.p[1]));
+const toW=a=>a.map(p=>merc(p[0],p[1]));
+const HAND={river:toW(PRAGUE_RIVER),ck:toW(CK_RIVER),parks:PARKS.map(toW),castle:toW(CASTLE_BLOCK),streets:STREETS.map(toW),bridges:BRIDGES.map(toW)};
+K.forEach(k=>k.w=merc(k.c[0],k.c[1]));
 
-/* ===== 熱門代購分頁 ===== */
-.main-tab-btn { font-size: 0.85rem; padding: 0 0.2rem; }
-.mobile-bottom-nav .nav-tab-action { min-width: 0; flex: 1; font-size: 0.72rem; }
-.mobile-bottom-nav .nav-tab-action span.icon { font-size: 1.2rem; }
+/* ---------- geo data ---------- */
+let GEO=null;
+function prepRings(arr){return arr.map(flat=>{const n=flat.length/2,xs=new Float64Array(n),ys=new Float64Array(n);let x0=1,x1=0,y0=1,y1=0;
+  for(let i=0;i<n;i++){const m=merc(flat[2*i],flat[2*i+1]);xs[i]=m[0];ys[i]=m[1];if(m[0]<x0)x0=m[0];if(m[0]>x1)x1=m[0];if(m[1]<y0)y0=m[1];if(m[1]>y1)y1=m[1]}
+  return {xs,ys,n,b:[x0,y0,x1,y1]}})}
+fetch("geo.json").then(r=>r.json()).then(g=>{
+  GEO={world:prepRings(g.world),eu:prepRings(g.eu),cz:prepRings([g.cz])[0],reg:prepRings(g.reg),
+       riv:g.riv.map(r=>Object.assign(prepRings([r.p])[0],{name:r.n,major:/Vltava|Elbe|Donau|Danube|Morava|Oder/.test(r.n)}))};
+  draw(state.t);
+}).catch(()=>{GEO={world:[],eu:[],cz:null,reg:[],riv:[]};draw(state.t)});
 
-.shop-intro { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem; }
+/* ---------- camera ---------- */
+function camera(t){
+  if(t<=K[0].t) return {x:K[0].w[0],y:K[0].w[1],z:K[0].z,fx:K[0].fx};
+  for(let i=0;i<K.length-1;i++){const a=K[i],b=K[i+1];
+    if(t<=b.t){const u=ease((t-a.t)/(b.t-a.t));
+      const zmin=Math.min(a.z,b.z),d=Math.hypot(b.w[0]-a.w[0],b.w[1]-a.w[1])*256*Math.pow(2,zmin);
+      const hop=d>1400?Math.log2(d/1400)*.9:0;
+      // weight center motion toward the zoomed-out phase for smoother flights
+      return {x:lerp(a.w[0],b.w[0],u),y:lerp(a.w[1],b.w[1],u),z:lerp(a.z,b.z,u)-hop*Math.sin(PI*u),fx:lerp(a.fx,b.fx,u)}}}
+  const l=K[K.length-1];return {x:l.w[0],y:l.w[1],z:l.z,fx:l.fx};
+}
 
-.shop-controls { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-lg);
-  box-shadow: var(--shadow); padding: 1rem 1.15rem; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
-.rate-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-.rate-title { font-size: 0.95rem; font-weight: 800; color: var(--secondary); }
-.rate-refresh { border: 1.5px solid var(--accent); background: #fff; color: var(--accent); font-weight: 800;
-  font-size: 0.82rem; padding: 0.35rem 0.75rem; border-radius: 999px; cursor: pointer; font-family: inherit;
-  white-space: nowrap; transition: background 0.15s, color 0.15s; }
-.rate-refresh:hover { background: var(--accent); color: #fff; }
-.rate-refresh:disabled { opacity: 0.55; cursor: default; }
-.rate-main { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
-.rate-main b { color: var(--accent); font-size: 1.5rem; }
-.rate-meta { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
-.rate-conv { border-top: 1px dashed #fcd34d; padding-top: 0.6rem; margin-top: 0.15rem; }
-.rate-conv > label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.4rem; }
-.rate-conv-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-.rate-conv-row input { flex: 1 1 8rem; min-width: 6rem; border: 1.5px solid #fcd34d; border-radius: 8px;
-  padding: 0.45rem 0.6rem; font-size: 0.95rem; font-weight: 700; color: var(--text-main); background: #fff; font-family: inherit; }
-.rate-conv-row input:focus { outline: none; border-color: var(--accent); }
-.rate-conv-eq { font-weight: 800; color: var(--text-muted); }
-.rate-conv-out { font-size: 1rem; font-weight: 700; color: var(--text-main); white-space: nowrap; }
-.rate-conv-out b { color: var(--map-green); font-size: 1.2rem; }
+/* ---------- canvas ---------- */
+const cv=document.getElementById("map"),ctx=cv.getContext("2d");
+let scaleK=.5,dpr=1;
+function resize(){
+  const st=document.getElementById("stage");
+  scaleK=st.clientWidth/W;document.getElementById("frame").style.setProperty("--k",scaleK);
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=Math.round(W*scaleK*dpr);cv.height=Math.round(H*scaleK*dpr);
+  draw(state.t);
+}
+let CAM,WS,OX,OY;
+function sx(x){return (x-CAM.x)*WS+OX} function sy(y){return (y-CAM.y)*WS+OY}
+function inView(b,pad){pad=pad||0;return !(sx(b[2])<-pad||sx(b[0])>W+pad||sy(b[3])<-pad||sy(b[1])>H+pad)}
+function ringPath(r,close){ctx.moveTo(sx(r.xs[0]),sy(r.ys[0]));for(let i=1;i<r.n;i++)ctx.lineTo(sx(r.xs[i]),sy(r.ys[i]));if(close)ctx.closePath()}
+function polyPath(w,close){ctx.moveTo(sx(w[0][0]),sy(w[0][1]));for(let i=1;i<w.length;i++)ctx.lineTo(sx(w[i][0]),sy(w[i][1]));if(close)ctx.closePath()}
 
-.shop-count { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.85rem; }
-.shop-count span { color: var(--accent); font-weight: 800; }
+const C={sea:"#bcd9df",land:"#e9ece3",cz:"#fbf6ea",ink:"#1c2840",ink2:"#56607a",roof:"#cf3a28",river:"#5fa6bb",water:"#a7d0da",gold:"#d99a1c",park:"#d3e3c4",paper:"#fffdf8",grid:"rgba(28,40,64,.07)",street:"#e4ddcd",bridge:"#c9bda4"};
+const FS='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif', FSERIF='"Noto Serif TC","Songti TC",serif', FMONO='"IBM Plex Mono",ui-monospace,monospace';
 
-.shop-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+function metersPerPx(){const lat=Math.atan(Math.sinh(PI*(1-2*CAM.y)))*180/PI;return 40075016.7*Math.cos(lat*PI/180)/WS}
 
-.shop-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
-.shop-card-img { position: relative; height: 12rem; background: #f1f5f9; cursor: pointer; }
-.shop-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.shop-rank { position: absolute; top: 0.6rem; left: 0.6rem; background: rgba(30,41,59,0.85); color: #fff;
-  font-weight: 800; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 999px; }
-.shop-hot { position: absolute; top: 0.6rem; right: 0.6rem; background: var(--accent); color: #fff;
-  font-weight: 800; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 999px; }
-.shop-card-body { padding: 0.9rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.shop-brand { font-size: 0.8rem; font-weight: 700; color: var(--accent); }
-.shop-name { font-size: 1.05rem; font-weight: 800; color: var(--text-main); line-height: 1.35; }
-.shop-stars { color: var(--accent); font-size: 0.95rem; letter-spacing: 1px; }
-.shop-stars small { color: var(--text-muted); margin-left: 0.35rem; font-weight: 700; font-size: 0.8rem; letter-spacing: 0; }
-.shop-eff { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-md);
-  padding: 0.6rem 0.75rem; font-size: 0.9rem; color: #78350f; line-height: 1.55; }
-.shop-eff b { color: var(--secondary); }
-.shop-reason { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
-.shop-price-row { display: flex; justify-content: space-between; align-items: flex-end;
-  border-top: 1px solid var(--border); padding-top: 0.65rem; margin-top: 0.15rem; }
-.shop-price .lbl, .shop-counter .lbl { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; display:block; }
-.shop-price .czk { font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-top: 0.1rem; }
-.shop-price .czk small { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
-.shop-counter { text-align: right; }
-.shop-counter .val { font-size: 0.9rem; color: var(--text-muted); text-decoration: line-through; margin-top: 0.1rem; }
-.shop-save { display: flex; justify-content: space-between; align-items: center; background: #ecfdf5;
-  border: 1px solid #a7f3d0; border-radius: var(--radius-md); padding: 0.5rem 0.75rem; }
-.shop-save .amt { color: #047857; font-weight: 800; font-size: 0.9rem; }
-.shop-save .pct { background: var(--map-green); color: #fff; font-weight: 800; font-size: 0.8rem;
-  padding: 0.2rem 0.6rem; border-radius: 999px; }
+function drawGraticule(){
+  const steps=[20,10,5,2,1,.5,.2,.1,.05,.02,.01,.005,.002];
+  const degPx=WS/360;let step=steps[0];for(const s of steps){if(s*degPx>=230)step=s}
+  const lon0=CAM.x*360-180-(OX/degPx)-step, lon1=lon0+W/degPx+2*step;
+  ctx.strokeStyle=C.grid;ctx.lineWidth=1;ctx.beginPath();
+  for(let l=Math.floor(lon0/step)*step;l<=lon1;l+=step){const x=sx((l+180)/360);ctx.moveTo(x,0);ctx.lineTo(x,H)}
+  const latTop=Math.atan(Math.sinh(PI*(1-2*(CAM.y-OY/WS))))*180/PI, latBot=Math.atan(Math.sinh(PI*(1-2*(CAM.y+(H-OY)/WS))))*180/PI;
+  for(let l=Math.floor(latBot/step)*step;l<=latTop+step;l+=step){const y=sy(merc(0,l)[1]);ctx.moveTo(0,y);ctx.lineTo(W,y)}
+  ctx.stroke();
+}
 
-.shop-empty { text-align: center; color: var(--text-muted); padding: 2.5rem 1rem; background: var(--card-bg);
-  border: 1px solid var(--border); border-radius: var(--radius-lg); }
+function drawBase(){
+  ctx.fillStyle=C.sea;ctx.fillRect(0,0,W,H);
+  drawGraticule();
+  if(!GEO)return;
+  const z=CAM.z;
+  ctx.fillStyle=C.land;ctx.strokeStyle="rgba(28,40,64,.22)";ctx.lineWidth=1;
+  if(z<6.6){ctx.beginPath();GEO.world.forEach(r=>{if(inView(r.b,20))ringPath(r,true)});ctx.fill();ctx.stroke()}
+  if(z>5){ctx.beginPath();GEO.eu.forEach(r=>{if(inView(r.b,20))ringPath(r,true)});ctx.fill('evenodd');ctx.stroke()}
+  if(GEO.cz){ctx.beginPath();ringPath(GEO.cz,true);ctx.fillStyle=C.cz;ctx.fill();}
+  // regions
+  if(z>6&&z<12){ctx.save();ctx.globalAlpha=.55*(1-smooth(10,12,z));ctx.setLineDash([5,6]);ctx.strokeStyle="rgba(28,40,64,.35)";ctx.lineWidth=1;ctx.beginPath();GEO.reg.forEach(r=>{if(inView(r.b))ringPath(r,false)});ctx.stroke();ctx.restore()}
+  if(GEO.cz&&z>4.5){ctx.save();ctx.globalAlpha=1-smooth(11,13,z);ctx.strokeStyle=C.ink;ctx.lineWidth=2.2;ctx.beginPath();ringPath(GEO.cz,true);ctx.stroke();ctx.restore()}
+  // natural earth rivers
+  const ra=1-smooth(11.2,12.4,z);
+  if(ra>0&&z>5.5){ctx.save();ctx.globalAlpha=ra;ctx.strokeStyle=C.river;ctx.lineJoin="round";ctx.lineCap="round";
+    GEO.riv.forEach(r=>{if(!inView(r.b))return;ctx.lineWidth=(r.major?2.4:1.2)*(1+smooth(8,11,z)*.8);ctx.beginPath();ringPath(r,false);ctx.stroke()});ctx.restore()}
+}
 
-.shop-insights { margin-top: 1.5rem; background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 1rem 1.15rem; }
-.shop-insights h4 { color: var(--primary); font-size: 1.05rem; margin-bottom: 0.6rem; }
-.shop-insight { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; padding: 0.55rem 0;
-  border-top: 1px dashed var(--border); }
-.shop-insight:first-of-type { border-top: none; }
-.shop-insight strong { display: block; color: var(--text-main); margin-bottom: 0.15rem; }
+function drawCity(){
+  const a=smooth(11.2,12.4,CAM.z);if(a<=0)return;
+  const mpp=metersPerPx();ctx.save();ctx.globalAlpha=a;ctx.lineJoin="round";ctx.lineCap="round";
+  ctx.fillStyle=C.park;HAND.parks.forEach(p=>{ctx.beginPath();polyPath(p,true);ctx.fill()});
+  ctx.fillStyle="#efe3c8";ctx.strokeStyle="rgba(28,40,64,.18)";ctx.lineWidth=1.2;ctx.beginPath();polyPath(HAND.castle,true);ctx.fill();ctx.stroke();
+  ctx.strokeStyle=C.street;HAND.streets.forEach(s=>{ctx.lineWidth=Math.max(3,26/mpp);ctx.beginPath();polyPath(s,false);ctx.stroke()});
+  [[HAND.river,230],[HAND.ck,40]].forEach(([w,m])=>{ctx.strokeStyle=C.river;ctx.lineWidth=m/mpp+3;ctx.beginPath();polyPath(w,false);ctx.stroke();ctx.strokeStyle=C.water;ctx.lineWidth=m/mpp;ctx.beginPath();polyPath(w,false);ctx.stroke()});
+  ctx.strokeStyle=C.bridge;HAND.bridges.forEach((b,i)=>{ctx.lineWidth=Math.max(3,(i===0?14:20)/mpp);ctx.beginPath();polyPath(b,false);ctx.stroke()});
+  ctx.restore();
+}
 
-.shop-disclaimer { font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 1rem; }
+function partial(r,p){const target=r.len*p,out=[r.w[0]];let i=1;
+  for(;i<r.w.length&&r.cum[i]<=target;i++)out.push(r.w[i]);
+  if(i<r.w.length){const seg=r.cum[i]-r.cum[i-1]||1,u=(target-r.cum[i-1])/seg;out.push([lerp(r.w[i-1][0],r.w[i][0],u),lerp(r.w[i-1][1],r.w[i][1],u)])}
+  return out}
 
-.shop-modal { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.8);
-  display: flex; align-items: center; justify-content: center; padding: 1rem; }
-.shop-modal-box { background: #fff; border-radius: var(--radius-lg); overflow: hidden; max-width: 32rem; width: 100%; position: relative; }
-.shop-modal-close { position: absolute; top: 0.6rem; right: 0.6rem; width: 2rem; height: 2rem; border: none;
-  border-radius: 999px; background: rgba(255,255,255,0.92); color: var(--text-main); font-size: 1rem; cursor: pointer; z-index: 2; }
-.shop-modal-box img { width: 100%; max-height: 60vh; object-fit: contain; background: #f1f5f9; display: block; }
+function drawPlane(x,y,ang){ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.fillStyle=C.ink;ctx.strokeStyle=C.paper;ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(22,0);ctx.lineTo(4,-4);ctx.lineTo(-4,-20);ctx.lineTo(-10,-20);ctx.lineTo(-4,-4);ctx.lineTo(-16,-3);ctx.lineTo(-21,-10);ctx.lineTo(-25,-10);ctx.lineTo(-22,0);ctx.lineTo(-25,10);ctx.lineTo(-21,10);ctx.lineTo(-16,3);ctx.lineTo(-4,4);ctx.lineTo(-10,20);ctx.lineTo(-4,20);ctx.lineTo(4,4);ctx.closePath();ctx.stroke();ctx.fill();ctx.restore()}
 
-/* 每日行程圖片可點擊放大 */
-.spot-img-container img.zoomable, .route-card img.zoomable, .food-card img.zoomable { cursor: zoom-in; }
-#imgLightbox .shop-modal-box { max-width: min(94vw, 960px); width: auto; }
-#imgLightbox .shop-modal-box img { width: auto; max-width: min(94vw, 960px); max-height: 82vh; margin: 0 auto; }
-#imgLightbox .shop-modal-body { text-align: center; }
-.spot-img-container { position: relative; }
-.spot-img-container::after { content: "🔍 點圖放大"; position: absolute; right: 0.6rem; bottom: 0.6rem;
-  background: rgba(30,41,59,0.72); color: #fff; font-size: 0.7rem; font-weight: 700;
-  padding: 0.2rem 0.55rem; border-radius: 999px; pointer-events: none; opacity: 0.9; }
-.shop-modal-body { padding: 1rem 1.15rem 1.25rem; }
-.shop-modal-body h4 { font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.4rem; }
-.shop-modal-body p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+function pill(text,x,y,font,bg,fg,anchor){
+  ctx.font=font;const w=ctx.measureText(text).width+28,h=40;let px=x,py=y;
+  if(anchor==="r"){px=x+24;py=y-h/2}else if(anchor==="l"){px=x-24-w;py=y-h/2}else if(anchor==="t"){px=x-w/2;py=y-28-h}else{px=x-w/2;py=y+24}
+  ctx.fillStyle=bg;ctx.beginPath();ctx.roundRect(px,py,w,h,h/2);ctx.fill();
+  ctx.strokeStyle="rgba(28,40,64,.14)";ctx.lineWidth=1.5;ctx.stroke();
+  ctx.fillStyle=fg;ctx.textBaseline="middle";ctx.textAlign="left";ctx.fillText(text,px+14,py+h/2+1);
+}
 
-@media (min-width: 640px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 900px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
+function drawRoutes(t){
+  R.forEach(r=>{
+    if(t<r.t0)return;const fade=1-smooth(r.until-.8,r.until,t);if(fade<=0)return;
+    const p=easeOut(clamp((t-r.t0)/(r.t1-r.t0),0,1));const pts=partial(r,p);if(pts.length<2)return;
+    ctx.save();ctx.globalAlpha=fade;ctx.lineJoin="round";ctx.lineCap="round";
+    const path=()=>{ctx.beginPath();polyPath(pts,false)};
+    if(r.k==="drive"){path();ctx.strokeStyle=C.paper;ctx.lineWidth=11;ctx.stroke();path();ctx.strokeStyle=C.roof;ctx.lineWidth=6;ctx.stroke()}
+    else if(r.k==="walk"){path();ctx.strokeStyle=C.paper;ctx.lineWidth=10;ctx.stroke();path();ctx.setLineDash([2,12]);ctx.strokeStyle=C.roof;ctx.lineWidth=7;ctx.stroke()}
+    else if(r.k==="opt"){path();ctx.setLineDash([2,10]);ctx.strokeStyle=C.ink2;ctx.lineWidth=5;ctx.stroke()}
+    else if(r.k==="boat"){path();ctx.setLineDash([14,10]);ctx.strokeStyle="#1f6f8b";ctx.lineWidth=6;ctx.stroke()}
+    else if(r.k==="flight"){path();ctx.setLineDash([14,12]);ctx.strokeStyle=C.ink;ctx.lineWidth=4;ctx.stroke()}
+    ctx.setLineDash([]);
+    const h=pts[pts.length-1],hp=pts[pts.length-2];
+    if(p<1){if(r.k==="flight"){drawPlane(sx(h[0]),sy(h[1]),Math.atan2(sy(h[1])-sy(hp[1]),sx(h[0])-sx(hp[0])))}
+      else{ctx.fillStyle=r.k==="boat"?"#1f6f8b":C.roof;ctx.strokeStyle=C.paper;ctx.lineWidth=4;ctx.beginPath();ctx.arc(sx(h[0]),sy(h[1]),10,0,2*PI);ctx.fill();ctx.stroke()}}
+    if(r.label&&p>.55){const mid=partial(r,.5).pop();ctx.globalAlpha=fade*smooth(.55,.8,p);
+      pill(r.label,sx(mid[0]),sy(mid[1]),`600 21px ${FMONO}`,C.ink,"#fff",r.k==="flight"?"t":"r")}
+    ctx.restore();
+  });
+}
 
-    /* ===== 梯次人員名單 (點名／分房名冊) ===== */
-    .roster-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      padding: 1.15rem 1.25rem;
-      box-shadow: var(--shadow);
-      margin-bottom: 1.25rem;
-      border: 1px solid var(--border);
-      border-left: 4px solid #c65911;
+function drawPins(t){
+  PINS.forEach(pn=>{
+    if(t<pn.t0)return;const f=1-smooth(pn.t1-.8,pn.t1,t);if(f<=0)return;
+    const x=sx(pn.w[0]),y=sy(pn.w[1]);if(x<-200||x>W+200||y<-100||y>H+100)return;
+    const u=clamp((t-pn.t0)/.45,0,1),s=u<1?(1-Math.pow(1-u,3))*(1+.25*Math.sin(u*PI)):1;
+    ctx.save();ctx.globalAlpha=f;
+    // label
+    ctx.globalAlpha=f*smooth(.25,.7,(t-pn.t0));
+    const isOpt=pn.k==="opt";
+    pill(pn.name,x,y,`700 23px ${FS}`,isOpt?"rgba(255,253,248,.92)":C.paper,isOpt?C.ink2:C.ink,pn.a);
+    ctx.globalAlpha=f;ctx.translate(x,y);ctx.scale(s,s);
+    const r=18;ctx.lineWidth=4;ctx.strokeStyle=C.paper;
+    let bg=C.roof,txt=pn.n!=null?String(pn.n):"";
+    if(pn.k==="hotel"){bg=C.ink;txt="宿"}else if(pn.k==="meal"){bg=C.gold;txt="餐"}else if(pn.k==="air"){bg=C.ink;txt="✈"}else if(pn.k==="opt"){bg=C.paper;txt="選"}
+    ctx.shadowColor="rgba(28,40,64,.3)";ctx.shadowBlur=10;ctx.shadowOffsetY=3;
+    ctx.fillStyle=bg;ctx.beginPath();
+    if(pn.k==="hotel")ctx.roundRect(-r,-r,2*r,2*r,7);else ctx.arc(0,0,r,0,2*PI);
+    ctx.fill();ctx.shadowColor="transparent";ctx.stroke();
+    if(isOpt){ctx.strokeStyle=C.ink2;ctx.lineWidth=2.5;ctx.setLineDash([4,4]);ctx.beginPath();ctx.arc(0,0,r-3,0,2*PI);ctx.stroke();ctx.setLineDash([])}
+    ctx.fillStyle=isOpt?C.ink2:"#fff";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.font=`700 ${txt.length>1?16:19}px ${pn.k==="no"?FMONO:FS}`;ctx.fillText(txt,0,1.5);
+    ctx.restore();
+  });
+}
+
+function drawLabels(){
+  const z=CAM.z;
+  LABELS.forEach(l=>{const a=Math.min(smooth(l.zmin,l.zmin+.6,z),1-smooth(l.zmax-.6,l.zmax,z));if(a<=0)return;
+    const x=sx(l.w[0])+(l.dx||0),y=sy(l.w[1]);if(x<-300||x>W+300||y<-100||y>H+100)return;
+    ctx.save();ctx.globalAlpha=a;ctx.translate(x,y);if(l.rot)ctx.rotate(l.rot);ctx.textAlign="center";ctx.textBaseline="middle";
+    let font,fill,stroke=C.paper,sw=6;
+    switch(l.s){
+      case "country":font=`900 54px ${FSERIF}`;fill="rgba(28,40,64,.55)";break;
+      case "country2":font=`600 30px ${FSERIF}`;fill="rgba(28,40,64,.38)";stroke=null;break;
+      case "city":font=`900 34px ${FSERIF}`;fill=C.ink;break;
+      case "town":font=`500 22px ${FS}`;fill=C.ink2;break;
+      case "district":font=`600 30px ${FSERIF}`;fill="rgba(28,40,64,.42)";stroke="rgba(255,253,248,.7)";break;
+      case "park":font=`500 20px ${FS}`;fill="#5d7a4c";break;
+      case "river":font=`italic 500 22px ${FS}`;fill="#2f7890";stroke=null;break;
     }
-    .roster-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      margin-bottom: 0.85rem;
-    }
-    .roster-title-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-    .roster-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin: 0;
-    }
-    .roster-badges {
-      display: inline-flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.82rem;
-    }
-    .badge-total {
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-weight: 700;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid #bfdbfe;
-    }
-    .badge-emp {
-      background: #fff7ed;
-      color: #c65911;
-      font-weight: 700;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid #fed7aa;
-    }
-    .badge-fam {
-      background: #f1f5f9;
-      color: #475569;
-      font-weight: 600;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid #e2e8f0;
-    }
-    .roster-legend {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.85rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      background: #fafaf9;
-      padding: 0.45rem 0.75rem;
-      border-radius: 6px;
-      border: 1px dashed #e7e5e4;
-    }
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .legend-dot-emp {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #c65911;
-      display: inline-block;
-    }
-    .legend-dot-fam {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #334155;
-      display: inline-block;
-    }
-    .roster-search-box {
-      width: 100%;
-    }
-    .roster-search-box input {
-      width: 100%;
-      padding: 0.6rem 0.85rem;
-      font-size: 0.95rem;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      outline: none;
-      background: #f8fafc;
-      transition: all 0.2s ease;
-      box-sizing: border-box;
-    }
-    .roster-search-box input:focus {
-      background: #fff;
-      border-color: #c65911;
-      box-shadow: 0 0 0 3px rgba(198, 89, 17, 0.15);
-    }
-    .roster-table-wrap {
-      overflow-x: auto;
-      max-height: 420px;
-      overflow-y: auto;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #fff;
-      transition: max-height 0.3s ease;
-      -webkit-overflow-scrolling: touch;
-    }
-    .roster-table-wrap.expanded {
-      max-height: none;
-    }
-    .roster-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.92rem;
-      min-width: 380px;
-    }
-    .roster-table thead th {
-      position: sticky;
-      top: 0;
-      background: #f1f5f9;
-      color: #334155;
-      font-weight: 700;
-      padding: 0.65rem 0.5rem;
-      text-align: center;
-      border-bottom: 2px solid #cbd5e1;
-      z-index: 2;
-    }
-    .roster-table tbody td {
-      padding: 0.6rem 0.5rem;
-      border-bottom: 1px solid var(--border);
-      vertical-align: middle;
-      text-align: center;
-    }
-    .roster-table tbody tr:nth-child(even) {
-      background: #fafafa;
-    }
-    .roster-table tbody tr:hover {
-      background: #fffbeb;
-    }
-    .roster-name-cell {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem;
-    }
-    .roster-name-emp {
-      font-weight: 800;
-      color: #c65911;
-      font-size: 1rem;
-    }
-    .roster-name-fam {
-      font-weight: 700;
-      color: #334155;
-      font-size: 0.95rem;
-    }
-    .role-badge {
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 0.1rem 0.35rem;
-      border-radius: 4px;
-      line-height: 1.2;
-    }
-    .role-emp {
-      background: #fff7ed;
-      color: #c65911;
-      border: 1px solid #fed7aa;
-    }
-    .role-fam {
-      background: #f8fafc;
-      color: #64748b;
-      border: 1px solid #e2e8f0;
-    }
-    .room-tag {
-      display: inline-block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 0.18rem 0.5rem;
-      border-radius: 6px;
-      background: #f1f5f9;
-      color: #334155;
-      border: 1px solid #e2e8f0;
-      white-space: nowrap;
-    }
-    .room-triple {
-      background: #fef3c7;
-      color: #92400e;
-      border-color: #fde68a;
-    }
-    .room-single {
-      background: #fce7f3;
-      color: #9d174d;
-      border-color: #fbcfe8;
-    }
-    .tag-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.2rem;
-      font-size: 0.76rem;
-      font-weight: 700;
-      padding: 0.15rem 0.45rem;
-      border-radius: 999px;
-      margin: 0.1rem;
-      white-space: nowrap;
-    }
-    .tag-biz { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-    .tag-prem { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
-    .tag-veg { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-    .tag-child { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
-    .tag-note { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
-    .roster-footer {
-      display: flex;
-      justify-content: center;
-      padding-top: 0.65rem;
-    }
-    .roster-expand-btn {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      color: #c65911;
-      font-weight: 700;
-      font-size: 0.86rem;
-      padding: 0.45rem 1.3rem;
-      border-radius: 999px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      transition: all 0.2s ease;
-    }
-    .roster-expand-btn:hover {
-      background: #fff7ed;
-      border-color: #fed7aa;
-    }
-  </style>
+    ctx.font=font;
+    if(l.s==="city"||l.s==="town"){ctx.fillStyle=C.ink;ctx.beginPath();ctx.arc(0,0,l.s==="city"?7:5,0,2*PI);ctx.fill();ctx.translate(0,l.s==="city"?-30:-22)}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw;ctx.lineJoin="round";ctx.strokeText(l.t,0,0)}
+    ctx.fillStyle=fill;ctx.fillText(l.t,0,0);ctx.restore()});
+}
+
+/* ---------- DOM overlays ---------- */
+const $=id=>document.getElementById(id);
+document.querySelectorAll(".heroimg").forEach(i=>i.src=IMG+"hero.webp");
+const cardsEl=$("cards");
+CARDS.forEach(c=>{const d=document.createElement("div");d.className="layer card"+(c.text?" textonly":"");d.style.opacity=0;
+  d.innerHTML=(c.img?`<img src="${IMG}${c.img}.webp" alt="">`:"")+`<div class="txt"><div class="n">${c.n}</div><h3>${c.h}</h3><p>${c.p}</p></div>`;
+  cardsEl.appendChild(d);c.el=d});
+$("food").innerHTML=FOOD.items.map(f=>`<div class="pola"><img src="${IMG}${f.img}.webp" alt=""><div><span>${f.h}</span><small>${f.p}</small></div></div>`).join("");
+$("ribbon").innerHTML=["1","2","3","4","5","6","7","8"].map(n=>`<span>${n}</span>`).join("");
+const ribbonSpans=[...$("ribbon").children];
+
+let curDay=-2;
+function dayAt(t){for(let i=0;i<DAYS.length;i++)if(t>=DAYS[i].t0&&t<DAYS[i].t1)return i;return -1}
+function setBadge(i){
+  const b=$("badge");if(i<0){b.innerHTML="";return}
+  const d=DAYS[i];
+  b.innerHTML=`<div class="kicker">DAY ${d.n}</div><h2>${d.title}</h2><div class="route">${d.route}</div>
+   <div class="chips"><span class="chip meal"><b>餐</b>${d.meal}</span><span class="chip"><b>宿</b>${d.hotel}</span></div>`;
+}
+
+function overlays(t){
+  const di=dayAt(t);if(di!==curDay){curDay=di;setBadge(di)}
+  const b=$("badge");
+  if(di>=0){const d=DAYS[di],a=vis(t,d.t0,d.t1,.7),e=easeOut(clamp((t-d.t0)/.9,0,1));b.style.opacity=a;b.style.transform=`translateY(${(1-e)*24}px)`}else b.style.opacity=0;
+  // ribbon
+  const dayNum=di<0?-1:(di===6?6:di);
+  ribbonSpans.forEach((s,j)=>{const on=di===6?(j>=6):(j===di);s.classList.toggle("on",on&&di>=0);s.classList.toggle("done",di>=0&&!on&&j<(di===6?6:di))});
+  $("ribbon").style.opacity=vis(t,9,192,.8);
+  // cards
+  CARDS.forEach(c=>{const a=vis(t,c.t0,c.t1,.55);c.el.style.opacity=a;
+    if(a>0){const e=easeOut(clamp((t-c.t0)/.7,0,1)),k=1+.03*(1-clamp((t-c.t0)/(c.t1-c.t0),0,1));c.el.style.transform=`translateX(${(1-e)*60}px) rotate(${(1-e)*1.5}deg)`;
+      const im=c.el.querySelector("img");if(im)im.style.transform=`scale(${k})`}
+    c.el.style.visibility=a>0?"visible":"hidden"});
+  // food
+  const fa=vis(t,FOOD.t0,FOOD.t1,.5),fe=$("food");fe.style.opacity=fa;fe.style.visibility=fa>0?"visible":"hidden";
+  [...fe.children].forEach((p,j)=>{const e=easeOut(clamp((t-FOOD.t0-j*.18)/.6,0,1));p.style.transform=`translateY(${(1-e)*40}px) rotate(${(j%2?1.6:-1.4)*(e)}deg)`;p.style.opacity=e});
+  // caption
+  const ce=$("caption"),ct=$("captext");
+  if(curCap&&curCap.a>0){const h=`<b class="who ${curCap.who==="小晴"?"f":"m"}">${curCap.who}</b>${curCap.text}`;if(ct.dataset.k!==curCap.key){ct.innerHTML=h;ct.dataset.k=curCap.key}ce.style.opacity=curCap.a}else ce.style.opacity=0;
+  // intro / outro
+  const ia=1-smooth(7.8,9.4,t),io=$("intro");io.style.opacity=ia;io.style.visibility=ia>0?"visible":"hidden";
+  io.querySelector("img").style.transform=`scale(${1.12-.1*clamp(t/9,0,1)})`;
+  [...io.querySelector(".t").children].forEach((c,j)=>{const e=t<.02?1:easeOut(clamp((t-.3-j*.35)/.9,0,1));c.style.opacity=e;c.style.transform=`translateY(${(1-e)*26}px)`});
+  const oa=smooth(192,193.4,t),oo=$("outro");oo.style.opacity=oa;oo.style.visibility=oa>0?"visible":"hidden";
+  oo.querySelector("img").style.transform=`scale(${1+.08*clamp((t-192)/8,0,1)})`;
+  [...oo.querySelector(".t").children].forEach((c,j)=>{const e=easeOut(clamp((t-192.8-j*.35)/.9,0,1));c.style.opacity=e;c.style.transform=`translateY(${(1-e)*26}px)`});
+  // meta
+  const mpp=metersPerPx(),target=mpp*220,nice=[10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000];
+  let m=nice[0];for(const n of nice)if(n<=target)m=n;
+  const lat=Math.atan(Math.sinh(PI*(1-2*CAM.y)))*180/PI,lon=CAM.x*360-180;
+  const dm=v=>{const a=Math.abs(v),d=Math.floor(a),mm=Math.round((a-d)*60);return `${d}°${String(mm).padStart(2,"0")}′`};
+  $("scale").innerHTML=`<svg width="${Math.round(m/mpp)}" height="12" style="display:block;overflow:visible"><path d="M1 0V10H${Math.round(m/mpp)-1}V0" fill="none" stroke="#1c2840" stroke-width="2.5"/></svg>${m>=1000?(m/1000)+" km":m+" m"}`;
+  $("coord").textContent=`${dm(lat)}N ${dm(lon)}E`;
+  $("meta").style.opacity=Math.min(smooth(9,10,t),1-smooth(191.5,192.5,t));
+}
+
+let curCap=null;
+function draw(t){
+  CAM=camera(t);WS=256*Math.pow(2,CAM.z);OX=W*CAM.fx;OY=H/2;
+  ctx.setTransform(scaleK*dpr,0,0,scaleK*dpr,0,0);
+  if(t<9.4&&t>=0&&smooth(7.8,9.4,t)===0){/* intro fully covers */}
+  drawBase();drawCity();drawLabels();drawRoutes(t);drawPins(t);
+  overlays(t);
+}
+
+/* ---------- playback ---------- */
+/* Master clock is real time T. Each chapter lasts as long as its narration (or its film length, whichever is longer);
+   the film time inside the chapter is stretched to fit. */
+let REAL=[],RS=[],RTOTAL=0;
+function layout(){REAL=CHV.map((c,i)=>Math.max(c[1]-c[0],(AUD_DUR[i]||0)+1.4));RS=[];let acc=0;REAL.forEach(r=>{RS.push(acc);acc+=r});RTOTAL=acc;
+  const sk=document.getElementById("seek");if(sk)sk.max=RTOTAL;const tk=document.getElementById("ticks");
+  if(tk)tk.innerHTML=RS.slice(1,8).map(r=>`<i style="left:${r/RTOTAL*100}%"></i>`).join("")}
+layout();
+function chAt(T){for(let i=CHV.length-1;i>=0;i--)if(T>=RS[i])return i;return 0}
+function filmTime(T){const i=chAt(T),u=clamp((T-RS[i])/REAL[i],0,1);return CHV[i][0]+u*(CHV[i][1]-CHV[i][0])}
+const state={T:0,t:0,playing:false,last:0,ch:-1};
+try{const h=window.claude&&window.claude.hot&&window.claude.hot.data;if(h&&typeof h.T==="number"){state.T=h.T;state.t=filmTime(h.T)}}catch(e){}
+try{window.claude&&window.claude.hot&&window.claude.hot.snapshot&&window.claude.hot.snapshot(()=>({T:state.T}))}catch(e){}
+const seek=$("seek"),timeEl=$("time"),bigplay=$("bigplay"),bgm=$("bgm");
+const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+const PLAY='<path d="M6 4l15 8-15 8z"/>',PAUSE='<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+const vo={on:true},music={on:true,vol:0};
+
+/* one audio element per chapter */
+const AUD=CHV.map((c,i)=>{const a=new Audio();a.preload="auto";a.src=VOICE_DIR+"ch"+i+".mp3";
+  a.addEventListener("loadedmetadata",()=>{if(!AUD_DUR[i]&&isFinite(a.duration)){AUD_DUR[i]=a.duration;const f=state.T/RTOTAL;layout();state.T=f*RTOTAL;ui()}});
+  a.addEventListener("error",()=>{a.dataset.bad="1"});return a});
+function stopVoice(){AUD.forEach(a=>{try{a.pause()}catch(e){}})}
+function startVoice(i,off){stopVoice();const a=AUD[i];if(!vo.on||!state.playing||a.dataset.bad)return;
+  const d=AUD_DUR[i]||a.duration||0;if(off>=d-.05)return;
+  try{a.currentTime=Math.max(0,off)}catch(e){}try{const p=a.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
+function voicePlaying(){return AUD.some(a=>!a.paused&&!a.ended)}
+/* captions: lines share the chapter's narration time by length */
+function captionAt(T){const i=chAt(T),lines=DLG[i];if(!lines)return null;
+  const d=AUD_DUR[i]||REAL[i]-1.4,lt=T-RS[i];if(lt>d+.6)return null;
+  const w=lines.map(l=>l[1].replace(/[，。！？、…～\s]/g,"").length+3),sum=w.reduce((x,y)=>x+y,0);
+  const st=CAPT[i]&&CAPT[i].length===lines.length?CAPT[i]:null;
+  let acc=0;for(let k=0;k<lines.length;k++){let s0=acc/sum*d,s1=(acc+w[k])/sum*d;acc+=w[k];if(st){s0=st[k];s1=k+1<lines.length?st[k+1]:d}
+    if(lt<s1||k===lines.length-1){const a=Math.min(smooth(s0-.1,s0+.2,lt),1-smooth(d+.2,d+.6,lt));return {who:lines[k][0],text:lines[k][1],a:Math.max(a,lt>=s0?.001:0),key:i+"-"+k}}}
+  return null}
+
+function ui(){seek.value=state.T;timeEl.textContent=`${fmt(state.T)} / ${fmt(RTOTAL)}`;
+  $("playicon").innerHTML=state.playing?PAUSE:PLAY;$("play").setAttribute("aria-label",state.playing?"暫停":"播放");
+  bigplay.classList.toggle("off",state.playing);
+  const di=dayAt(state.t);chapBtns.forEach((b,j)=>b.classList.toggle("on",j===di));
+  document.querySelectorAll(".chap .m").forEach(m=>{const t=fmt(RS[+m.dataset.i]);if(m.textContent!==t)m.textContent=t})}
+function audioTick(dt){
+  let target=music.on&&state.playing?(voicePlaying()&&vo.on?.035:.10):0;
+  target*=1-smooth(RTOTAL-3.5,RTOTAL,state.T);
+  music.vol+=(target-music.vol)*Math.min(1,dt*4);
+  try{bgm.volume=clamp(music.vol,0,1)}catch(e){}}
+function render(){state.t=filmTime(state.T);curCap=captionAt(state.T);draw(state.t)}
+function loop(ts){if(!state.playing)return;const dt=Math.min((ts-state.last)/1000,.1);state.last=ts;
+  state.T+=dt;
+  const i=chAt(state.T);if(i!==state.ch){state.ch=i;startVoice(i,state.T-RS[i])}
+  if(state.T>=RTOTAL){state.T=RTOTAL;state.playing=false;stopVoice();try{bgm.pause()}catch(e){}}
+  audioTick(dt);render();ui();if(state.playing)requestAnimationFrame(loop)}
+function play(){
+  if(state.T>=RTOTAL-.05){state.T=0;try{bgm.currentTime=0}catch(e){}}
+  state.playing=true;state.last=performance.now();state.ch=chAt(state.T);startVoice(state.ch,state.T-RS[state.ch]);
+  if(music.on){try{const p=bgm.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
+  ui();requestAnimationFrame(loop)}
+function pause(){state.playing=false;stopVoice();try{bgm.pause()}catch(e){}music.vol=0;ui()}
+function toggle(){state.playing?pause():play()}
+function go(T){state.T=clamp(T,0,RTOTAL);state.ch=chAt(state.T);if(state.playing)startVoice(state.ch,state.T-RS[state.ch]);render();ui()}
+function setTog(el,on){el.classList.toggle("on",on);el.setAttribute("aria-pressed",String(on))}
+$("vo").addEventListener("click",()=>{vo.on=!vo.on;setTog($("vo"),vo.on);if(!vo.on)stopVoice();else if(state.playing)startVoice(state.ch,state.T-RS[state.ch])});
+$("mu").addEventListener("click",()=>{music.on=!music.on;setTog($("mu"),music.on);
+  if(music.on&&state.playing){try{const p=bgm.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}});
+$("play").addEventListener("click",toggle);
+$("bigbtn").addEventListener("click",e=>{e.stopPropagation();play()});
+$("stage").addEventListener("click",toggle);
+$("stage").addEventListener("dblclick",e=>{e.preventDefault();toggleFS()});
+seek.addEventListener("input",()=>go(parseFloat(seek.value)));
+document.addEventListener("keydown",e=>{if((e.target.tagName==="INPUT"||e.target.tagName==="SELECT")&&e.code!=="Space")return;
+  if(e.code==="Space"){e.preventDefault();toggle()}else if(e.code==="ArrowRight")go(state.T+5);else if(e.code==="ArrowLeft")go(state.T-5);else if(e.key==="f"||e.key==="F")toggleFS()});
+function toggleFS(){const p=$("player");try{if(document.fullscreenElement)document.exitFullscreen();else p.requestFullscreen().catch(()=>{})}catch(e){}}
+$("fs").addEventListener("click",toggleFS);
+document.addEventListener("fullscreenchange",()=>setTimeout(resize,60));
+window.addEventListener("pagehide",stopVoice);
+
+/* chapters */
+const chapData=[{d:"OPEN",h:"片頭",i:0}].concat(DAYS.map((d,k)=>({d:"DAY "+d.n,h:d.title,i:k+1})));
+const chapEl=$("chapters");
+chapData.forEach(c=>{const b=document.createElement("button");b.type="button";b.className="chap";b.innerHTML=`<span class="d">${c.d}</span><span class="h">${c.h}</span><span class="m" data-i="${c.i}">${fmt(RS[c.i])}</span>`;
+  b.addEventListener("click",()=>{go(RS[c.i]+.01);play()});chapEl.appendChild(b)});
+const chapBtns=[...chapEl.children].slice(1);
+layout();
+
+new ResizeObserver(resize).observe($("stage"));
+resize();render();ui();
+// make sure CJK glyphs used on canvas are loaded before drawing
+const allText=PINS.map(p=>p.name).concat(LABELS.map(l=>l.t),"宿餐選✈").join("");
+if(document.fonts&&document.fonts.load){Promise.all([
+  document.fonts.load(`700 23px "Noto Sans TC"`,allText),document.fonts.load(`500 22px "Noto Sans TC"`,allText),
+  document.fonts.load(`900 34px "Noto Serif TC"`,allText),document.fonts.load(`600 30px "Noto Serif TC"`,allText),
+  document.fonts.load(`600 21px "IBM Plex Mono"`,"0123456789 km")]).then(()=>draw(state.t)).catch(()=>{})}
+})();
+</script>
+
+</body>
+</html>
