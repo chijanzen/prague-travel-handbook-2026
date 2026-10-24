@@ -17,6 +17,9 @@
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
   <link rel="apple-touch-icon" href="icon-192.png">
+  <!-- Leaflet CSS & JS (載入 Google Maps 圖磚與互動軌跡動畫引擎) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <style>
     :root {
       --primary: #1e3a8a;
@@ -1229,6 +1232,595 @@
     .tour-video-btn .tv-txt { display: flex; flex-direction: column; line-height: 1.3; }
     .tour-video-btn .tv-txt b { font-size: 1rem; }
     .tour-video-btn .tv-txt small { font-size: 0.75rem; color: #475569; }
+    .header-actions {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 1.25rem 0 1.2rem;
+    }
+    .header-actions .tour-video-btn { margin: 0; cursor: pointer; border: none; font-family: inherit; }
+    .tour-video-btn.gmap-hero-btn {
+      background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+      border: 2px solid #93c5fd;
+    }
+    .tour-video-btn.gmap-hero-btn .tv-play {
+      background: #1a73e8;
+    }
+
+    /* ===== Google Maps 每日旅遊行程動態模擬器 ===== */
+    .gmap-sim-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.09);
+      overflow: hidden;
+      margin-bottom: 1.35rem;
+    }
+    .gmap-sim-topbar {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff;
+      padding: 0.85rem 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+    }
+    .gmap-sim-title {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .gmap-logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #fff;
+      color: #1a73e8;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      white-space: nowrap;
+    }
+    .gmap-sim-title h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: 0.3px;
+    }
+    .gmap-layer-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .gmap-layer-btn {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #e2e8f0;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.32rem 0.68rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      font-family: inherit;
+    }
+    .gmap-layer-btn:hover {
+      background: rgba(255,255,255,0.26);
+      color: #fff;
+    }
+    .gmap-layer-btn.active {
+      background: #fbbf24;
+      color: #0f172a;
+      border-color: #fbbf24;
+      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+    }
+
+    /* 地圖主視窗 */
+    .gmap-stage-wrap {
+      position: relative;
+      width: 100%;
+      height: 460px;
+      background: #e5e3df;
+    }
+    #prague-gmap {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .gmap-embed-drawer {
+      position: absolute;
+      inset: 0;
+      z-index: 500;
+      background: #0f172a;
+      display: none;
+      flex-direction: column;
+    }
+    .gmap-embed-drawer.open {
+      display: flex;
+    }
+    .gmap-embed-header {
+      background: #1e293b;
+      color: #fff;
+      padding: 0.55rem 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .gmap-embed-close {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 0.28rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .gmap-embed-drawer iframe {
+      flex: 1;
+      width: 100%;
+      border: 0;
+    }
+
+    /* 地圖上懸浮 HUD 資訊卡 */
+    .gmap-hud-top {
+      position: absolute;
+      top: 12px;
+      left: 52px;
+      right: 12px;
+      z-index: 400;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+    .gmap-hud-pill {
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .gmap-hud-pill .leg-badge {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+    }
+    .gmap-live-card {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      z-index: 400;
+      width: min(370px, calc(100% - 28px));
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+      padding: 0.75rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      transition: transform 0.28s ease, opacity 0.28s ease;
+    }
+    .gmap-live-card img {
+      width: 78px;
+      height: 78px;
+      border-radius: 10px;
+      object-fit: cover !important;
+      flex-shrink: 0;
+      border: 1px solid #e2e8f0;
+      background: #f1f5f9;
+      cursor: zoom-in;
+    }
+    .gmap-live-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .gmap-live-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #1a73e8;
+      margin-bottom: 0.15rem;
+    }
+    .gmap-live-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+      margin-bottom: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .gmap-live-desc {
+      font-size: 0.78rem;
+      color: #475569;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .gmap-live-actions {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+    .gmap-mini-btn {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .gmap-mini-btn:hover { background: #dbeafe; }
+    .gmap-mini-btn.green {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #047857;
+    }
+
+    /* 動畫播放控制列與站點時間軸 */
+    .gmap-controls-bar {
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .gmap-ctrl-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .gmap-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .gmap-ctrl-btn {
+      min-height: 38px;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      border: 1.5px solid #cbd5e1;
+      background: #fff;
+      color: #1e293b;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .gmap-ctrl-btn:hover {
+      border-color: #1a73e8;
+      color: #1a73e8;
+      background: #eff6ff;
+    }
+    .gmap-ctrl-btn.primary {
+      background: #1a73e8;
+      color: #fff;
+      border-color: #1a73e8;
+      box-shadow: 0 3px 10px rgba(26, 115, 232, 0.3);
+    }
+    .gmap-ctrl-btn.primary:hover {
+      background: #1557b0;
+    }
+    .gmap-ctrl-btn.playing {
+      background: #dc2626;
+      border-color: #dc2626;
+      color: #fff;
+    }
+    .gmap-speed-select {
+      height: 36px;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      padding: 0 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #334155;
+      background: #fff;
+      cursor: pointer;
+    }
+    .gmap-progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .gmap-progress-wrap input[type="range"] {
+      flex: 1;
+      accent-color: #1a73e8;
+      cursor: pointer;
+      height: 6px;
+    }
+    .gmap-progress-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      min-width: 92px;
+      text-align: right;
+    }
+
+    /* 站點快速切換橫軸 */
+    .gmap-stops-strip {
+      display: flex;
+      gap: 0.45rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    .gmap-stop-chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.38rem 0.75rem;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      font-family: inherit;
+    }
+    .gmap-stop-chip:hover {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+    .gmap-stop-chip.active {
+      background: #1e3a8a;
+      color: #fff;
+      border-color: #1e3a8a;
+      box-shadow: 0 3px 8px rgba(30, 58, 138, 0.25);
+    }
+    .gmap-stop-chip .chip-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #1e293b;
+      font-size: 0.72rem;
+      display: inline-grid;
+      place-items: center;
+      font-weight: 800;
+    }
+    .gmap-stop-chip.active .chip-num {
+      background: #fbbf24;
+      color: #0f172a;
+    }
+
+    /* 自訂 Google 地圖針腳與移動載具標記 */
+    .gmap-pin-marker {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translateY(-18px);
+    }
+    .gmap-pin-bubble {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #ffffff;
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 3px 9px 3px 5px;
+      border-radius: 999px;
+      border: 2px solid #1a73e8;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      white-space: nowrap;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .gmap-pin-marker.active .gmap-pin-bubble {
+      background: #1a73e8;
+      color: #ffffff;
+      border-color: #ffffff;
+      transform: scale(1.14);
+      box-shadow: 0 6px 16px rgba(26, 115, 232, 0.55);
+    }
+    .gmap-pin-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ea4335;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      display: inline-grid;
+      place-items: center;
+    }
+    .gmap-pin-marker.active .gmap-pin-num {
+      background: #fbbf24;
+      color: #0f172a;
+    }
+    .gmap-pin-stem {
+      width: 3px;
+      height: 8px;
+      background: #ea4335;
+      border-radius: 2px;
+    }
+    .gmap-vehicle-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ea4335, #f59e0b);
+      border: 3px solid #ffffff;
+      box-shadow: 0 6px 18px rgba(234, 67, 53, 0.55);
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+      animation: vehiclePulse 1.2s infinite ease-in-out;
+    }
+    @keyframes vehiclePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+
+    /* 每日行程時間軸與互動卡片升級 */
+    .day-route-summary {
+      background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+    }
+    .day-route-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .stat-pill {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .day-play-cta {
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 0.42rem 0.95rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      box-shadow: 0 3px 10px rgba(26,115,232,0.25);
+      font-family: inherit;
+    }
+    .day-play-cta:hover { background: #1557b0; }
+
+    .spot-timeline-badge {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: #f1f5f9;
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .spot-time-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .spot-step-pill {
+      background: #1e3a8a;
+      color: #fff;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+    .spot-leg-right {
+      color: #0369a1;
+      background: #e0f2fe;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+    }
+    .spot-card.sim-highlight {
+      border: 2px solid #1a73e8;
+      box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.12);
+    }
+    .map-sim-btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: #eff6ff;
+      border: 1.5px solid #93c5fd;
+      color: #1d4ed8;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+    .map-sim-btn:hover {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    .map-embed-btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: #fff7ed;
+      border: 1.5px solid #fed7aa;
+      color: #c2410c;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .map-embed-btn:hover { background: #ffedd5; }
+
+    @media (max-width: 639px) {
+      .gmap-stage-wrap { height: 370px; }
+      .gmap-hud-top { left: 46px; top: 8px; }
+      .gmap-live-card { bottom: 8px; left: 8px; width: calc(100% - 16px); padding: 0.55rem; }
+      .gmap-live-card img { width: 62px; height: 62px; }
+    }
   </style>
 </head>
 <body>
@@ -1236,11 +1828,17 @@
   <header>
     <span class="badge">115年港洲營建事業員工旅遊</span>
     <h1>捷克・布拉格 8 日遊</h1>
-    <p class="subtitle">梯次天氣速查・原行程景點完整手冊</p>
-    <a class="tour-video-btn" href="tour/" aria-label="觀看每日行程地圖導覽影片">
-      <span class="tv-play" aria-hidden="true">▶</span>
-      <span class="tv-txt"><b>觀看行程導覽影片</b><small>地圖動畫＋雙人解說・約 3 分 40 秒</small></span>
-    </a>
+    <p class="subtitle">Google 地圖每日行程動態模擬・梯次天氣速查・完整互動手冊</p>
+    <div class="header-actions">
+      <button type="button" class="tour-video-btn gmap-hero-btn" onclick="launchGmapTour(2)">
+        <span class="tv-play" aria-hidden="true">🗺️</span>
+        <span class="tv-txt"><b>啟動 Google 地圖行程模擬</b><small>互動地圖軌跡動畫＋站點實景導覽</small></span>
+      </button>
+      <a class="tour-video-btn" href="tour/index.html" aria-label="觀看每日行程地圖導覽影片">
+        <span class="tv-play" aria-hidden="true">▶</span>
+        <span class="tv-txt"><b>觀看雙人解說導覽影片</b><small>地圖動畫＋語音解說・約 3 分 40 秒</small></span>
+      </a>
+    </div>
   </header>
 
   <div class="container">
@@ -1429,45 +2027,150 @@
       </div>
     </section>
 
-    <!-- ==================== 主分頁 2：每日行程導覽 ==================== -->
+    <!-- ==================== 主分頁 2：每日行程導覽 (Google Maps 動態模擬升級版) ==================== -->
     <section id="tab-itinerary" class="main-section">
       <div class="days-tabs-wrapper">
         <div class="days-tabs" id="tabsScroll">
-          <button class="day-btn active" onclick="showDay(1)">Day 1</button>
+          <button class="day-btn active" onclick="showDay(1)">Day 1 啟程直飛</button>
           <button class="day-btn" onclick="showDay(2)">Day 2 CK古鎮</button>
           <button class="day-btn" onclick="showDay(3)">Day 3 城堡&遊船</button>
           <button class="day-btn" onclick="showDay(4)">Day 4 市區觀光</button>
           <button class="day-btn" onclick="showDay(5)">Day 5 人骨&Outlet</button>
           <button class="day-btn" onclick="showDay(6)">Day 6 新城&自由行</button>
-          <button class="day-btn" onclick="showDay(7)">Day 7</button>
-          <button class="day-btn" onclick="showDay(8)">Day 8</button>
+          <button class="day-btn" onclick="showDay(7)">Day 7 賦歸返航</button>
+          <button class="day-btn" onclick="showDay(8)">Day 8 抵台</button>
+        </div>
+      </div>
+
+      <!-- ==================== 布拉格 Google 地圖每日行程動態模擬器 ==================== -->
+      <div class="gmap-sim-card" id="gmapSimCard">
+        <div class="gmap-sim-topbar">
+          <div class="gmap-sim-title">
+            <span class="gmap-logo-badge">📍 Google Maps</span>
+            <h4 id="gmapDayHeaderTitle">Day 1｜桃園機場 ➔ 布拉格哈維爾機場</h4>
+          </div>
+          <div class="gmap-layer-group">
+            <button type="button" class="gmap-layer-btn active" id="layerBtnRoad" onclick="switchGmapLayer('road')">🗺️ 標準地圖</button>
+            <button type="button" class="gmap-layer-btn" id="layerBtnSat" onclick="switchGmapLayer('hybrid')">🛰️ 衛星實景</button>
+            <button type="button" class="gmap-layer-btn" id="layerBtnTer" onclick="switchGmapLayer('terrain')">⛰️ 地形圖</button>
+            <button type="button" class="gmap-layer-btn" id="layerBtnEmbed" onclick="toggleGmapEmbedDrawer()">🪟 Google 實景內嵌</button>
+          </div>
+        </div>
+
+        <div class="gmap-stage-wrap">
+          <div id="prague-gmap" aria-label="布拉格每日旅遊行程 Google 互動模擬地圖"></div>
+
+          <!-- 頂部即時狀態膠囊 -->
+          <div class="gmap-hud-top">
+            <div class="gmap-hud-pill" id="gmapHudStopPill">
+              <span id="gmapHudModeIcon">✈️</span>
+              <span id="gmapHudStopText">第 1 站：桃園國際機場</span>
+              <span class="leg-badge" id="gmapHudLegBadge">星宇 JX101 直飛</span>
+            </div>
+            <button type="button" class="gmap-hud-pill" style="cursor:pointer;" onclick="fitDayRouteBounds()" title="縮放至今日完整路線">
+              🔍 全覽今日路線
+            </button>
+          </div>
+
+          <!-- 左下角即時景點預覽卡 -->
+          <div class="gmap-live-card" id="gmapLiveCard">
+            <img id="gmapLiveImg" src="01.webp" alt="景點預覽" onclick="openImgLightbox(this.src, document.getElementById('gmapLiveTitle').textContent)">
+            <div class="gmap-live-body">
+              <div class="gmap-live-meta">
+                <span id="gmapLiveTime">🕒 20:45 集合 / 23:45 起飛</span>
+                <span>·</span>
+                <span id="gmapLiveStay">飛行約 15 小時</span>
+              </div>
+              <div class="gmap-live-title" id="gmapLiveTitle">桃園國際機場 (TPE)</div>
+              <div class="gmap-live-desc" id="gmapLiveDesc">搭乘星宇航空 JX101 豪華客機直飛《百塔之城》布拉格，機上享用精緻餐食並舒適夜宿。</div>
+              <div class="gmap-live-actions">
+                <button type="button" class="gmap-mini-btn" onclick="openCurrentStopEmbed()">🪟 實景地圖</button>
+                <a id="gmapLiveNavLink" class="gmap-mini-btn green" href="https://www.google.com/maps/search/?api=1&query=Taiwan+Taoyuan+International+Airport" target="_blank" rel="noopener noreferrer">🧭 Google 導航 ↗</a>
+                <button type="button" class="gmap-mini-btn" onclick="scrollToCurrentSpotCard()">📖 詳情 ↓</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Maps 官方 Iframe 實景內嵌抽屜 -->
+          <div class="gmap-embed-drawer" id="gmapEmbedDrawer">
+            <div class="gmap-embed-header">
+              <span id="gmapEmbedTitle">📍 Google Maps 實景內嵌預覽</span>
+              <button type="button" class="gmap-embed-close" onclick="closeGmapEmbedDrawer()">✕ 返回軌跡動畫地圖</button>
+            </div>
+            <iframe id="gmapEmbedIframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Google Maps 實景地圖"></iframe>
+          </div>
+        </div>
+
+        <!-- 動畫播放器與站點時間軸控制列 -->
+        <div class="gmap-controls-bar">
+          <div class="gmap-ctrl-row">
+            <div class="gmap-btn-group">
+              <button type="button" class="gmap-ctrl-btn" onclick="prevGmapStop()" title="上一站">⏮ 上一站</button>
+              <button type="button" class="gmap-ctrl-btn primary" id="gmapPlayBtn" onclick="toggleGmapPlay()">▶ 播放今日行程動畫</button>
+              <button type="button" class="gmap-ctrl-btn" onclick="nextGmapStop()" title="下一站">⏭ 下一站</button>
+              <button type="button" class="gmap-ctrl-btn" onclick="replayGmapDay()" title="從頭重播今日路線">🔄 重播</button>
+            </div>
+            <div class="gmap-btn-group">
+              <label for="gmapSpeedSelect" style="font-size:0.78rem; font-weight:700; color:#475569;">動畫速度：</label>
+              <select id="gmapSpeedSelect" class="gmap-speed-select" onchange="changeGmapSpeed(this.value)">
+                <option value="0.7">慢速 0.7x</option>
+                <option value="1" selected>標準 1.0x</option>
+                <option value="1.8">快速 1.8x</option>
+                <option value="3">極速 3.0x</option>
+              </select>
+              <button type="button" class="gmap-ctrl-btn" id="gmapFollowBtn" onclick="toggleGmapFollow()" style="padding:0.3rem 0.65rem; font-size:0.78rem;">🎯 鏡頭跟隨：開</button>
+            </div>
+          </div>
+
+          <div class="gmap-progress-wrap">
+            <input type="range" id="gmapScrubber" min="0" max="1000" value="0" oninput="scrubGmapTimeline(this.value)" aria-label="今日行程動畫進度">
+            <span class="gmap-progress-label" id="gmapProgressLabel">進度 0% (1/2站)</span>
+          </div>
+
+          <!-- 今日各站點快速點擊列 -->
+          <div class="gmap-stops-strip" id="gmapStopsStrip"></div>
         </div>
       </div>
 
       <!-- DAY 1 -->
       <div id="day-pane-1" class="day-panel active">
         <div class="panel-header">
-          <span class="tag">Day 1</span>
-          <h3>桃園 / 布拉格機場</h3>
+          <span class="tag">Day 1 · 啟程直飛</span>
+          <h3>桃園國際機場 (TPE) ➔ 星宇航空 JX101 ➔ 布拉格哈維爾機場 (PRG)</h3>
+        </div>
+        <div class="day-route-summary">
+          <div class="day-route-stats">
+            <span class="stat-pill">✈️ 航程約 9,050 公里</span>
+            <span class="stat-pill">⏱️ 直飛約 14.5 ~ 15 小時</span>
+            <span class="stat-pill">🌙 夜宿機上・跨歐亞大陸</span>
+          </div>
+          <button type="button" class="day-play-cta" onclick="startDaySimFromCard(1)">▶ 模擬 Day 1 飛行軌跡</button>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
             <h5>🍽 餐食安排</h5>
-            <p>早餐：× ｜ 中餐：× ｜ 晚餐：機上餐食</p>
+            <p>早餐：× ｜ 中餐：× ｜ 晚餐：機上精緻餐食</p>
           </div>
           <div class="meta-item">
             <h5>🏨 住宿</h5>
-            <p>機上</p>
+            <p>夜宿豪華客機上</p>
           </div>
         </div>
-        <div class="spot-card">
+        <div class="spot-card" data-day="1" data-stop="0">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 1</span> 🕒 20:45 機場集合 · 23:45 起飛</span>
+            <span class="spot-leg-right">✈️ 星宇航空 JX101 直飛布拉格</span>
+          </div>
           <div class="spot-img-container">
             <img src="01.webp" alt="搭乘星宇航空啟程" loading="lazy">
           </div>
           <div class="spot-content">
             <h4 class="spot-title">啟程飛行：搭乘星宇航空飛往《百塔之城》布拉格</h4>
-            <p class="spot-desc">今日團體集合於公司，搭車前往桃園國際機場，搭乘豪華客機飛往《百塔之城》布拉格。班機將於翌日早晨抵達，謹祝您夜晚愉快！</p>
+            <p class="spot-desc">今日團體集合於公司，搭車前往桃園國際機場，搭乘星宇航空豪華客機直飛捷克首都《百塔之城》布拉格。班機將於翌日早晨抵達布拉格哈維爾國際機場，由於捷克冬令時間比台灣慢 7 小時，抵達時正好展開充實的波希米亞古鎮之旅，謹祝您機上夜晚愉快！</p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(1, 0, true)">📍 在地圖模擬桃園起飛</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(1, 1, true)">🛬 模擬抵達布拉格機場</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Taiwan Taoyuan International Airport', '桃園國際機場')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Taiwan+Taoyuan+International+Airport" target="_blank" rel="noopener noreferrer">🧭 桃園國際機場 地標位址</a>
             </div>
           </div>
@@ -1477,13 +2180,21 @@
       <!-- DAY 2 (CK 小鎮) -->
       <div id="day-pane-2" class="day-panel">
         <div class="panel-header">
-          <span class="tag">Day 2</span>
-          <h3>布拉格 Prague ➔ 173公里 ➔ 契斯科庫倫洛夫 Český Krumlov</h3>
+          <span class="tag">Day 2 · 世界雙遺產古鎮</span>
+          <h3>布拉格機場 ➔ 173公里 ➔ 契斯科庫倫洛夫 Český Krumlov (城堡區・彩繪塔・S型河灣・舊城市政廣場)</h3>
+        </div>
+        <div class="day-route-summary">
+          <div class="day-route-stats">
+            <span class="stat-pill">🚌 專車南下 173 公里 (約 2.5 小時)</span>
+            <span class="stat-pill">🚶 古鎮石板路漫步約 3.5 小時</span>
+            <span class="stat-pill">🏰 聯合國世界文化與自然雙遺產</span>
+          </div>
+          <button type="button" class="day-play-cta" onclick="startDaySimFromCard(2)">▶ 模擬 Day 2 庫倫洛夫路線</button>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
             <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：捷克烤鴨風味料理 ｜ 晚餐：肉類拼盤(雞/豬/牛)</p>
+            <p>早餐：機上早餐 ｜ 中餐：捷克烤鴨風味料理 ｜ 晚餐：中古世紀肉類拼盤(雞/豬/牛)</p>
           </div>
           <div class="meta-item">
             <h5>🏨 住宿</h5>
@@ -1491,21 +2202,28 @@
               <a class="hotel-link" href="https://www.hoteloldinn.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Hotel OLDINN ↗</a>
               <a class="hotel-tel" href="tel:+420388288888">(+420-388-288 888)</a>
               <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Hotel+OLDINN+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+              <button type="button" class="hotel-map-pill" style="cursor:pointer;" onclick="focusGmapStop(2, 3, true)">🗺️ 地圖定位飯店</button>
             </p>
           </div>
         </div>
 
-        <div class="spot-card">
+        <div class="spot-card" data-day="2" data-stop="1">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 1–2</span> 🕒 08:00 抵達布拉格 ➔ 11:00 庫倫洛夫城堡區</span>
+            <span class="spot-leg-right">🚌 南下 173 km (約 2.5 小時)</span>
+          </div>
           <div class="spot-img-container">
             <img src="02.webp" 
                  alt="契斯科庫倫洛夫古鎮全景與彩繪塔" loading="lazy">
           </div>
           <div class="spot-content">
-            <h4 class="spot-title">契斯科庫倫洛夫 (Český Krumlov)</h4>
+            <h4 class="spot-title">契斯科庫倫洛夫 (Český Krumlov) ＆ 城堡區俯瞰 S 型河灣</h4>
             <p class="spot-desc">
               契斯科庫倫洛夫被公認為捷克最美麗的中世紀古鎮，維第格王朝在此興建的美麗城堡，讓您如同墜入歷史歲月的時光洪流之中，其建築、街道、教堂、要塞等散發出濃郁的古典氣息，令人發思古之幽情。曾有人說，想要當中古世紀的古人，就要到至今連麥當勞都沒有的「契斯科庫倫洛夫」。這個如珠玉般風情的中古世紀小鎮，風情如詩如畫，伏爾他瓦河蜿蜒而過，悠緩而寧靜，從城堡區俯瞰小鎮，紅瓦白牆的屋子在陽光下展露出迷人的風情，時光彷彿停留在十八世紀般，照亮了彩繪塔、走過玫瑰家族等三朝領主的輝煌歲月。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(2, 1, true)">📍 在地圖模擬庫倫洛夫城堡</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('State Castle and Chateau Cesky Krumlov', '庫倫洛夫城堡區')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=State+Castle+and+Chateau+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">🧭 庫倫洛夫城堡 地標位址</a>
             </div>
 
@@ -1528,17 +2246,24 @@
           </div>
         </div>
 
-        <div class="spot-card">
+        <div class="spot-card" data-day="2" data-stop="2">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 3–4</span> 🕒 14:30 舊城區與市政廣場 ➔ 入住 Hotel OLDINN</span>
+            <span class="spot-leg-right">🚶 跨過拉塞尼基木橋・步行 550m</span>
+          </div>
           <div class="spot-img-container">
             <img src="03.webp" 
                  alt="庫倫洛夫舊城區巷弄" loading="lazy">
           </div>
           <div class="spot-content">
-            <h4 class="spot-title">舊城區</h4>
+            <h4 class="spot-title">舊城區 ＆ 市政廣場 (Náměstí Svornosti)</h4>
             <p class="spot-desc">
-              被伏爾他瓦河以 S 型蜿蜒環繞，巧妙地將古城分為兩部分，東北是河左岸以古堡為主的城堡區；西南則是河右岸以市政廣場為中心的舊城區。庫倫洛夫城堡，以哥德式的形式建在山頂，不論在市區任何地方抬頭都能望見，城堡由四十棟建築物組成，規模之大，在捷克境內僅次於布拉格城堡。千萬別錯過舊城區的巷弄中，有數不清各式各樣的特色商店，像是琳瑯滿目的木造玩具、晶瑩剔透的波希米亞水晶製品等，都是選購特色紀念品的好地方。
+              被伏爾他瓦河以 S 型蜿蜒環繞，巧妙地將古城分為兩部分，東北是河左岸以古堡為主的城堡區；西南則是河右岸以市政廣場為中心的舊城區。庫倫洛夫城堡，以哥德式的形式建在山頂，不論在市區任何地方抬頭都能望見，城堡由四十棟建築物組成，規模之大，在捷克境內僅次於布拉格城堡。千萬別錯過舊城區的巷弄中，有數不清各式各樣的特色商店，像是琳瑯滿目的木造玩具、晶瑩剔透的波希米亞水晶製品等，都是選購特色紀念品的好地方。傍晚直接下榻於市政廣場旁的 Hotel OLDINN，輕鬆散步賞古鎮夜色。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(2, 2, true)">📍 在地圖模擬舊城市政廣場</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(2, 3, true)">🏨 定位 Hotel OLDINN</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Namesti Svornosti Cesky Krumlov', '庫倫洛夫舊城市政廣場')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Namesti+Svornosti+Cesky+Krumlov" target="_blank" rel="noopener noreferrer">🧭 舊城市政廣場 地標位址</a>
             </div>
           </div>
@@ -1548,13 +2273,21 @@
       <!-- DAY 3 -->
       <div id="day-pane-3" class="day-panel">
         <div class="panel-header">
-          <span class="tag">Day 3</span>
-          <h3>契斯科庫倫洛夫 Český Krumlov ➔ 25公里 ➔ 捷克布傑約維采 ➔ 12公里 ➔ 赫魯博卡城堡 (Hluboka Castle) ➔ 145公里 ➔ 布拉格 Prague ➔ 跳舞的房子 ➔ 伏爾他瓦河遊船 Vltava Cruise</h3>
+          <span class="tag">Day 3 · 白色童話城堡與河畔巡禮</span>
+          <h3>契斯科庫倫洛夫 ➔ 25km ➔ 捷克布傑約維采 ➔ 12km ➔ 赫魯博卡城堡 ➔ 145km ➔ 布拉格 ➔ 跳舞的房子 ➔ 伏爾他瓦河遊船</h3>
+        </div>
+        <div class="day-route-summary">
+          <div class="day-route-stats">
+            <span class="stat-pill">🚌 總車程約 182 公里</span>
+            <span class="stat-pill">⛴️ 伏爾他瓦河遊船約 1 小時</span>
+            <span class="stat-pill">🍺 百威啤酒發源地＋白色溫莎風城堡</span>
+          </div>
+          <button type="button" class="day-play-cta" onclick="startDaySimFromCard(3)">▶ 模擬 Day 3 北上布拉格與遊船</button>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
             <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：Hotel Štekl-Erb捷克三道式套 ｜ 晚餐：啤酒醬豬肘</p>
+            <p>早餐：飯店內 ｜ 中餐：Hotel Štekl-Erb捷克三道式套餐 ｜ 晚餐：捷克傳統啤酒醬豬肘</p>
           </div>
           <div class="meta-item">
             <h5>🏨 住宿</h5>
@@ -1562,21 +2295,28 @@
               <a class="hotel-link" href="https://www.palacehotel.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Art Nouveau Palace ↗</a>
               <a class="hotel-tel" href="tel:+420224093181">(+420-224-093 181)</a>
               <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Art+Nouveau+Palace+Hotel+Prague" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+              <button type="button" class="hotel-map-pill" style="cursor:pointer;" onclick="focusGmapStop(3, 5, true)">🗺️ 地圖定位飯店</button>
             </p>
           </div>
         </div>
 
-        <div class="spot-card">
+        <div class="spot-card" data-day="3" data-stop="1">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 1</span> 🕒 09:30 捷克布傑約維采 (奧托卡二世廣場・黑塔)</span>
+            <span class="spot-leg-right">🚌 北上 25 km (約 30 分鐘)</span>
+          </div>
           <div class="spot-img-container">
             <img src="04.webp" 
                  alt="捷克布傑約維采主廣場" loading="lazy">
           </div>
           <div class="spot-content">
-            <h4 class="spot-title">捷克布傑約維采</h4>
+            <h4 class="spot-title">捷克布傑約維采 (České Budějovice)</h4>
             <p class="spot-desc">
               舊稱波希米亞布德維斯是捷克城市，南捷克州的首府和最大城市，天主教捷克布傑約維采教區和南捷克的中心。在途中，我們會在布傑約維采短暫停留。這是一座迷人的歷史小鎮，被稱為原創百威啤酒的故鄉。在這裡，您可以在主廣場上稍作漫步，參孫噴泉所在的廣場－普熱米斯爾·奧托卡二世廣場以及黑塔。百威啤酒源於該地，13世紀起該地就以釀造啤酒而知名。當地最著名的啤酒公司是布德瓦啤酒。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(3, 1, true)">📍 在地圖模擬布傑約維采</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Premysl Otakar II Square Ceske Budejovice', '奧托卡二世廣場・布傑約維采')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Premysl+Otakar+II+Square+Ceske+Budejovice" target="_blank" rel="noopener noreferrer">🧭 奧托卡二世廣場 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Black+Tower+Ceske+Budejovice" target="_blank" rel="noopener noreferrer">🧭 黑塔 地標位址</a>
             </div>
@@ -1584,24 +2324,34 @@
         </div>
 
         <!-- 赫魯博卡城堡外觀 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="3" data-stop="2">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 2</span> 🕒 11:00 赫魯博卡白色城堡 ＆ 皇家飯店三道式午宴</span>
+            <span class="spot-leg-right">🚌 車程 12 km (約 18 分鐘)</span>
+          </div>
           <div class="spot-img-container">
             <img src="05.webp" 
                  alt="赫魯博卡白色城堡全景" loading="lazy">
           </div>
           <div class="spot-content">
-            <h4 class="spot-title">赫魯博卡城堡 (Hluboka Castle)</h4>
+            <h4 class="spot-title">赫魯博卡城堡 (Hluboká Castle)</h4>
             <p class="spot-desc">
-              這座優雅的白色宮殿以溫莎城堡為靈感，是捷克共和國最美麗的城堡之一。這座城堡四周環繞著花園和自然風光，為您的一天畫下寧靜而難忘的句點。
+              這座優雅的白色宮殿以英國溫莎城堡為靈感，是捷克共和國最美麗的浪漫主義城堡之一。城堡四周環繞著英式皇家花園和自然風光，中午特別安排於城堡旁的 Hotel Štekl 享用捷克三道式套餐。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(3, 2, true)">📍 在地圖模擬赫魯博卡城堡</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('State Chateau Hluboka', '赫魯博卡城堡')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=State+Chateau+Hluboka" target="_blank" rel="noopener noreferrer">🧭 赫魯博卡城堡 地標位址</a>
             </div>
           </div>
         </div>
 
         <!-- 跳舞的房子雙塔建築 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="3" data-stop="3">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 3</span> 🕒 15:45 布拉格河畔：跳舞的房子 (Tančící dům)</span>
+            <span class="spot-leg-right">🚌 北返布拉格 145 km (約 2 小時)</span>
+          </div>
           <div class="spot-img-container">
             <img src="06.webp" alt="布拉格跳舞的房子" loading="lazy">
           </div>
@@ -1611,13 +2361,19 @@
               「跳舞的房子」（Tančící dům）位於捷克布拉格伏爾塔瓦河畔，是當代解構主義建築的傑作。這棟建築由加拿大建築師法蘭克·蓋瑞（Frank Gehry）與克羅埃西亞籍建築師弗拉多·米盧尼克（Vlado Milunić）合作設計，於1996年完工。其造型靈感源自好萊塢傳奇舞伴弗雷德與琴吉，因此又名「弗雷德與琴吉之屋」。建築由兩座相互依偎、扭轉的塔樓組成：一座是以混凝土為主的實體，代表男舞者；另一座則是呈現婀娜曲線的玻璃塔，象徵穿著裙擺的女舞者。這種大膽的動態美感，打破了傳統建築的對稱與剛性，現已成為布拉格除古城外的另一座標誌性地標。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(3, 3, true)">📍 在地圖模擬跳舞的房子</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Dancing House Prague', '布拉格跳舞的房子')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Dancing+House+Prague" target="_blank" rel="noopener noreferrer">🧭 跳舞的房子 地標位址</a>
             </div>
           </div>
         </div>
 
         <!-- 伏爾他瓦河遊船 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="3" data-stop="4">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 4–5</span> 🕒 16:45 伏爾他瓦河遊船 ➔ 啤酒醬豬肘晚宴 ➔ 入住飯店</span>
+            <span class="spot-leg-right">⛴️ 河上巡航賞查理大橋與城堡全景</span>
+          </div>
           <div class="spot-img-container">
             <img src="07.webp" alt="伏爾他瓦河遊船遠眺布拉格" loading="lazy">
           </div>
@@ -1627,6 +2383,8 @@
               伏爾他瓦河遊船：捷克著名文學家卡夫卡曾寫給女友一封信中說：我最喜歡划著我的小船沿伏爾他瓦河逆流而上，然後仰臥在船中順流而下，欣賞不同形式的橋。一個城市，能有條美麗的河流蜿蜒其中，如同為這個城市畫上了一條柔美的線條，城裡也就有了個能讓戀人依偎漫步的浪漫場景。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(3, 4, true)">⛴️ 在地圖模擬遊船航線</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Prague Boats Vltava Cruise', '伏爾他瓦河遊船碼頭')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Steamboats+Vltava+Cruise" target="_blank" rel="noopener noreferrer">🧭 伏爾他瓦河遊船碼頭 地標位址</a>
             </div>
           </div>
@@ -1636,13 +2394,21 @@
       <!-- DAY 4 (布拉格市區觀光 & 慕夏美術館) -->
       <div id="day-pane-4" class="day-panel">
         <div class="panel-header">
-          <span class="tag">Day 4</span>
-          <h3>第 4 天 布拉格 Prague(市區觀光) ➔ 慕夏美術館 ➔ 在布拉格城堡裡穿越不同世紀 Prague Castle ➔ 聖維特大教堂 St. Vitus Cathedral ➔ 布拉格城堡 Prague Castle ➔ 布拉格黃金巷 Golden Lane ➔ 華倫斯坦宮 ➔ 小區廣場 Malostranske ➔ 布拉格列儂牆到查理大橋上尋見浪漫的真諦 Charles Bridge ➔ 舊城廣場 ➔ 布拉格老城天文鐘 Old Town ➔ 火藥塔 Powder Tower, Prague ➔ 布拉格</h3>
+          <span class="tag">Day 4 · 布拉格皇城與古橋經典縱走</span>
+          <h3>慕夏美術館 ➔ 布拉格城堡 ➔ 聖維特大教堂 ➔ 黃金巷 ➔ 華倫斯坦宮 ➔ 小區廣場 ➔ 列儂牆 ➔ 查理大橋(MLYNEC米其林推薦午宴) ➔ 舊城廣場・天文鐘・火藥塔</h3>
+        </div>
+        <div class="day-route-summary">
+          <div class="day-route-stats">
+            <span class="stat-pill">🏰 橫跨城堡區・小城區・查理大橋・舊城區</span>
+            <span class="stat-pill">🍽️ 查理橋畔 MLYNEC 三道式＋晚間遊船自助餐</span>
+            <span class="stat-pill">📍 共 9 大經典地標串聯</span>
+          </div>
+          <button type="button" class="day-play-cta" onclick="startDaySimFromCard(4)">▶ 模擬 Day 4 布拉格一日縱走</button>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
             <h5>🍽 餐食安排</h5>
-            <p>早餐：飯店內 ｜ 中餐：查理士橋畔餐廳(三道式餐點) ｜ 晚餐：伏爾他瓦河遊船自助餐</p>
+            <p>早餐：飯店內 ｜ 中餐：查理士橋畔餐廳 MLYNEC (米其林推薦三道式) ｜ 晚餐：伏爾他瓦河遊船自助餐</p>
           </div>
           <div class="meta-item">
             <h5>🏨 住宿</h5>
@@ -1650,12 +2416,17 @@
               <a class="hotel-link" href="https://www.palacehotel.cz/en/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Art Nouveau Palace ↗</a>
               <a class="hotel-tel" href="tel:+420224093181">(+420-224-093 181)</a>
               <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Art+Nouveau+Palace+Hotel+Prague" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+              <button type="button" class="hotel-map-pill" style="cursor:pointer;" onclick="focusGmapStop(4, 8, true)">🗺️ 地圖定位飯店</button>
             </p>
           </div>
         </div>
 
         <!-- 聖維特大教堂、布拉格城堡、慕夏美術館 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="4" data-stop="1">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 1–2</span> 🕒 09:00 慕夏美術館 ➔ 10:15 布拉格城堡 ＆ 聖維特大教堂</span>
+            <span class="spot-leg-right">🚌 專車登山進入城堡區 Hradčany</span>
+          </div>
           <div class="spot-img-container">
             <img src="11.webp" 
                  alt="聖維特大教堂哥德式雙塔與布拉格城堡" loading="lazy">
@@ -1670,6 +2441,9 @@
               <strong>布拉格城堡 (Prague Castle)：</strong>矗立在布拉格《城堡區》Hradčany山崗上的巨無霸《布拉格城堡》Prague Castle是布拉格最顯著的地標。這座城堡佔地高達7萬平方公尺，是金氏世界紀錄上全世界最大的古堡，不僅是捷克共和國的象徵，也讓布拉格躋身全球最美城市之一，到豐富的藝術收藏和精美的建築設計。世界上最大的城堡非布拉格城堡莫屬！在城堡裡悠閒漫步，欣賞在一千多年來作為歷任捷克國王、皇帝及總統官邸的布拉格城堡之美。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 0, true)">📍 模擬慕夏美術館</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 1, true)">🏰 模擬布拉格城堡＆聖維特</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('St. Vitus Cathedral Prague', '聖維特大教堂・布拉格城堡')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mucha+Museum+Prague" target="_blank" rel="noopener noreferrer">🧭 慕夏美術館 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Castle" target="_blank" rel="noopener noreferrer">🧭 布拉格城堡 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St.+Vitus+Cathedral+Prague" target="_blank" rel="noopener noreferrer">🧭 聖維特大教堂 地標位址</a>
@@ -1678,7 +2452,11 @@
         </div>
 
         <!-- 黃金巷彩色小屋照片 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="4" data-stop="2">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 3–5</span> 🕒 11:15 黃金巷 ➔ 華倫斯坦宮 ➔ 小區廣場 ➔ 列儂牆</span>
+            <span class="spot-leg-right">🚶 順坡漫步下山・穿越小城區 Malá Strana</span>
+          </div>
           <div class="spot-img-container">
             <img src="12.webp" 
                  alt="布拉格黃金巷彩色小屋" loading="lazy">
@@ -1692,6 +2470,10 @@
               <strong>布拉格列儂牆：</strong>布拉格的列儂牆（Lennon Wall）是一個著名的塗鴉牆，位於城市的查理大橋對岸的馬爾斯區。這個牆壁在1980年代成為了紀念約翰·列儂的地方，後來逐漸成為了反共主義的符號，許多人都會在這裡留下自己的塗鴉和訊息。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 2, true)">📍 模擬黃金巷</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 3, true)">🏛️ 模擬華倫斯坦宮＆小區</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 4, true)">🎨 模擬列儂牆</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Golden Lane Prague', '布拉格黃金巷')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Golden+Lane+Prague" target="_blank" rel="noopener noreferrer">🧭 黃金巷 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wallenstein+Palace+Prague" target="_blank" rel="noopener noreferrer">🧭 華倫斯坦宮 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Malostranske+namesti+Prague" target="_blank" rel="noopener noreferrer">🧭 小區廣場 地標位址</a>
@@ -1701,7 +2483,11 @@
         </div>
 
         <!-- 查理大橋橋面雕像照片 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="4" data-stop="5">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 6–7</span> 🕒 12:45 漫步查理大橋 ＆ MLYNEC 橋畔米其林推薦午宴</span>
+            <span class="spot-leg-right">🚶 跨越 520 公尺十四世紀古石橋</span>
+          </div>
           <div class="spot-img-container">
             <img src="13.webp" alt="查理大橋橋面與聖者雕像" loading="lazy">
           </div>
@@ -1712,6 +2498,9 @@
               <strong>到查理大橋上尋見浪漫的真諦 (Charles Bridge)：</strong>查理大橋總是為藝術家、攝影師與詩人們提供源源不絕的靈感。遠景中布拉格城堡的剪影浮現，巴洛克時期的雕像佇立橋的兩側，無庸置疑這裡就是全歐洲最漂亮的地方。東歐現存最古老的石橋。建於十四世紀，全長520公尺，兩旁聳立了30座雕像，108聖者的古橋，已然成為布拉格觀光生活的代表。橋兩端有哥德式橋，兩側欄杆上有以宗教故事為題的15座聖像，偶有街頭藝人或民俗藝品賣者吆喝其間，輕鬆有趣；它也同時是連結舊城區和布拉格城堡區的唯一橋樑。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 5, true)">🌉 在地圖模擬查理大橋</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 6, true)">🍽️ 模擬 MLYNEC 餐廳</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Charles Bridge Prague', '布拉格查理大橋')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Charles+Bridge+Prague" target="_blank" rel="noopener noreferrer">🧭 查理大橋 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Mlynec+Restaurant+Prague" target="_blank" rel="noopener noreferrer">🧭 MLYNEC 橋畔餐廳 地標位址</a>
             </div>
@@ -1719,7 +2508,11 @@
         </div>
 
         <!-- 老城天文鐘金色鐘面照片 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="4" data-stop="7">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 8–9</span> 🕒 15:00 舊城廣場・老城天文鐘整點報時 ➔ 火藥塔</span>
+            <span class="spot-leg-right">🚶 舊城皇家之路漫遊・晚間遊船自助晚宴</span>
+          </div>
           <div class="spot-img-container">
             <img src="14.webp" alt="布拉格老城天文鐘特寫" loading="lazy">
           </div>
@@ -1731,6 +2524,9 @@
               <strong>火藥塔 (Powder Tower, Prague)：</strong>建於1475年，是布拉格舊城門，17世紀時曾用來貯藏火藥後改稱火藥塔，如果登上65公尺的高塔，可遠眺市區，欣賞外觀華麗的新市政廳以及新城區的瓦茲拉夫廣場等，體會布拉格「百塔之城」的風情。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 7, true)">🕰️ 模擬舊城廣場＆天文鐘</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(4, 8, true)">🗼 模擬火藥塔</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Prague Astronomical Clock', '布拉格老城天文鐘・舊城廣場')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 舊城廣場 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Prague+Astronomical+Clock" target="_blank" rel="noopener noreferrer">🧭 老城天文鐘 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Powder+Tower+Prague" target="_blank" rel="noopener noreferrer">🧭 火藥塔 地標位址</a>
@@ -1742,8 +2538,16 @@
       <!-- DAY 5 (庫特納霍拉 & OUTLET) -->
       <div id="day-pane-5" class="day-panel">
         <div class="panel-header">
-          <span class="tag">Day 5</span>
-          <h3>布拉格 Prague ➔ 70 公里 ➔ 庫特納霍拉 Kutná Hora ➔ 聖母升天和施洗者聖約翰教堂 ➔ 人骨教堂 ➔ 聖芭芭拉教堂 ➔ 65 公里 ➔ OUTLET (Fashion Arena Prague Outlet) ➔ 布拉格</h3>
+          <span class="tag">Day 5 · 銀礦世界遺產與 Outlet 精品血拼</span>
+          <h3>布拉格 ➔ 70公里 ➔ 庫特納霍拉 Kutná Hora (人骨教堂・聖母升天教堂・聖芭芭拉教堂) ➔ 65公里 ➔ Fashion Arena Outlet ➔ 布拉格萬豪酒店</h3>
+        </div>
+        <div class="day-route-summary">
+          <div class="day-route-stats">
+            <span class="stat-pill">🚌 往返車程約 135 公里</span>
+            <span class="stat-pill">⛪ UNESCO 世界文化遺產三教堂</span>
+            <span class="stat-pill">🛍️ Fashion Arena VIP 9折＋滿 2,001 克朗退稅</span>
+          </div>
+          <button type="button" class="day-play-cta" onclick="startDaySimFromCard(5)">▶ 模擬 Day 5 庫特納霍拉與 Outlet</button>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
@@ -1756,12 +2560,17 @@
               <a class="hotel-link" href="https://www.marriott.com/en-us/hotels/prgdt-prague-marriott-hotel/overview/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Marriott Hotel Prague ↗</a>
               <a class="hotel-tel" href="tel:+420222888888">(+420-222-888 888)</a>
               <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Prague+Marriott+Hotel" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+              <button type="button" class="hotel-map-pill" style="cursor:pointer;" onclick="focusGmapStop(5, 4, true)">🗺️ 地圖定位萬豪酒店</button>
             </p>
           </div>
         </div>
 
         <!-- 人骨教堂內部大吊燈照片 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="5" data-stop="1">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 1–2</span> 🕒 09:45 庫特納霍拉：人骨教堂 ＆ 聖母升天教堂</span>
+            <span class="spot-leg-right">🚌 東行 70 km (約 1 小時 10 分)</span>
+          </div>
           <div class="spot-img-container">
             <img src="08.webp" 
                  alt="庫特納霍拉人骨教堂內部骨骸大吊燈" loading="lazy">
@@ -1774,6 +2583,8 @@
               <strong>人骨教堂：</strong>聯合國教科文組織列為世界遺產的塞德萊茨骸骨教堂，位於庫特納霍拉，聽起來很恐怖，但其實這些骸骨來自於中世紀的黑死病與戰爭後的死者，19 世紀時由木雕藝術家弗朗提謝克·林特（František Rint）將這些骸骨重新整理並藝術化擺放。繼續前往庫特納霍拉的歷史中心，在中世紀餐廳品嚐傳統的捷克午餐。在舊城區的鵝卵石街道上輕鬆漫步後，經過一所前耶穌會學院，欣賞美麗的風景。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(5, 1, true)">📍 在地圖模擬人骨教堂＆聖母升天堂</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Sedlec Ossuary Kutna Hora', '庫特納霍拉人骨教堂')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Sedlec+Ossuary+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 人骨教堂 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Church+of+the+Assumption+of+Our+Lady+and+Saint+John+the+Baptist+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 聖約翰教堂 地標位址</a>
             </div>
@@ -1781,7 +2592,11 @@
         </div>
 
         <!-- 聖芭芭拉教堂三峰尖塔哥德式建築照片 -->
-        <div class="spot-card">
+        <div class="spot-card" data-day="5" data-stop="2">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 3</span> 🕒 11:15 聖芭芭拉大教堂 (St. Barbara's Cathedral)</span>
+            <span class="spot-leg-right">🚌 銀礦舊城核心・哥德式三尖塔地標</span>
+          </div>
           <div class="spot-img-container">
             <img src="09.webp" 
                  alt="聖芭芭拉教堂哥德式建築立面" loading="lazy">
@@ -1792,12 +2607,18 @@
               這是庫特納霍拉皇家城鎮的哥德式地標，也是聯合國教科文組織世界遺產。這座宏偉的晚期哥德式大教堂，始建於14世紀後半，是捷克最傑出的哥德式建築之一。其建造歷時數百年，期間因戰爭等因素多次中斷，展現了不同時期的建築風格演變。教堂內部精美的彩繪玻璃與宏偉的管風琴，皆是藝術與信仰的結晶，令人讚嘆。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(5, 2, true)">📍 在地圖模擬聖芭芭拉教堂</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('St Barbara Cathedral Kutna Hora', '聖芭芭拉教堂')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=St+Barbara's+Cathedral+Kutna+Hora" target="_blank" rel="noopener noreferrer">🧭 聖芭芭拉教堂 地標位址</a>
             </div>
           </div>
         </div>
 
-        <div class="spot-card">
+        <div class="spot-card" data-day="5" data-stop="3">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 4–5</span> 🕒 14:30 Fashion Arena Prague Outlet ➔ 入住萬豪酒店</span>
+            <span class="spot-leg-right">🚌 西返布拉格近郊 65 km (約 55 分鐘)</span>
+          </div>
           <div class="spot-img-container">
             <img src="10.webp" alt="Fashion Arena Prague Outlet 購物中心" loading="lazy">
           </div>
@@ -1807,6 +2628,8 @@
               喜歡名牌？別錯過布拉格近郊這座大型 Outlet，匯集 HH、Ecco、Adidas、Nike、Calvin Klein、Guess 等中高階品牌，部份精品包款也會上架。搭配退稅，價格比亞洲更優惠，是高 CP 值買手的天堂。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(5, 3, true)">🛍️ 在地圖模擬 Fashion Arena Outlet</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Fashion Arena Prague Outlet', 'Fashion Arena Prague Outlet')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Fashion+Arena+Prague+Outlet" target="_blank" rel="noopener noreferrer">🧭 Fashion Arena Outlet 地標位址</a>
             </div>
 
@@ -1833,8 +2656,16 @@
       <!-- DAY 6 -->
       <div id="day-pane-6" class="day-panel">
         <div class="panel-header">
-          <span class="tag">Day 6</span>
-          <h3>布拉格 ➔ 新城區 Nové Město ➔ 下午自由活動 ➔ 布拉格</h3>
+          <span class="tag">Day 6 · 新城皇家午茶與布拉格自由漫遊</span>
+          <h3>瓦茲拉夫廣場(新城區) ➔ 市民會館皇家下午茶 ➔ 帕拉迪姆購物中心 ➔ 午後自由活動散策</h3>
+        </div>
+        <div class="day-route-summary">
+          <div class="day-route-stats">
+            <span class="stat-pill">☕ 市民會館百年咖啡廳下午茶</span>
+            <span class="stat-pill">🚶 帕拉迪姆解散後 3 大推薦散策路線</span>
+            <span class="stat-pill">🪙 發放 500 捷克克朗體驗街頭美食</span>
+          </div>
+          <button type="button" class="day-play-cta" onclick="startDaySimFromCard(6)">▶ 模擬 Day 6 新城與自由行路線</button>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
@@ -1847,11 +2678,16 @@
               <a class="hotel-link" href="https://www.marriott.com/en-us/hotels/prgdt-prague-marriott-hotel/overview/" target="_blank" rel="noopener noreferrer" title="點擊開啟飯店官網">🔗 Marriott Hotel Prague ↗</a>
               <a class="hotel-tel" href="tel:+420222888888">(+420-222-888 888)</a>
               <a class="hotel-map-pill" href="https://www.google.com/maps/search/?api=1&query=Prague+Marriott+Hotel" target="_blank" rel="noopener noreferrer">📍 飯店實景/地圖</a>
+              <button type="button" class="hotel-map-pill" style="cursor:pointer;" onclick="focusGmapStop(6, 0, true)">🗺️ 地圖定位萬豪酒店</button>
             </p>
           </div>
         </div>
 
-        <div class="spot-card">
+        <div class="spot-card" data-day="6" data-stop="1">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 1–3</span> 🕒 09:30 瓦茲拉夫廣場 ➔ 14:00 市民會館下午茶 ➔ 帕拉迪姆解散</span>
+            <span class="spot-leg-right">🚶 新城區核心大道至共和國廣場</span>
+          </div>
           <div class="spot-img-container">
             <img src="15.webp" 
                  alt="布拉格新城區與帕拉迪姆購物中心" loading="lazy">
@@ -1864,6 +2700,10 @@
               <strong>帕拉迪姆購物中心：</strong>位於捷克共和國布拉格市中心，於2007年開幕。該購物中心擁有170家商店和30家餐廳，零售面積達39,000平方公尺（420,000平方英尺）。此外，該建築內還設有總面積達19,500平方公尺（210,000平方英尺）的辦公空間。它是捷克共和國最大的購物中心之一，正對面是另一家購物中心－科特瓦百貨公司。
             </p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(6, 1, true)">📍 模擬瓦茲拉夫廣場</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(6, 2, true)">☕ 模擬市民會館下午茶</button>
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(6, 3, true)">🛍️ 模擬帕拉迪姆購物中心</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Wenceslas Square Prague', '布拉格瓦茲拉夫廣場')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Wenceslas+Square+Prague" target="_blank" rel="noopener noreferrer">🧭 瓦茲拉夫廣場 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Kavarna+Obecni+dum+Municipal+House+Cafe+Prague" target="_blank" rel="noopener noreferrer">🧭 Municipal House Café 地標位址</a>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Palladium+Shopping+Center+Prague" target="_blank" rel="noopener noreferrer">🧭 帕拉迪姆購物中心 地標位址</a>
@@ -1872,44 +2712,53 @@
         </div>
 
         <div class="free-plan-section">
-          <h3 class="section-subtitle">🚶‍♂️ 帕拉迪姆解散後：午後 3 處散策地標</h3>
+          <h3 class="section-subtitle">🚶‍♂️ 帕拉迪姆解散後：午後 3 處散策地標（點擊可於 Google 地圖模擬路線）</h3>
           <div class="route-grid">
-            <div class="route-card">
+            <div class="route-card" data-day="6" data-stop="4">
               <!-- 真正帝國咖啡館內部實景 -->
               <img src="16.webp" 
                    alt="世界最美帝國咖啡館挑高大廳實景" loading="lazy">
               <div class="route-info">
-                <span class="route-tag">古典文藝</span>
+                <span class="route-tag">古典文藝 · 支線 A</span>
                 <h4>帝國咖啡館 (Café Imperial)</h4>
-                <p class="route-path">📍 帕拉迪姆斜對面步行 3 分鐘</p>
+                <p class="route-path">📍 帕拉迪姆斜對面步行 3 分鐘 (約 260m)</p>
                 <p class="route-desc">世界十大最美咖啡館之一，滿室百年馬賽克陶瓷浮雕，品嚐經典泡芙與香醇熱咖啡。</p>
-                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Cafe+Imperial+Prague" target="_blank" rel="noopener noreferrer">🧭 帝國咖啡館 地標位址</a>
+                <div class="map-action-bar">
+                  <button type="button" class="map-sim-btn" onclick="focusGmapStop(6, 4, true)">📍 地圖模擬此路線</button>
+                  <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Cafe+Imperial+Prague" target="_blank" rel="noopener noreferrer">🧭 Google 導航</a>
+                </div>
               </div>
             </div>
 
-            <div class="route-card">
+            <div class="route-card" data-day="6" data-stop="5">
               <!-- 真正伏爾他瓦河天鵝與查理大橋實景 -->
               <img src="17.webp" 
                    alt="伏爾他瓦河天鵝岸實景" loading="lazy">
               <div class="route-info">
-                <span class="route-tag">夕陽打卡</span>
+                <span class="route-tag">夕陽打卡 · 支線 B</span>
                 <h4>伏爾他瓦河天鵝岸 (Cihelná)</h4>
-                <p class="route-path">📍 查理大橋北側河灘</p>
+                <p class="route-path">📍 查理大橋北側河灘 (步行約 18 分鐘)</p>
                 <p class="route-desc">群聚優雅天鵝的河畔秘境，傍晚時分能拍下夕陽金光灑在布拉格城堡與查理大橋的明信片大片。</p>
-                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Cihelna+Park+Prague" target="_blank" rel="noopener noreferrer">🧭 天鵝岸 (Cihelná) 地標位址</a>
+                <div class="map-action-bar">
+                  <button type="button" class="map-sim-btn" onclick="focusGmapStop(6, 5, true)">📍 地圖模擬此路線</button>
+                  <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Cihelna+Park+Prague" target="_blank" rel="noopener noreferrer">🧭 Google 導航</a>
+                </div>
               </div>
             </div>
 
-            <div class="route-card">
+            <div class="route-card" data-day="6" data-stop="6">
               <!-- 真正哈維爾市集實景 -->
               <img src="18.webp" 
                    alt="哈維爾露天市集攤位實景" loading="lazy">
               <div class="route-info">
-                <span class="route-tag">市集尋寶</span>
+                <span class="route-tag">市集尋寶 · 支線 C</span>
                 <h4>哈維爾露天市集 (Havelské tržiště)</h4>
-                <p class="route-path">📍 老城區核心步道</p>
+                <p class="route-path">📍 老城區核心步道 (步行約 9 分鐘)</p>
                 <p class="route-desc">布拉格歷史最悠久的露天市集，販售新鮮莓果、手作木雕、天文鐘磁鐵與波希米亞小點。</p>
-                <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Havelske+trziste+Prague" target="_blank" rel="noopener noreferrer">🧭 哈維爾市集 地標位址</a>
+                <div class="map-action-bar">
+                  <button type="button" class="map-sim-btn" onclick="focusGmapStop(6, 6, true)">📍 地圖模擬此路線</button>
+                  <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Havelske+trziste+Prague" target="_blank" rel="noopener noreferrer">🧭 Google 導航</a>
+                </div>
               </div>
             </div>
           </div>
@@ -1962,8 +2811,16 @@
       <!-- DAY 7 -->
       <div id="day-pane-7" class="day-panel">
         <div class="panel-header">
-          <span class="tag">Day 7</span>
-          <h3>布拉格 / 桃園</h3>
+          <span class="tag">Day 7 · 滿載回憶賦歸</span>
+          <h3>布拉格萬豪酒店 ➔ 布拉格哈維爾國際機場 (退稅辦理) ➔ 星宇航空 JX102 ➔ 桃園</h3>
+        </div>
+        <div class="day-route-summary">
+          <div class="day-route-stats">
+            <span class="stat-pill">🚌 飯店至機場約 17 公里 (約 30 分鐘)</span>
+            <span class="stat-pill">🛃 機場辦理歐盟退稅蓋章</span>
+            <span class="stat-pill">✈️ 星宇 JX102 返航台北</span>
+          </div>
+          <button type="button" class="day-play-cta" onclick="startDaySimFromCard(7)">▶ 模擬 Day 7 機場退稅與返航</button>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
@@ -1975,14 +2832,20 @@
             <p>飛機上</p>
           </div>
         </div>
-        <div class="spot-card">
+        <div class="spot-card" data-day="7" data-stop="1">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">STOP 1–2</span> 🕒 07:15 專車前往布拉格機場 ➔ 10:30/10:55 起飛返台</span>
+            <span class="spot-leg-right">✈️ 星宇航空 JX102 直飛桃園</span>
+          </div>
           <div class="spot-img-container">
             <img src="23.webp" alt="搭機返程" loading="lazy">
           </div>
           <div class="spot-content">
-            <h4 class="spot-title">布拉格 ➔ 布拉格國際機場 ➔ 桃園</h4>
-            <p class="spot-desc">早餐後專車前往布拉格國際機場搭機返回桃園。</p>
+            <h4 class="spot-title">布拉格 ➔ 布拉格哈維爾國際機場 (PRG) ➔ 桃園</h4>
+            <p class="spot-desc">早餐後整理行囊，專車前往布拉格哈維爾國際機場（Václav Havel Airport Prague），在領隊協助下辦理登機與歐盟購物退稅手續，隨後搭乘星宇航空豪華客機直飛返回台灣。</p>
             <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(7, 1, true)">📍 在地圖模擬布拉格機場出發</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Vaclav Havel Airport Prague', '布拉格哈維爾國際機場')">🪟 實景地圖預覽</button>
               <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Vaclav+Havel+Airport+Prague" target="_blank" rel="noopener noreferrer">🧭 布拉格哈維爾機場 地標位址</a>
             </div>
           </div>
@@ -1992,8 +2855,15 @@
       <!-- DAY 8 -->
       <div id="day-pane-8" class="day-panel">
         <div class="panel-header">
-          <span class="tag">Day 8</span>
-          <h3>桃園國際機場</h3>
+          <span class="tag">Day 8 · 平安抵台</span>
+          <h3>抵達桃園國際機場 (TPE) ➔ 專車返回溫暖的家</h3>
+        </div>
+        <div class="day-route-summary">
+          <div class="day-route-stats">
+            <span class="stat-pill">🛬 清晨 07:10 / 07:20 抵達桃園機場</span>
+            <span class="stat-pill">🚌 台中—機場專車接送賦歸</span>
+          </div>
+          <button type="button" class="day-play-cta" onclick="startDaySimFromCard(8)">▶ 模擬 Day 8 平安抵台</button>
         </div>
         <div class="meta-bar">
           <div class="meta-item">
@@ -2005,13 +2875,22 @@
             <p>溫暖的家</p>
           </div>
         </div>
-        <div class="spot-card">
+        <div class="spot-card" data-day="8" data-stop="0">
+          <div class="spot-timeline-badge">
+            <span class="spot-time-left"><span class="spot-step-pill">ARRIVAL</span> 🕒 07:20 抵達桃園國際機場 ➔ 專車接送返家</span>
+            <span class="spot-leg-right">🏠 圓滿結束 8 日捷克布拉格之旅</span>
+          </div>
           <div class="spot-img-container">
             <img src="24.webp" alt="抵達台灣" loading="lazy">
           </div>
           <div class="spot-content">
             <h4 class="spot-title">圓滿賦歸：抵達桃園國際機場</h4>
-            <p class="spot-desc">班機抵達桃園國際機場，返回溫暖的家，圓滿結束 8 天精彩的捷克布拉格之旅。</p>
+            <p class="spot-desc">班機於清晨平安抵達桃園國際機場，隨後搭乘專車返回台中與溫暖的家，圓滿結束 115 年港洲營建事業 8 天精彩的捷克布拉格之旅。</p>
+            <div class="map-action-bar">
+              <button type="button" class="map-sim-btn" onclick="focusGmapStop(8, 0, true)">📍 在地圖模擬抵達桃園機場</button>
+              <button type="button" class="map-embed-btn" onclick="openSpotEmbedByQuery('Taiwan Taoyuan International Airport', '桃園國際機場')">🪟 實景地圖預覽</button>
+              <a class="map-nav-btn" href="https://www.google.com/maps/search/?api=1&query=Taiwan+Taoyuan+International+Airport" target="_blank" rel="noopener noreferrer">🧭 桃園國際機場 地標位址</a>
+            </div>
           </div>
         </div>
       </div>
@@ -2310,6 +3189,16 @@
       else if (targetId === 'tab-info') btns[2].classList.add('active');
       else if (targetId === 'tab-shopping') btns[3].classList.add('active');
 
+      if (targetId === 'tab-itinerary') {
+        setTimeout(() => {
+          initPragueGmap();
+          if (gmapInstance) gmapInstance.invalidateSize();
+          loadGmapDay(currentGmapDay, false);
+        }, 80);
+      } else {
+        pauseGmapPlay();
+      }
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -2327,6 +3216,1101 @@
       }
       const currentPane = document.getElementById(`day-pane-${dayKey}`);
       if (currentPane) currentPane.classList.add("active");
+
+      loadGmapDay(dayKey, false);
+    }
+
+    function launchGmapTour(startDay) {
+      switchMainTab('tab-itinerary');
+      setTimeout(() => {
+        showDay(startDay || 2);
+        const simCard = document.getElementById('gmapSimCard');
+        if (simCard) simCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          replayGmapDay();
+        }, 350);
+      }, 150);
+    }
+
+    function startDaySimFromCard(dayNum) {
+      if (currentGmapDay !== dayNum) showDay(dayNum);
+      const simCard = document.getElementById('gmapSimCard');
+      if (simCard) simCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        replayGmapDay();
+      }, 300);
+    }
+
+    /* ===== 布拉格 Google 地圖每日旅遊行程動態模擬資料庫與引擎 ===== */
+    const GMAP_ITINERARY_DATA = {
+      1: {
+        headerTitle: "Day 1｜桃園國際機場 (TPE) ➔ 星宇航空 JX101 ➔ 布拉格機場 (PRG)",
+        defaultZoom: 4,
+        stops: [
+          {
+            name: "桃園國際機場 (TPE)",
+            shortName: "桃園機場起飛",
+            lat: 25.0777, lng: 121.2328, zoom: 12,
+            time: "20:45 集合 / 23:45 起飛",
+            stay: "航程約 15 小時",
+            mode: "flight", modeIcon: "✈️",
+            legBadge: "星宇 JX101 啟程",
+            img: "01.webp",
+            desc: "團體於公司集合搭車前往桃園國際機場，搭乘星宇航空 JX101 直飛捷克首都《百塔之城》布拉格。",
+            query: "Taiwan Taoyuan International Airport",
+            cardIdx: 0
+          },
+          {
+            name: "布拉格瓦茨拉夫・哈維爾國際機場 (PRG)",
+            shortName: "抵達布拉格機場",
+            lat: 50.1008, lng: 14.2600, zoom: 12,
+            time: "翌日 08:00 抵達",
+            stay: "辦理入境通關",
+            mode: "flight", modeIcon: "🛬",
+            legBadge: "跨歐亞 9,050 km",
+            img: "01.webp",
+            desc: "班機於翌日早晨平安降落布拉格哈維爾國際機場，準備搭乘旅遊專車南下前往世界遺產古鎮庫倫洛夫！",
+            query: "Vaclav Havel Airport Prague",
+            cardIdx: 0,
+            waypointsFromPrev: [
+              [25.0777, 121.2328], [31.2, 112.5], [38.5, 98.0], [44.0, 80.0],
+              [48.5, 62.0], [51.0, 42.0], [50.8, 26.0], [50.1008, 14.2600]
+            ]
+          }
+        ]
+      },
+      2: {
+        headerTitle: "Day 2｜布拉格機場 ➔ 173km ➔ 契斯科庫倫洛夫 (城堡・舊城・Hotel OLDINN)",
+        defaultZoom: 8,
+        stops: [
+          {
+            name: "布拉格哈維爾機場 (出發南下)",
+            shortName: "布拉格機場出發",
+            lat: 50.1008, lng: 14.2600, zoom: 11,
+            time: "08:45 專車出發",
+            stay: "南下波希米亞",
+            mode: "bus", modeIcon: "🚌",
+            legBadge: "專車啟程",
+            img: "02.webp",
+            desc: "由布拉格機場搭乘豪華旅遊專巴往南行駛 173 公里，穿越波希米亞田園風光前往契斯科庫倫洛夫。",
+            query: "Vaclav Havel Airport Prague",
+            cardIdx: 1
+          },
+          {
+            name: "契斯科庫倫洛夫城堡區 ＆ 彩繪塔 (Český Krumlov Castle)",
+            shortName: "庫倫洛夫城堡＆彩繪塔",
+            lat: 48.8127, lng: 14.3152, zoom: 16,
+            time: "11:15 抵達古鎮",
+            stay: "停留約 2.5 小時 (含烤鴨午宴)",
+            mode: "bus", modeIcon: "🏰",
+            legBadge: "🚌 車程 173 km (約 2.5h)",
+            img: "02.webp",
+            desc: "規模僅次於布拉格城堡的捷克第二大古堡！登臨城堡橋廊俯瞰伏爾他瓦河 S 型彎道與滿城紅瓦白牆，照亮玫瑰家族三朝領主的輝煌歲月。",
+            query: "State Castle and Chateau Cesky Krumlov",
+            cardIdx: 1,
+            waypointsFromPrev: [
+              [50.1008, 14.2600], [50.00, 14.52], [49.79, 14.66], [49.41, 14.66],
+              [49.18, 14.69], [48.98, 14.47], [48.86, 14.36], [48.8127, 14.3152]
+            ]
+          },
+          {
+            name: "庫倫洛夫舊城區 ＆ 市政廣場 (Náměstí Svornosti)",
+            shortName: "舊城區＆市政廣場",
+            lat: 48.8105, lng: 14.3151, zoom: 17,
+            time: "14:30 古鎮漫步",
+            stay: "停留約 2.5 小時",
+            mode: "walk", modeIcon: "🚶",
+            legBadge: "🚶 跨木橋步行 450m",
+            img: "03.webp",
+            desc: "蜿蜒石板巷弄遍布木造玩具、Koh-i-Noor 刺蝟色鉛筆與波希米亞水晶小店，推薦品嚐現烤肉桂煙囪捲 Trdelník。",
+            query: "Namesti Svornosti Cesky Krumlov",
+            cardIdx: 2,
+            waypointsFromPrev: [
+              [48.8127, 14.3152], [48.8118, 14.3139], [48.8111, 14.3143], [48.8105, 14.3151]
+            ]
+          },
+          {
+            name: "下榻：Hotel OLDINN (舊城市政廣場旁)",
+            shortName: "宿：Hotel OLDINN",
+            lat: 48.8102, lng: 14.3156, zoom: 17,
+            time: "18:00 晚餐與入住",
+            stay: "古鎮核心精品飯店",
+            mode: "walk", modeIcon: "🏨",
+            legBadge: "🚶 廣場旁步行 1 分鐘",
+            img: "03.webp",
+            desc: "晚餐享用中古世紀肉類拼盤(雞/豬/牛)，直接入住市政廣場旁的 Hotel OLDINN，夜晚可輕鬆漫步欣賞靜謐古鎮夜景。",
+            query: "Hotel OLDINN Cesky Krumlov",
+            cardIdx: 2,
+            waypointsFromPrev: [
+              [48.8105, 14.3151], [48.8102, 14.3156]
+            ]
+          }
+        ]
+      },
+      3: {
+        headerTitle: "Day 3｜庫倫洛夫 ➔ 布傑約維采 ➔ 赫魯博卡城堡 ➔ 布拉格跳舞的房子 ➔ 遊船",
+        defaultZoom: 8,
+        stops: [
+          {
+            name: "契斯科庫倫洛夫 Hotel OLDINN (出發)",
+            shortName: "庫倫洛夫出發",
+            lat: 48.8102, lng: 14.3156, zoom: 14,
+            time: "08:45 飯店出發",
+            stay: "北上南捷克首府",
+            mode: "bus", modeIcon: "🚌",
+            legBadge: "晨間啟程",
+            img: "02.webp",
+            desc: "於飯店享用豐盛早餐後，搭車北上前往南捷克州首府、百威啤酒發源地—捷克布傑約維采。",
+            query: "Hotel OLDINN Cesky Krumlov",
+            cardIdx: 1
+          },
+          {
+            name: "捷克布傑約維采：奧托卡二世廣場 ＆ 黑塔",
+            shortName: "布傑約維采＆黑塔",
+            lat: 48.9745, lng: 14.4743, zoom: 16,
+            time: "09:30 廣場漫步",
+            stay: "停留約 1 小時",
+            mode: "bus", modeIcon: "🍺",
+            legBadge: "🚌 車程 25 km (約 30m)",
+            img: "04.webp",
+            desc: "原創百威啤酒（Budweiser Budvar）的故鄉！漫步於宏偉的奧托卡二世廣場、巴洛克參孫噴泉與哥德式黑塔。",
+            query: "Premysl Otakar II Square Ceske Budejovice",
+            cardIdx: 1,
+            waypointsFromPrev: [
+              [48.8102, 14.3156], [48.85, 14.36], [48.91, 14.42], [48.9745, 14.4743]
+            ]
+          },
+          {
+            name: "赫魯博卡白色城堡 ＆ Hotel Štekl 午宴 (Hluboká Castle)",
+            shortName: "赫魯博卡白色城堡",
+            lat: 49.0517, lng: 14.4417, zoom: 16,
+            time: "11:00 城堡與午宴",
+            stay: "停留約 2.5 小時",
+            mode: "bus", modeIcon: "🏰",
+            legBadge: "🚌 車程 12 km (約 18m)",
+            img: "05.webp",
+            desc: "以英國溫莎城堡為靈感打造的純白浪漫主義宮殿，環繞廣闊英式花園；中午於城堡旁 Hotel Štekl 享用捷克三道式套餐。",
+            query: "State Chateau Hluboka",
+            cardIdx: 2,
+            waypointsFromPrev: [
+              [48.9745, 14.4743], [49.01, 14.455], [49.0517, 14.4417]
+            ]
+          },
+          {
+            name: "布拉格：跳舞的房子 (Tančící dům)",
+            shortName: "跳舞的房子",
+            lat: 50.0755, lng: 14.4141, zoom: 16,
+            time: "15:45 河畔地標",
+            stay: "停留約 40 分鐘",
+            mode: "bus", modeIcon: "🏛️",
+            legBadge: "🚌 北上 145 km (約 2h)",
+            img: "06.webp",
+            desc: "法蘭克·蓋瑞設計的解構主義雙塔傑作，玻璃曲線塔樓與混凝土塔相擁而舞，又名「弗雷德與琴吉之屋」。",
+            query: "Dancing House Prague",
+            cardIdx: 3,
+            waypointsFromPrev: [
+              [49.0517, 14.4417], [49.25, 14.62], [49.41, 14.66], [49.68, 14.68],
+              [49.95, 14.54], [50.04, 14.43], [50.0755, 14.4141]
+            ]
+          },
+          {
+            name: "伏爾他瓦河遊船 (Vltava River Cruise)",
+            shortName: "伏爾他瓦河遊船",
+            lat: 50.0865, lng: 14.4115, zoom: 15,
+            time: "16:45 浪漫遊船",
+            stay: "航程約 1 小時",
+            mode: "boat", modeIcon: "⛴️",
+            legBadge: "⛴️ 河上巡航賞古橋與城堡",
+            img: "07.webp",
+            desc: "沿著卡夫卡最愛的伏爾他瓦河順流巡航，從水面仰望查理大橋、布拉格城堡與兩岸巴洛克建築群。",
+            query: "Prague Steamboats Vltava Cruise",
+            cardIdx: 4,
+            waypointsFromPrev: [
+              [50.0755, 14.4141], [50.0785, 14.4130], [50.0820, 14.4112],
+              [50.0865, 14.4115], [50.0905, 14.4140], [50.0928, 14.4170]
+            ]
+          },
+          {
+            name: "下榻：Art Nouveau Palace Hotel Prague",
+            shortName: "宿：皇宮新藝術飯店",
+            lat: 50.0840, lng: 14.4268, zoom: 16,
+            time: "19:30 豬肘晚宴＆入住",
+            stay: "布拉格市中心五星級古典飯店",
+            mode: "bus", modeIcon: "🏨",
+            legBadge: "🍽️ 晚餐：啤酒醬豬肘",
+            img: "07.webp",
+            desc: "享用道地捷克啤酒醬烤豬肘晚餐後，入住布拉格市中心新藝術風格宮殿飯店 Art Nouveau Palace Hotel。",
+            query: "Art Nouveau Palace Hotel Prague",
+            cardIdx: 4,
+            waypointsFromPrev: [
+              [50.0928, 14.4170], [50.0880, 14.4230], [50.0840, 14.4268]
+            ]
+          }
+        ]
+      },
+      4: {
+        headerTitle: "Day 4｜慕夏美術館 ➔ 布拉格城堡・聖維特・黃金巷 ➔ 列儂牆 ➔ 查理大橋 ➔ 舊城廣場天文鐘",
+        defaultZoom: 15,
+        stops: [
+          {
+            name: "慕夏美術館 (Mucha Museum · Savarin Palace)",
+            shortName: "1. 慕夏美術館",
+            lat: 50.0839, lng: 14.4260, zoom: 16,
+            time: "09:00 藝術巡禮",
+            stay: "停留約 1 小時",
+            mode: "walk", modeIcon: "🎨",
+            legBadge: "🚶 飯店旁步行即達",
+            img: "11.webp",
+            desc: "座落於 18 世紀薩瓦林宮內，典藏捷克新藝術大師阿爾豐斯·慕夏（Alfons Mucha）經典海報、繪畫與手稿。",
+            query: "Mucha Museum Prague",
+            cardIdx: 1
+          },
+          {
+            name: "布拉格城堡 ＆ 聖維特大教堂 (Prague Castle & St. Vitus)",
+            shortName: "2. 布拉格城堡＆聖維特",
+            lat: 50.0909, lng: 14.4005, zoom: 17,
+            time: "10:15 皇城古堡",
+            stay: "停留約 1 小時",
+            mode: "bus", modeIcon: "🏰",
+            legBadge: "🚌 專車登山至城堡區",
+            img: "11.webp",
+            desc: "金氏世界紀錄全球最大古堡（佔地 7 萬平方公尺），入內參觀世界三大哥德式教堂之一「聖維特大教堂」與慕夏之窗。",
+            query: "St. Vitus Cathedral Prague",
+            cardIdx: 1,
+            waypointsFromPrev: [
+              [50.0839, 14.4260], [50.0890, 14.4180], [50.0915, 14.4090], [50.0909, 14.4005]
+            ]
+          },
+          {
+            name: "布拉格黃金巷 22 號卡夫卡故居 (Golden Lane)",
+            shortName: "3. 黃金巷彩色小屋",
+            lat: 50.0920, lng: 14.4040, zoom: 17,
+            time: "11:15 煉金術士巷弄",
+            stay: "停留約 40 分鐘",
+            mode: "walk", modeIcon: "🏘️",
+            legBadge: "🚶 城堡內步行 300m",
+            img: "12.webp",
+            desc: "色彩繽紛的 16 世紀煉金術士與城堡侍衛小屋，其中 22 號水藍色小屋為文學巨擘卡夫卡（Franz Kafka）昔日寫作故居。",
+            query: "Golden Lane Prague",
+            cardIdx: 2,
+            waypointsFromPrev: [
+              [50.0909, 14.4005], [50.0915, 14.4025], [50.0920, 14.4040]
+            ]
+          },
+          {
+            name: "華倫斯坦宮 ＆ 小區廣場 (Wallenstein Palace & Malostranské)",
+            shortName: "4. 華倫斯坦宮＆小區",
+            lat: 50.0894, lng: 14.4068, zoom: 16,
+            time: "11:55 巴洛克宮殿",
+            stay: "停留約 30 分鐘",
+            mode: "walk", modeIcon: "🏛️",
+            legBadge: "🚶 順城堡階梯步行下山",
+            img: "12.webp",
+            desc: "建於 1623 年的宏偉巴洛克宮殿與皇家庭園，隨後穿過歷史宮殿環繞的小區廣場（Malostranské náměstí）。",
+            query: "Wallenstein Palace Prague",
+            cardIdx: 2,
+            waypointsFromPrev: [
+              [50.0920, 14.4040], [50.0910, 14.4058], [50.0894, 14.4068]
+            ]
+          },
+          {
+            name: "布拉格列儂牆 (John Lennon Wall)",
+            shortName: "5. 列儂塗鴉牆",
+            lat: 50.0862, lng: 14.4068, zoom: 17,
+            time: "12:25 和平塗鴉打卡",
+            stay: "停留約 20 分鐘",
+            mode: "walk", modeIcon: "🎸",
+            legBadge: "🚶 穿越小城區步行 400m",
+            img: "12.webp",
+            desc: "自 1980 年代起紀念約翰·藍儂與象徵愛與和平的繽紛塗鴉牆，是查理大橋西岸最受歡迎的打卡熱點。",
+            query: "Lennon Wall Prague",
+            cardIdx: 2,
+            waypointsFromPrev: [
+              [50.0894, 14.4068], [50.0878, 14.4038], [50.0862, 14.4068]
+            ]
+          },
+          {
+            name: "查理大橋 (Charles Bridge · 東歐最古老石橋)",
+            shortName: "6. 查理大橋",
+            lat: 50.0865, lng: 14.4114, zoom: 17,
+            time: "12:45 漫步十四世紀石橋",
+            stay: "停留約 45 分鐘",
+            mode: "walk", modeIcon: "🌉",
+            legBadge: "🚶 跨越 520m 巴洛克聖像古橋",
+            img: "13.webp",
+            desc: "建於 1357 年、全長 520 公尺，兩側佇立 30 座巴洛克聖者雕像，回望布拉格城堡天際線，感受全歐洲最浪漫的古橋風情。",
+            query: "Charles Bridge Prague",
+            cardIdx: 5,
+            waypointsFromPrev: [
+              [50.0862, 14.4068], [50.0864, 14.4088], [50.0865, 14.4114]
+            ]
+          },
+          {
+            name: "查理士橋畔餐廳 MLYNEC (米其林推薦三道式午宴)",
+            shortName: "7. MLYNEC 橋畔午宴",
+            lat: 50.0855, lng: 14.4136, zoom: 17,
+            time: "13:30 米其林推薦午宴",
+            stay: "用餐約 1.5 小時",
+            mode: "walk", modeIcon: "🍽️",
+            legBadge: "🍽️ 查理橋下景觀西餐",
+            img: "13.webp",
+            desc: "於查理大橋旁多次獲米其林指南推薦的 MLYNEC 景觀餐廳，品嚐精緻前湯、主廚香煎鮭魚與法式甜點。",
+            query: "Restaurant Mlynec Prague",
+            cardIdx: 5,
+            waypointsFromPrev: [
+              [50.0865, 14.4114], [50.0863, 14.4135], [50.0855, 14.4136]
+            ]
+          },
+          {
+            name: "舊城廣場 ＆ 布拉格老城天文鐘 (Old Town Square & Clock)",
+            shortName: "8. 舊城廣場＆天文鐘",
+            lat: 50.0870, lng: 14.4207, zoom: 17,
+            time: "15:00 整點十二使徒報時",
+            stay: "停留約 1.5 小時",
+            mode: "walk", modeIcon: "🕰️",
+            legBadge: "🚶 沿皇家之路步行 600m",
+            img: "14.webp",
+            desc: "運轉逾 600 年的中世紀科學奇蹟！整點欣賞老城天文鐘十二使徒現身，並飽覽提恩雙塔教堂與胡斯紀念碑。",
+            query: "Prague Astronomical Clock",
+            cardIdx: 7,
+            waypointsFromPrev: [
+              [50.0855, 14.4136], [50.0862, 14.4172], [50.0870, 14.4207]
+            ]
+          },
+          {
+            name: "哥德式火藥塔 ＆ 晚間遊船自助晚宴 (Powder Tower)",
+            shortName: "9. 火藥塔＆夜遊船晚宴",
+            lat: 50.0873, lng: 14.4278, zoom: 16,
+            time: "16:45 火藥塔 ➔ 遊船自助晚宴",
+            stay: "完美結束布拉格經典一日",
+            mode: "walk", modeIcon: "🗼",
+            legBadge: "🚶 采萊特納街步行 500m",
+            img: "14.webp",
+            desc: "建於 1475 年的 65 公尺黑色哥德式城門、昔日皇家加冕遊行起點；晚間搭乘伏爾他瓦河遊船享用豐盛自助晚餐並賞璀璨夜景。",
+            query: "Powder Tower Prague",
+            cardIdx: 7,
+            waypointsFromPrev: [
+              [50.0870, 14.4207], [50.0874, 14.4242], [50.0873, 14.4278]
+            ]
+          }
+        ]
+      },
+      5: {
+        headerTitle: "Day 5｜布拉格 ➔ 70km ➔ 庫特納霍拉 (人骨教堂・聖芭芭拉) ➔ Fashion Arena Outlet",
+        defaultZoom: 10,
+        stops: [
+          {
+            name: "布拉格出發 (東行前往銀礦古城)",
+            shortName: "布拉格出發",
+            lat: 50.0840, lng: 14.4268, zoom: 12,
+            time: "08:30 專車出發",
+            stay: "前往庫特納霍拉",
+            mode: "bus", modeIcon: "🚌",
+            legBadge: "東行 70 km",
+            img: "08.webp",
+            desc: "由布拉格搭乘專巴往東行駛約 70 公里，前往中世紀波希米亞最富裕的皇家銀礦之城—庫特納霍拉（Kutná Hora）。",
+            query: "Art Nouveau Palace Hotel Prague",
+            cardIdx: 1
+          },
+          {
+            name: "塞德萊茨人骨教堂 ＆ 聖母升天教堂 (Sedlec Ossuary)",
+            shortName: "人骨教堂＆聖母升天",
+            lat: 49.9619, lng: 15.2882, zoom: 15,
+            time: "09:45 世界遺產奇觀",
+            stay: "停留約 1 小時 15 分",
+            mode: "bus", modeIcon: "⛪",
+            legBadge: "🚌 車程 70 km (約 1h10m)",
+            img: "08.webp",
+            desc: "19 世紀木雕大師林特將數萬具中世紀遺骨化為莊嚴的骨骸大吊燈與家族徽章，緊鄰巴洛克哥德式聖母升天大教堂。",
+            query: "Sedlec Ossuary Kutna Hora",
+            cardIdx: 1,
+            waypointsFromPrev: [
+              [50.0840, 14.4268], [50.075, 14.62], [50.078, 14.82],
+              [50.04, 15.05], [49.99, 15.22], [49.9619, 15.2882]
+            ]
+          },
+          {
+            name: "聖芭芭拉大教堂 ＆ 傳統捷克午宴 (St. Barbara's Cathedral)",
+            shortName: "聖芭芭拉大教堂",
+            lat: 49.9446, lng: 15.2630, zoom: 15,
+            time: "11:15 哥德式皇家大教堂",
+            stay: "停留約 2.5 小時 (含午餐)",
+            mode: "bus", modeIcon: "🕍",
+            legBadge: "🚌 銀礦舊城區 3.5 km",
+            img: "09.webp",
+            desc: "始建於 14 世紀後半的晚期哥德式三尖塔巨作，擁有絕美彩繪玻璃與飛扶壁；中午於古城餐廳品嚐傳統捷克高麗菜肉捲料理。",
+            query: "St Barbara's Cathedral Kutna Hora",
+            cardIdx: 2,
+            waypointsFromPrev: [
+              [49.9619, 15.2882], [49.955, 15.278], [49.949, 15.270], [49.9446, 15.2630]
+            ]
+          },
+          {
+            name: "Fashion Arena Prague Outlet (精品折扣村)",
+            shortName: "Fashion Arena Outlet",
+            lat: 50.0723, lng: 14.5537, zoom: 15,
+            time: "14:45 暢貨中心血拼",
+            stay: "停留約 3 小時",
+            mode: "bus", modeIcon: "🛍️",
+            legBadge: "🚌 西行 65 km (約 55m)",
+            img: "10.webp",
+            desc: "布拉格最大名牌 Outlet！入館先憑護照至服務中心領取 VIP 9 折卡，必買 Baťa 氣墊皮鞋、Alpine Pro 與歐系精品，單筆滿 2,001 克朗可退稅。",
+            query: "Fashion Arena Prague Outlet",
+            cardIdx: 3,
+            waypointsFromPrev: [
+              [49.9446, 15.2630], [49.99, 15.18], [50.05, 15.00],
+              [50.078, 14.80], [50.0723, 14.5537]
+            ]
+          },
+          {
+            name: "下榻：Prague Marriott Hotel (布拉格萬豪酒店)",
+            shortName: "宿：布拉格萬豪酒店",
+            lat: 50.0884, lng: 14.4316, zoom: 16,
+            time: "18:30 中式晚宴＆入住萬豪",
+            stay: "市中心頂級五星萬豪酒店",
+            mode: "bus", modeIcon: "🏨",
+            legBadge: "🚌 返回市中心 10 km",
+            img: "10.webp",
+            desc: "晚餐享用上海多味中式料理暖胃，隨後入住位於共和國廣場與市民會館旁的五星級 Prague Marriott Hotel。",
+            query: "Prague Marriott Hotel",
+            cardIdx: 3,
+            waypointsFromPrev: [
+              [50.0723, 14.5537], [50.080, 14.49], [50.0884, 14.4316]
+            ]
+          }
+        ]
+      },
+      6: {
+        headerTitle: "Day 6｜新城區瓦茲拉夫廣場 ➔ 市民會館皇家下午茶 ➔ 帕拉迪姆 ➔ 午後自由漫遊",
+        defaultZoom: 15,
+        stops: [
+          {
+            name: "布拉格萬豪酒店 (Prague Marriott Hotel 出發)",
+            shortName: "萬豪酒店出發",
+            lat: 50.0884, lng: 14.4316, zoom: 16,
+            time: "09:15 漫步出發",
+            stay: "舊城與新城交界核心",
+            mode: "walk", modeIcon: "🏨",
+            legBadge: "市中心漫遊起點",
+            img: "15.webp",
+            desc: "由市中心五星萬豪酒店出發，展開第 6 天的新城區巡禮、百年皇家咖啡廳午茶與午後自由行。",
+            query: "Prague Marriott Hotel",
+            cardIdx: 1
+          },
+          {
+            name: "新城區：瓦茲拉夫廣場 ＆ 國家博物館 (Wenceslas Square)",
+            shortName: "1. 瓦茲拉夫廣場",
+            lat: 50.0812, lng: 14.4282, zoom: 16,
+            time: "09:30 新城商業大道",
+            stay: "停留約 2 小時 (含烤肋排午宴)",
+            mode: "walk", modeIcon: "🏛️",
+            legBadge: "🚶 漫步 850m 至新城大道",
+            img: "15.webp",
+            desc: "查理四世於 14 世紀建立的新城區核心大道，國家博物館宏偉矗立於廣場端點；中午享用香氣四溢的捷克風味烤肋排料理。",
+            query: "Wenceslas Square Prague",
+            cardIdx: 1,
+            waypointsFromPrev: [
+              [50.0884, 14.4316], [50.0850, 14.4270], [50.0812, 14.4282]
+            ]
+          },
+          {
+            name: "市民會館皇家下午茶 (Kavárna Obecní dům)",
+            shortName: "2. 市民會館下午茶",
+            lat: 50.0875, lng: 14.4282, zoom: 17,
+            time: "14:00 百年新藝術午茶",
+            stay: "享用咖啡＋精緻蛋糕",
+            mode: "walk", modeIcon: "☕",
+            legBadge: "☕ 貼心安排：皇家咖啡＋蛋糕",
+            img: "15.webp",
+            desc: "於布拉格新藝術風格建築瑰寶「市民會館（Municipal House）」一樓百年咖啡廳，優雅品嚐香醇咖啡與波希米亞蛋糕。",
+            query: "Kavarna Obecni dum Prague",
+            cardIdx: 1,
+            waypointsFromPrev: [
+              [50.0812, 14.4282], [50.0845, 14.4265], [50.0875, 14.4282]
+            ]
+          },
+          {
+            name: "帕拉迪姆購物中心 (Palladium · 自由活動起點)",
+            shortName: "3. 帕拉迪姆 (解散點)",
+            lat: 50.0893, lng: 14.4296, zoom: 17,
+            time: "15:15 自由活動開始",
+            stay: "發放 500 克朗晚餐自理金",
+            mode: "walk", modeIcon: "🛍️",
+            legBadge: "🪙 每人發 500 CZK 自由探索",
+            img: "15.webp",
+            desc: "匯集 170 家商店的捷克最大市中心百貨！在此解散展開午後自由漫遊，可選購菠丹妮、蔓菲蘿或前往 3 大推薦散策地標。",
+            query: "Palladium Shopping Center Prague",
+            cardIdx: 1,
+            waypointsFromPrev: [
+              [50.0875, 14.4282], [50.0893, 14.4296]
+            ]
+          },
+          {
+            name: "自由散策 A：世界最美帝國咖啡館 (Café Imperial)",
+            shortName: "散策A：帝國咖啡館",
+            lat: 50.0898, lng: 14.4328, zoom: 17,
+            time: "15:45 推薦散策支線 A",
+            stay: "帕拉迪姆斜對面步行 3 分鐘",
+            mode: "walk", modeIcon: "🥐",
+            legBadge: "🚶 步行 260m (約 3 分鐘)",
+            img: "16.webp",
+            desc: "入選世界十大最美咖啡館，挑高大廳鑲滿百年摩爾風格馬賽克陶瓷浮雕，就在萬豪酒店與帕拉迪姆旁。",
+            query: "Cafe Imperial Prague",
+            cardIdx: 4,
+            waypointsFromPrev: [
+              [50.0893, 14.4296], [50.0898, 14.4328]
+            ]
+          },
+          {
+            name: "自由散策 B：伏爾他瓦河天鵝岸夕陽 (Cihelná Park)",
+            shortName: "散策B：河畔天鵝岸",
+            lat: 50.0888, lng: 14.4096, zoom: 16,
+            time: "16:15 推薦散策支線 B",
+            stay: "查理大橋北側河灘夕陽",
+            mode: "walk", modeIcon: "🦢",
+            legBadge: "🚶 河畔明信片夕陽秘境",
+            img: "17.webp",
+            desc: "成群優雅白鵝聚集的伏爾他瓦河畔秘境，傍晚時分可將潔白天鵝、查理大橋與布拉格城堡同框拍出絕美大片。",
+            query: "Cihelna Park Prague",
+            cardIdx: 5,
+            waypointsFromPrev: [
+              [50.0898, 14.4328], [50.0880, 14.4210], [50.0888, 14.4096]
+            ]
+          },
+          {
+            name: "自由散策 C：哈維爾露天市集 ＆ 500克朗街頭美食 (Havelské tržiště)",
+            shortName: "散策C：哈維爾市集＆小吃",
+            lat: 50.0848, lng: 14.4210, zoom: 17,
+            time: "17:15 推薦散策支線 C",
+            stay: "老城街頭小吃尋寶",
+            mode: "walk", modeIcon: "🌭",
+            legBadge: "🌭 煙囪捲・烤香腸・皮爾森生啤",
+            img: "18.webp",
+            desc: "創立於 1232 年的布拉格最古老市集！沿途用 500 克朗品嚐現烤肉桂煙囪捲、街頭大香腸 Klobása、開放三明治與皮爾森生啤。",
+            query: "Havelske trziste Prague",
+            cardIdx: 6,
+            waypointsFromPrev: [
+              [50.0888, 14.4096], [50.0865, 14.4150], [50.0848, 14.4210]
+            ]
+          }
+        ]
+      },
+      7: {
+        headerTitle: "Day 7｜布拉格萬豪酒店 ➔ 布拉格哈維爾國際機場 (退稅) ➔ 星宇航空 JX102 返台",
+        defaultZoom: 11,
+        stops: [
+          {
+            name: "布拉格萬豪酒店 (整理行囊出發)",
+            shortName: "萬豪酒店退房",
+            lat: 50.0884, lng: 14.4316, zoom: 14,
+            time: "07:15 專車前往機場",
+            stay: "檢查退稅單據與護照",
+            mode: "bus", modeIcon: "🚌",
+            legBadge: "專車前往機場 17 km",
+            img: "23.webp",
+            desc: "早餐後確認護照、退稅單（已親筆簽名）、收據與退稅商品齊全，搭乘專車前往布拉格哈維爾國際機場。",
+            query: "Prague Marriott Hotel",
+            cardIdx: 1
+          },
+          {
+            name: "布拉格哈維爾國際機場 (PRG · 退稅蓋章＆JX102 起飛)",
+            shortName: "布拉格機場退稅＆起飛",
+            lat: 50.1008, lng: 14.2600, zoom: 13,
+            time: "10:30 / 10:55 星宇 JX102 起飛",
+            stay: "直飛返航桃園機場",
+            mode: "flight", modeIcon: "✈️",
+            legBadge: "✈️ 星宇航空 JX102 返航",
+            img: "23.webp",
+            desc: "於機場退稅櫃檯出示購買商品、收據與退稅單完成海關蓋章，隨後搭乘星宇航空 JX102 豪華客機直飛返回台灣。",
+            query: "Vaclav Havel Airport Prague",
+            cardIdx: 1,
+            waypointsFromPrev: [
+              [50.0884, 14.4316], [50.095, 14.39], [50.098, 14.33], [50.1008, 14.2600]
+            ]
+          }
+        ]
+      },
+      8: {
+        headerTitle: "Day 8｜平安抵達桃園國際機場 (TPE) ➔ 專車接送返回溫暖的家",
+        defaultZoom: 9,
+        stops: [
+          {
+            name: "桃園國際機場 (TPE · 平安抵台)",
+            shortName: "抵達桃園國際機場",
+            lat: 25.0777, lng: 121.2328, zoom: 12,
+            time: "07:10 / 07:20 抵達桃園",
+            stay: "領取行李・專車接送返家",
+            mode: "flight", modeIcon: "🛬",
+            legBadge: "🏠 圓滿賦歸",
+            img: "24.webp",
+            desc: "班機於清晨平安降落桃園國際機場，搭乘台中—機場接送專車返回溫暖的家，圓滿結束 115 年港洲營建事業布拉格 8 日之旅！",
+            query: "Taiwan Taoyuan International Airport",
+            cardIdx: 0
+          }
+        ]
+      }
+    };
+
+    let gmapInstance = null;
+    let gmapTileLayers = {};
+    let currentGmapLayerKey = 'road';
+    let currentGmapDay = 1;
+    let currentStopIdx = 0;
+    let gmapMarkers = [];
+    let gmapBasePolyline = null;
+    let gmapProgressPolyline = null;
+    let gmapVehicleMarker = null;
+    let gmapRoutePoints = [];
+    let gmapStopPointIndices = [];
+    let gmapAnimPlaying = false;
+    let gmapAnimProgress = 0; // 0 to 1
+    let gmapAnimSpeed = 1.0;
+    let gmapAnimFollow = true;
+    let gmapAnimFrameId = null;
+    let gmapLastTick = 0;
+
+    function initPragueGmap() {
+      if (gmapInstance || typeof L === 'undefined') return;
+      const mapEl = document.getElementById('prague-gmap');
+      if (!mapEl) return;
+
+      gmapInstance = L.map('prague-gmap', {
+        center: [50.0865, 14.4114],
+        zoom: 14,
+        zoomControl: true
+      });
+
+      // Google Maps 官方圖磚服務 (支援繁體中文地標 hl=zh-TW)
+      gmapTileLayers = {
+        road: L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=zh-TW&x={x}&y={y}&z={z}', {
+          maxZoom: 20,
+          attribution: '© Google Maps'
+        }),
+        hybrid: L.tileLayer('https://mt1.google.com/vt/lyrs=y&hl=zh-TW&x={x}&y={y}&z={z}', {
+          maxZoom: 20,
+          attribution: '© Google Maps Satellite'
+        }),
+        terrain: L.tileLayer('https://mt1.google.com/vt/lyrs=p&hl=zh-TW&x={x}&y={y}&z={z}', {
+          maxZoom: 20,
+          attribution: '© Google Maps Terrain'
+        })
+      };
+
+      gmapTileLayers.road.addTo(gmapInstance);
+      loadGmapDay(currentGmapDay, false);
+    }
+
+    function switchGmapLayer(layerKey) {
+      closeGmapEmbedDrawer();
+      if (!gmapInstance) initPragueGmap();
+      if (!gmapInstance || !gmapTileLayers[layerKey]) return;
+
+      Object.keys(gmapTileLayers).forEach(k => {
+        if (gmapInstance.hasLayer(gmapTileLayers[k])) {
+          gmapInstance.removeLayer(gmapTileLayers[k]);
+        }
+      });
+      gmapTileLayers[layerKey].addTo(gmapInstance);
+      currentGmapLayerKey = layerKey;
+
+      document.getElementById('layerBtnRoad').classList.toggle('active', layerKey === 'road');
+      document.getElementById('layerBtnSat').classList.toggle('active', layerKey === 'hybrid');
+      document.getElementById('layerBtnTer').classList.toggle('active', layerKey === 'terrain');
+      document.getElementById('layerBtnEmbed').classList.remove('active');
+    }
+
+    function buildDenseRoute(stops) {
+      const pts = [];
+      const stopIndices = [0];
+      if (!stops || stops.length === 0) return { pts, stopIndices };
+
+      pts.push([stops[0].lat, stops[0].lng]);
+      for (let i = 1; i < stops.length; i++) {
+        const prev = stops[i - 1];
+        const curr = stops[i];
+        const rawWaypoints = curr.waypointsFromPrev || [[prev.lat, prev.lng], [curr.lat, curr.lng]];
+        // 內插細化軌跡點讓載具移動極度平滑
+        for (let w = 0; w < rawWaypoints.length - 1; w++) {
+          const pA = rawWaypoints[w];
+          const pB = rawWaypoints[w + 1];
+          const dist = Math.hypot(pB[0] - pA[0], pB[1] - pA[1]);
+          const steps = Math.max(12, Math.min(80, Math.round(dist * 350)));
+          for (let s = 1; s <= steps; s++) {
+            const u = s / steps;
+            pts.push([pA[0] + (pB[0] - pA[0]) * u, pA[1] + (pB[1] - pA[1]) * u]);
+          }
+        }
+        stopIndices.push(pts.length - 1);
+      }
+      return { pts, stopIndices };
+    }
+
+    function loadGmapDay(dayNum, autoPlay) {
+      pauseGmapPlay();
+      closeGmapEmbedDrawer();
+      currentGmapDay = dayNum;
+      currentStopIdx = 0;
+      gmapAnimProgress = 0;
+
+      const dayData = GMAP_ITINERARY_DATA[dayNum];
+      if (!dayData) return;
+
+      const headerEl = document.getElementById('gmapDayHeaderTitle');
+      if (headerEl) headerEl.textContent = dayData.headerTitle;
+
+      // 渲染站點快速切換列
+      const stripEl = document.getElementById('gmapStopsStrip');
+      if (stripEl) {
+        stripEl.innerHTML = dayData.stops.map((st, idx) => `
+          <button type="button" class="gmap-stop-chip ${idx === 0 ? 'active' : ''}" onclick="focusGmapStop(${dayNum}, ${idx}, true)">
+            <span class="chip-num">${idx + 1}</span>
+            <span>${st.modeIcon} ${st.shortName}</span>
+          </button>
+        `).join('');
+      }
+
+      if (!gmapInstance) initPragueGmap();
+      if (!gmapInstance) return;
+
+      // 清除舊圖層
+      gmapMarkers.forEach(m => gmapInstance.removeLayer(m));
+      gmapMarkers = [];
+      if (gmapBasePolyline) { gmapInstance.removeLayer(gmapBasePolyline); gmapBasePolyline = null; }
+      if (gmapProgressPolyline) { gmapInstance.removeLayer(gmapProgressPolyline); gmapProgressPolyline = null; }
+      if (gmapVehicleMarker) { gmapInstance.removeLayer(gmapVehicleMarker); gmapVehicleMarker = null; }
+
+      const built = buildDenseRoute(dayData.stops);
+      gmapRoutePoints = built.pts;
+      gmapStopPointIndices = built.stopIndices;
+
+      if (gmapRoutePoints.length > 1) {
+        // 底層路線虛線
+        gmapBasePolyline = L.polyline(gmapRoutePoints, {
+          color: '#64748b',
+          weight: 5,
+          opacity: 0.45,
+          dashArray: '8, 8'
+        }).addTo(gmapInstance);
+
+        // 動態行進高亮路線 (Google Maps 經典藍)
+        gmapProgressPolyline = L.polyline([gmapRoutePoints[0]], {
+          color: '#1a73e8',
+          weight: 6,
+          opacity: 0.95,
+          lineCap: 'round',
+          lineJoin: 'round'
+        }).addTo(gmapInstance);
+      }
+
+      // 建立各站點 Google Maps 風格編號圖釘
+      dayData.stops.forEach((st, idx) => {
+        const iconHtml = `
+          <div class="gmap-pin-marker ${idx === 0 ? 'active' : ''}" id="gmapPin_${idx}">
+            <div class="gmap-pin-bubble">
+              <span class="gmap-pin-num">${idx + 1}</span>
+              <span>${st.shortName}</span>
+            </div>
+            <div class="gmap-pin-stem"></div>
+          </div>
+        `;
+        const customIcon = L.divIcon({
+          className: '',
+          html: iconHtml,
+          iconSize: [140, 36],
+          iconAnchor: [70, 34]
+        });
+        const marker = L.marker([st.lat, st.lng], { icon: customIcon, zIndexOffset: idx === 0 ? 500 : 100 }).addTo(gmapInstance);
+        marker.on('click', () => {
+          focusGmapStop(dayNum, idx, true);
+        });
+        gmapMarkers.push(marker);
+      });
+
+      // 建立移動載具標記
+      const firstStop = dayData.stops[0];
+      const vehicleIcon = L.divIcon({
+        className: '',
+        html: `<div class="gmap-vehicle-badge" id="gmapVehicleBadge">${firstStop.modeIcon || '🚌'}</div>`,
+        iconSize: [42, 42],
+        iconAnchor: [21, 21]
+      });
+      gmapVehicleMarker = L.marker([firstStop.lat, firstStop.lng], { icon: vehicleIcon, zIndexOffset: 1000 }).addTo(gmapInstance);
+
+      updateGmapStopUI(0);
+      fitDayRouteBounds();
+
+      if (autoPlay) {
+        setTimeout(() => startGmapPlay(), 400);
+      }
+    }
+
+    function fitDayRouteBounds() {
+      if (!gmapInstance) return;
+      const dayData = GMAP_ITINERARY_DATA[currentGmapDay];
+      if (!dayData || !dayData.stops.length) return;
+      if (dayData.stops.length === 1) {
+        gmapInstance.flyTo([dayData.stops[0].lat, dayData.stops[0].lng], dayData.stops[0].zoom || 13, { duration: 0.8 });
+        return;
+      }
+      const bounds = L.latLngBounds(dayData.stops.map(s => [s.lat, s.lng]));
+      gmapInstance.flyToBounds(bounds, { padding: [55, 55], maxZoom: 16, duration: 0.9 });
+    }
+
+    function updateGmapStopUI(stopIdx) {
+      const dayData = GMAP_ITINERARY_DATA[currentGmapDay];
+      if (!dayData || !dayData.stops[stopIdx]) return;
+      currentStopIdx = stopIdx;
+      const st = dayData.stops[stopIdx];
+
+      // 更新頂部膠囊與左下角實景預覽卡
+      document.getElementById('gmapHudModeIcon').textContent = st.modeIcon || '📍';
+      document.getElementById('gmapHudStopText').textContent = `第 ${stopIdx + 1}/${dayData.stops.length} 站：${st.shortName}`;
+      document.getElementById('gmapHudLegBadge').textContent = st.legBadge || '';
+
+      document.getElementById('gmapLiveImg').src = st.img || '01.webp';
+      document.getElementById('gmapLiveTime').textContent = `🕒 ${st.time}`;
+      document.getElementById('gmapLiveStay').textContent = st.stay || '';
+      document.getElementById('gmapLiveTitle').textContent = st.name;
+      document.getElementById('gmapLiveDesc').textContent = st.desc;
+      document.getElementById('gmapLiveNavLink').href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(st.query)}`;
+
+      // 更新移動載具圖示
+      const vBadge = document.getElementById('gmapVehicleBadge');
+      if (vBadge) vBadge.textContent = st.modeIcon || '🚌';
+
+      // 更新橫向站點按鈕與地圖針腳高亮
+      const chips = document.querySelectorAll('#gmapStopsStrip .gmap-stop-chip');
+      chips.forEach((c, idx) => {
+        c.classList.toggle('active', idx === stopIdx);
+        if (idx === stopIdx) c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      });
+
+      dayData.stops.forEach((_, idx) => {
+        const pinEl = document.getElementById(`gmapPin_${idx}`);
+        if (pinEl) pinEl.classList.toggle('active', idx === stopIdx);
+      });
+
+      // 高亮下方對應的景點卡片
+      document.querySelectorAll('.spot-card, .route-card').forEach(card => card.classList.remove('sim-highlight'));
+      const activePane = document.getElementById(`day-pane-${currentGmapDay}`);
+      if (activePane) {
+        const matchCard = activePane.querySelector(`[data-stop="${st.cardIdx}"]`) || activePane.querySelector('.spot-card');
+        if (matchCard) matchCard.classList.add('sim-highlight');
+      }
+
+      // 更新進度文字
+      const pct = Math.round(gmapAnimProgress * 100);
+      const scrubber = document.getElementById('gmapScrubber');
+      if (scrubber) scrubber.value = Math.round(gmapAnimProgress * 1000);
+      const progLbl = document.getElementById('gmapProgressLabel');
+      if (progLbl) progLbl.textContent = `進度 ${pct}% (${stopIdx + 1}/${dayData.stops.length}站)`;
+    }
+
+    function focusGmapStop(dayNum, stopIdx, flyCamera) {
+      pauseGmapPlay();
+      closeGmapEmbedDrawer();
+      if (currentGmapDay !== dayNum) {
+        showDay(dayNum);
+      }
+      const dayData = GMAP_ITINERARY_DATA[currentGmapDay];
+      if (!dayData || !dayData.stops[stopIdx]) return;
+
+      const ptIdx = gmapStopPointIndices[stopIdx] || 0;
+      const totalPts = Math.max(1, gmapRoutePoints.length - 1);
+      gmapAnimProgress = ptIdx / totalPts;
+
+      const st = dayData.stops[stopIdx];
+      if (gmapVehicleMarker) gmapVehicleMarker.setLatLng([st.lat, st.lng]);
+      if (gmapProgressPolyline && gmapRoutePoints.length > 1) {
+        gmapProgressPolyline.setLatLngs(gmapRoutePoints.slice(0, ptIdx + 1));
+      }
+
+      updateGmapStopUI(stopIdx);
+
+      if (flyCamera && gmapInstance) {
+        const simCard = document.getElementById('gmapSimCard');
+        if (simCard && window.scrollY > simCard.offsetTop + 260) {
+          simCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        gmapInstance.flyTo([st.lat, st.lng], st.zoom || 16, { duration: 0.85 });
+      }
+    }
+
+    function toggleGmapPlay() {
+      if (gmapAnimPlaying) pauseGmapPlay();
+      else startGmapPlay();
+    }
+
+    function startGmapPlay() {
+      closeGmapEmbedDrawer();
+      if (!gmapInstance) initPragueGmap();
+      const dayData = GMAP_ITINERARY_DATA[currentGmapDay];
+      if (!dayData || dayData.stops.length < 2) {
+        focusGmapStop(currentGmapDay, 0, true);
+        return;
+      }
+      if (gmapAnimProgress >= 0.995) {
+        gmapAnimProgress = 0;
+      }
+      gmapAnimPlaying = true;
+      gmapLastTick = performance.now();
+      const btn = document.getElementById('gmapPlayBtn');
+      if (btn) {
+        btn.textContent = '⏸ 暫停行程動畫';
+        btn.classList.add('playing');
+      }
+      gmapAnimFrameId = requestAnimationFrame(stepGmapAnimation);
+    }
+
+    function pauseGmapPlay() {
+      gmapAnimPlaying = false;
+      if (gmapAnimFrameId) {
+        cancelAnimationFrame(gmapAnimFrameId);
+        gmapAnimFrameId = null;
+      }
+      const btn = document.getElementById('gmapPlayBtn');
+      if (btn) {
+        btn.textContent = '▶ 播放今日行程動畫';
+        btn.classList.remove('playing');
+      }
+    }
+
+    function replayGmapDay() {
+      pauseGmapPlay();
+      gmapAnimProgress = 0;
+      updateGmapStopUI(0);
+      if (gmapProgressPolyline && gmapRoutePoints.length) {
+        gmapProgressPolyline.setLatLngs([gmapRoutePoints[0]]);
+      }
+      startGmapPlay();
+    }
+
+    function stepGmapAnimation(now) {
+      if (!gmapAnimPlaying) return;
+      const dt = Math.min(0.08, (now - gmapLastTick) / 1000);
+      gmapLastTick = now;
+
+      const dayData = GMAP_ITINERARY_DATA[currentGmapDay];
+      const totalDurationSec = Math.max(10, dayData.stops.length * 4.2); // 每站約 4.2 秒動畫
+      gmapAnimProgress += (dt * gmapAnimSpeed) / totalDurationSec;
+
+      if (gmapAnimProgress >= 1) {
+        gmapAnimProgress = 1;
+        renderGmapProgressFrame();
+        pauseGmapPlay();
+        return;
+      }
+
+      renderGmapProgressFrame();
+      gmapAnimFrameId = requestAnimationFrame(stepGmapAnimation);
+    }
+
+    function renderGmapProgressFrame() {
+      if (!gmapRoutePoints.length) return;
+      const exactIdx = gmapAnimProgress * (gmapRoutePoints.length - 1);
+      const idx0 = Math.floor(exactIdx);
+      const idx1 = Math.min(gmapRoutePoints.length - 1, idx0 + 1);
+      const frac = exactIdx - idx0;
+
+      const p0 = gmapRoutePoints[idx0];
+      const p1 = gmapRoutePoints[idx1];
+      const curLat = p0[0] + (p1[0] - p0[0]) * frac;
+      const curLng = p0[1] + (p1[1] - p0[1]) * frac;
+
+      if (gmapVehicleMarker) {
+        gmapVehicleMarker.setLatLng([curLat, curLng]);
+      }
+      if (gmapProgressPolyline) {
+        const sliced = gmapRoutePoints.slice(0, idx0 + 1);
+        sliced.push([curLat, curLng]);
+        gmapProgressPolyline.setLatLngs(sliced);
+      }
+      if (gmapAnimFollow && gmapInstance) {
+        gmapInstance.panTo([curLat, curLng], { animate: false });
+      }
+
+      // 判斷目前抵達哪個站點區段
+      let activeStop = 0;
+      for (let s = 0; s < gmapStopPointIndices.length; s++) {
+        if (idx0 >= gmapStopPointIndices[s] - 3) {
+          activeStop = s;
+        }
+      }
+      updateGmapStopUI(activeStop);
+    }
+
+    function scrubGmapTimeline(val) {
+      pauseGmapPlay();
+      gmapAnimProgress = Math.max(0, Math.min(1, parseFloat(val) / 1000));
+      renderGmapProgressFrame();
+    }
+
+    function prevGmapStop() {
+      const nextIdx = Math.max(0, currentStopIdx - 1);
+      focusGmapStop(currentGmapDay, nextIdx, true);
+    }
+
+    function nextGmapStop() {
+      const dayData = GMAP_ITINERARY_DATA[currentGmapDay];
+      if (!dayData) return;
+      const nextIdx = Math.min(dayData.stops.length - 1, currentStopIdx + 1);
+      focusGmapStop(currentGmapDay, nextIdx, true);
+    }
+
+    function changeGmapSpeed(val) {
+      gmapAnimSpeed = parseFloat(val) || 1.0;
+    }
+
+    function toggleGmapFollow() {
+      gmapAnimFollow = !gmapAnimFollow;
+      const btn = document.getElementById('gmapFollowBtn');
+      if (btn) btn.textContent = `🎯 鏡頭跟隨：${gmapAnimFollow ? '開' : '關'}`;
+    }
+
+    function openSpotEmbedByQuery(query, title) {
+      pauseGmapPlay();
+      const simCard = document.getElementById('gmapSimCard');
+      if (simCard) simCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const drawer = document.getElementById('gmapEmbedDrawer');
+      const iframe = document.getElementById('gmapEmbedIframe');
+      const titleEl = document.getElementById('gmapEmbedTitle');
+      if (!drawer || !iframe) return;
+      if (titleEl) titleEl.textContent = `📍 Google Maps 實景內嵌預覽：${title || query}`;
+      iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&hl=zh-TW&z=16&output=embed`;
+      drawer.classList.add('open');
+      document.getElementById('layerBtnEmbed').classList.add('active');
+    }
+
+    function openCurrentStopEmbed() {
+      const dayData = GMAP_ITINERARY_DATA[currentGmapDay];
+      if (!dayData) return;
+      const st = dayData.stops[currentStopIdx] || dayData.stops[0];
+      openSpotEmbedByQuery(st.query, st.name);
+    }
+
+    function toggleGmapEmbedDrawer() {
+      const drawer = document.getElementById('gmapEmbedDrawer');
+      if (drawer && drawer.classList.contains('open')) {
+        closeGmapEmbedDrawer();
+      } else {
+        openCurrentStopEmbed();
+      }
+    }
+
+    function closeGmapEmbedDrawer() {
+      const drawer = document.getElementById('gmapEmbedDrawer');
+      if (drawer) drawer.classList.remove('open');
+      const btn = document.getElementById('layerBtnEmbed');
+      if (btn) btn.classList.remove('active');
+    }
+
+    function scrollToCurrentSpotCard() {
+      const activePane = document.getElementById(`day-pane-${currentGmapDay}`);
+      if (!activePane) return;
+      const highlighted = activePane.querySelector('.sim-highlight') || activePane.querySelector('.spot-card');
+      if (highlighted) {
+        highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
 
     function quickNav(targetTab, actionIdx) {
