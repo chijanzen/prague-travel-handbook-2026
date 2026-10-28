@@ -1,12 +1,13 @@
 /* 布拉格手冊 Service Worker — 離線快取
  * 改版時把 CACHE_VERSION 加一,使用者下次連網開啟即自動更新。
  */
-const CACHE_VERSION = 'prague-handbook-v8';
+const CACHE_VERSION = 'prague-handbook-v9';
 
 // 需離線可用的核心資源(相對於本檔位置,可放在任何子路徑)
 const CORE_ASSETS = [
   './',
   './index.html',
+  './briefing.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
